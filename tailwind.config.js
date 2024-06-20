@@ -1,11 +1,9 @@
-import type { Config } from 'tailwindcss';
-
 const px0_50 = { ...Array.from(Array(51)).map((_, i) => `${i}px`) };
 const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
 const px0_400 = { ...Array.from(Array(401)).map((_, i) => `${i}px`) };
 
-const config: Config = {
+module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -57,4 +55,3 @@ const config: Config = {
   },
   plugins: [],
 };
-export default config;
