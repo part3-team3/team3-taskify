@@ -15,11 +15,6 @@ module.exports = {
       fontSize: px0_100,
       spacing: px0_200,
       width: px0_400,
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
 
       colors: {
         red: '#D6173A',
@@ -37,19 +32,17 @@ module.exports = {
           50: '#787486',
         },
 
-        'black-10': '#4B4B4B',
-        'black-20': '#333236',
-        'black-30': '#171717',
+        black: {
+          DEFAULT: '#000000',
+          10: '#4B4B4B',
+          20: '#333236',
+          30: '#171717',
+        },
 
         violet: {
           10: '#F1EFFD',
           20: '#5534DA',
         },
-      },
-
-      screens: {
-        sm: { min: '375px', max: '767px' },
-        md: { min: '768px', max: '1199px' },
       },
     },
   },
