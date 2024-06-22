@@ -1,7 +1,8 @@
 const px0_50 = { ...Array.from(Array(51)).map((_, i) => `${i}px`) };
 const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
-const px0_400 = { ...Array.from(Array(401)).map((_, i) => `${i}px`) };
+// const px0_400 = { ...Array.from(Array(401)).map((_, i) => `${i}px`) };
+const px0_1920 = { ...Array.from(Array(1921)).map((_, i) => `${i}px`) };
 
 module.exports = {
   content: [
@@ -14,7 +15,7 @@ module.exports = {
       borderRadius: px0_50,
       fontSize: px0_100,
       spacing: px0_200,
-      width: px0_400,
+      width: px0_1920,
 
       colors: {
         red: '#D6173A',
@@ -46,5 +47,235 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        // flex로 가운데 정렬시 3개 한번에 적용해줌
+        '.flex-center': {
+          display: 'flex',
+          justifyContent: 'center',
+          alineItems: 'center',
+        },
+        // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
+        '.btn_login_large_disabled': {
+          width: '520px',
+          height: '50px',
+          padding: '14px 236px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
+        // 로그인, 회원가입 페이지 데스크탑, 테블릿 보라색(활성화) 버튼
+        '.btn_login_large_active': {
+          width: '520px',
+          height: '50px',
+          padding: '14px 236px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '8px',
+        },
+        // 로그인, 회원가입 페이지 모바일 회색(비활성화) 버튼
+        '.btn_login_small_disabled': {
+          width: '351px',
+          height: '50px',
+          padding: '14px 146px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
+        // 로그인, 회원가입 페이지 모바일 보라색(활성화) 버튼
+        '.btn_login_small_active': {
+          width: '351px',
+          height: '50px',
+          padding: '14px 146px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '8px',
+        },
+        // 보라색 버튼
+        // 로그인 페이지 비밀번호 불일치 모달(d, t), 회원가입 페이지 가입 완료, 이미 사용중 이메일 모달(d, t), 마이페이지 비밀번호 틀렸습니다 모달(d, t)
+        // 대시보드 생성 모달(d, t), 할일 수정 모달(d, t), 할일 생성 모달(d, t),
+        // 컬럼 추가 모달(d, t), 컬럼 수정 모달(d, t), 초대하기 모달(d, t)
+        '.btn_modal_large_purple': {
+          width: '120px',
+          height: '48px',
+          padding: '14px 46px',
+          fontSize: '16px',
+          fontWeight: '500',
+          lineHeight: '19px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '8px',
+        },
+        // 흰색 버튼
+        // 대시보드 생성 모달(d, t), 할일 수정 모달(d, t), 할일 생성 모달(d, t),
+        // 컬럼 추가 모달(d, t), 컬럼 수정 모달(d, t), 초대하기 모달(d, t)
+        '.btn_modal_large_white': {
+          width: '122px',
+          height: '48px',
+          padding: '14px 46px',
+          fontSize: '16px',
+          fontWeight: '500',
+          lineHeight: '19px',
+          color: '#787486',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+        },
+        // 보라색 버튼
+        // 로그인 페이지 비밀번호 불일치 모달(m), 회원가입 페이지 가입 완료, 이미 사용중 이메일 모달(m), 마이페이지 비밀번호 틀렸습니다 모달(m)
+        // 대시보드 생성 모달(m), 할일 수정 모달(m), 할일 생성 모달(m),
+        // 컬럼 추가 모달(m), 컬럼 수정 모달(m), 초대하기 모달(m)
+        '.btn_modal_small_purple': {
+          width: '138px',
+          height: '42px',
+          padding: '12px 56px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '8px',
+        },
+        // 흰색 버튼
+        // 대시보드 생성 모달(m), 할일 수정 모달(m), 할일 생성 모달(m),
+        // 컬럼 추가 모달(m), 컬럼 수정 모달(m), 초대하기 모달(m)
+        '.btn_modal_small_white': {
+          width: '140px',
+          height: '42px',
+          padding: '12px 56px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#787486',
+          backgroundColor: '#FFFFFF',
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+        },
+        // 보라색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 -> 수락 버튼(d)
+        // 대시보드 수정 -> 변경 버튼(d, t)
+        // 마이페이지 -> 저장, 변경 버튼(d, t)
+        '.btn_desktop_purple': {
+          width: '84px',
+          height: '32px',
+          padding: '7px 29px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+        },
+        // 흰색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 -> 거절 버튼(d)
+        // 대시보드 수정 -> 삭제, 취소 버튼(d, t)
+        '.btn_desktop_white': {
+          width: '85px',
+          height: '32px',
+          padding: '7px 29px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+        },
+        // 보라색 버튼
+        // 대시보드 수정 -> 변경 버튼(m)
+        '.btn_small_purple': {
+          width: '84px',
+          height: '28px',
+          padding: '7px 29px',
+          fontSize: '12px',
+          fontWeight: '500',
+          lineHeight: '14px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+        },
+        // 흰색 버튼
+        // 대시보드 수정 -> 삭제, 취소 버튼(m)
+        '.btn_small_white': {
+          width: '52px',
+          height: '28px',
+          padding: '7px 9px',
+          fontSize: '12px',
+          fontWeight: '500',
+          lineHeight: '14px',
+          color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+        },
+        // 보라색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 수락 버튼(t)
+        '.btn_tablet_purple': {
+          width: '72px',
+          height: '30px',
+          padding: '6px 23px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+        },
+        // 흰색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 거절 버튼(t)
+        '.btn_tablet_white': {
+          width: '73px',
+          height: '30px',
+          padding: '6px 23px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+        },
+        // 보라색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 수락 버튼(m)
+        '.btn_mobile_purple': {
+          width: '109px',
+          height: '28px',
+          padding: '7px 37px',
+          fontSize: '12px',
+          fontWeight: '500',
+          lineHeight: '14px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+        },
+        // 흰색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 거절 버튼(m)
+        '.btn_mobile_white': {
+          width: '109px',
+          height: '28px',
+          padding: '7px 37px',
+          fontSize: '12px',
+          fontWeight: '500',
+          lineHeight: '14px',
+          color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+        },
+      });
+    },
+  ],
 };
