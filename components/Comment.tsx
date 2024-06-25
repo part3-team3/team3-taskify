@@ -38,7 +38,6 @@ const Comment = ({ comment }: { comment: CommentType }) => {
           </div>
         </div>
       </div>
-      <div id="observer" className="h-10"></div>
     </>
   );
 };
