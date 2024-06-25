@@ -22,14 +22,12 @@ const Modal = ({ isOpen, onClose, width, height, children }: ModalProps) => {
 
   return (
     <div
-      className="bg-black fixed inset-0 z-50 flex items-center justify-center bg-opacity-70"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
       onClick={handleOverlayClick}
     >
       <div
         style={{ width, height }}
-        className={
-          'whitespace-nowrap rounded-lg bg-white pb-28 pl-28 pr-28 pt-32'
-        }
+        className={'whitespace-nowrap rounded-lg bg-white px-20 py-28 md:px-28'}
         onClick={handleContentClick}
       >
         {children}

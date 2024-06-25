@@ -46,7 +46,6 @@ const Comments = () => {
         cursorId !== null &&
         cursor !== cursorId
       ) {
-        console.log(cursorId);
         setCursor(cursorId); // 스크롤하다가 마지막 댓글의 커서 Id를 cursor에 저장함.
       }
     };
