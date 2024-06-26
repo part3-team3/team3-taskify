@@ -1,6 +1,6 @@
 import { getComments } from '@/pages/api/getComments';
 import { CommentList, Comment as CommentType } from '@/types/comments';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Comment from './Comment';
 import CommentForm from './CommentForm';
@@ -11,30 +11,27 @@ const Comments = () => {
   const [cursor, setCursor] = useState<number | null>(null); // 무한스크롤에 사용되는 커서
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const getCommentsData = async (cursor?: number | null) => {
-    setIsLoading(true);
-    try {
-      const commentsData: CommentList = await getComments(cursor);
-      setComments((prevComments) => [
-        ...prevComments,
-        ...commentsData.comments.filter(
-          (comment) =>
-            !prevComments.some((prevComment) => prevComment.id === comment.id),
-        ),
-      ]);
-      setCursorId(commentsData.cursorId);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getCommentsData = async (cursor?: number | null) => {
+      setIsLoading(true);
+      try {
+        const commentsData: CommentList = await getComments(cursor);
+        setComments((prevComments) => [
+          ...prevComments,
+          ...commentsData.comments.filter(
+            (comment) =>
+              !prevComments.some(
+                (prevComment) => prevComment.id === comment.id,
+              ),
+          ),
+        ]);
+        setCursorId(commentsData.cursorId);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     getCommentsData(cursor);
   }, [cursor]); // 마지막 댓글의 커서 id가 바뀌면 데이터 리패칭
-
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
@@ -67,9 +64,13 @@ const Comments = () => {
     };
   }, [cursorId, isLoading]);
 
+  const addComment = (newComment: CommentType) => {
+    setComments((prevComments) => [newComment, ...prevComments]);
+  };
+
   return (
     <>
-      <CommentForm handleSubmit={handleSubmit} />
+      <CommentForm addComment={addComment} />
       {comments.length > 0 && (
         <div className="overflow-scroll h-150">
           {comments.map((comment) => (
