@@ -40,7 +40,7 @@ const CommentForm = ({
           value={content}
           onChange={handleInputChange}
           placeholder="댓글 작성하기"
-          className="h-70 w-287 resize-none rounded-6 border border-solid border-gray-30 p-12 text-12 leading-[14px] placeholder:text-12 md:h-110 md:w-420 md:p-16 md:leading-[17px] md:placeholder:text-14 xl:w-450"
+          className="h-70 w-287 resize-none rounded-6 border border-solid border-gray-30 p-12 text-12 leading-[14px] placeholder:text-12 md:h-110 md:w-420 md:p-16 md:text-14 md:leading-[17px] md:placeholder:text-14 xl:w-450"
         />
       </div>
       <button
