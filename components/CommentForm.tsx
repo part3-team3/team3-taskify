@@ -1,4 +1,4 @@
-import postComments from '@/pages/api/postComments';
+import postComments from '@/pages/api/comments/postComments';
 import { Comment as CommentType } from '@/types/comments';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 

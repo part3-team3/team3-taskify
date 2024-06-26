@@ -1,4 +1,5 @@
-import { getComments } from '@/pages/api/getComments';
+import deleteComment from '@/pages/api/comments/deleteComments';
+import { getComments } from '@/pages/api/comments/getComments';
 import { CommentList, Comment as CommentType } from '@/types/comments';
 import { useEffect, useState } from 'react';
 
@@ -68,13 +69,24 @@ const Comments = () => {
     setComments((prevComments) => [newComment, ...prevComments]);
   };
 
+  const handleDeleteComment = async (targetId: number) => {
+    await deleteComment(targetId);
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment.id !== targetId),
+    );
+  };
+
   return (
     <>
       <CommentForm addComment={addComment} />
       {comments.length > 0 && (
         <div className="overflow-scroll h-150">
           {comments.map((comment) => (
-            <Comment comment={comment} key={comment.id} />
+            <Comment
+              comment={comment}
+              key={comment.id}
+              handleDeleteComment={handleDeleteComment}
+            />
           ))}
           <div id="observer" className="h-10"></div>
         </div>

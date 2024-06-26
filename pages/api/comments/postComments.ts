@@ -9,9 +9,9 @@ interface PostComment {
   dashboardId: number;
 }
 
-async function postComments(body: PostComment) {
+const postComments = async (body: PostComment) => {
   const res = await privateApi.post('comments', body);
   return res;
-}
+};
 
 export default postComments;
