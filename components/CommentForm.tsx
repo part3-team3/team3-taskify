@@ -9,6 +9,8 @@ const CommentForm = ({
 }) => {
   const [content, setContent] = useState<string>('');
 
+  const isButtonDisabled = content.trim() === '' ? true : false;
+
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
@@ -41,7 +43,10 @@ const CommentForm = ({
           className="h-70 w-287 resize-none rounded-6 border border-solid border-gray-30 p-12 text-12 leading-[14px] placeholder:text-12 md:h-110 md:w-420 md:p-16 md:leading-[17px] md:placeholder:text-14 xl:w-450"
         />
       </div>
-      <button className="absolute bottom-12 right-6 btn_desktop_white md:bottom-16 md:left-[323px] xl:left-[353px]">
+      <button
+        disabled={isButtonDisabled ? true : false}
+        className={`${isButtonDisabled ? 'btn_todo_modal_desktop_disabled absolute bottom-12 right-6 md:bottom-16 md:left-[323px] xl:left-[353px]' : 'absolute bottom-12 right-6 btn_desktop_white md:bottom-16 md:left-[323px] xl:left-[353px]'}`}
+      >
         입력
       </button>
     </form>

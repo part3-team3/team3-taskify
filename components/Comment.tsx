@@ -71,7 +71,7 @@ const Comment = ({
                 />
                 <button
                   onClick={handleEditSubmit}
-                  className="absolute bottom-10 right-12 btn_small_white"
+                  className="absolute bottom-10 right-12 btn_small_white md:right-8"
                 >
                   입력
                 </button>
@@ -79,7 +79,6 @@ const Comment = ({
             ) : (
               content
             )}
-            {/* {content} */}
           </div>
 
           <div className="flex gap-12 text-10 leading-[12px] text-gray-40 underline md:text-12 md:leading-[14px]">

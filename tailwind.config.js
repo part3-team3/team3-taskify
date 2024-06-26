@@ -22,7 +22,7 @@ module.exports = {
 
       maxWidth: {
         ...px0_1920,
-        '1200': '1200px', // maxWidth를 1200px로 설정
+        1200: '1200px', // maxWidth를 1200px로 설정
       },
       // 공지
       backgroundImage: {
@@ -61,6 +61,12 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       addUtilities({
+        '.input': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+        },
         // flex로 가운데 정렬시 3개 한번에 적용해줌
         '.flex-center': {
           display: 'flex',
@@ -95,7 +101,7 @@ module.exports = {
         },
         '.checkbox-custom:checked': {
           backgroundColor: '#5534DA',
-          border: "none",
+          border: 'none',
         },
         '.input': {
           border: '1px solid #D9D9D9',
@@ -358,6 +364,38 @@ module.exports = {
           backgroundColor: '#ffffff',
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
+        },
+        // 랜딩페이지 로그인 버튼
+        '.btn_landing_login': {
+          width: '235px',
+          height: '42px',
+          borderRadius: '8px',
+          backgroundColor: '#5534DA',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
+        '.btn_login_large_disabled': {
+          width: '100%',
+          height: '50px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
+        // 로그인, 회원가입 페이지 데스크탑, 테블릿 보라색(활성화) 버튼
+        '.btn_login_large_active': {
+          width: '100%',
+          height: '50px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '8px',
         },
       });
     },

@@ -78,7 +78,6 @@ const Comments = () => {
     id: number;
     newContent: string;
   }) => {
-    console.log('handlePutComment', id, newContent);
     const newCommentData = await putComment({ id, content: newContent });
 
     setComments((prevComments) =>
