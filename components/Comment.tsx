@@ -1,17 +1,39 @@
 import { Comment as CommentType } from '@/types/comments';
 import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
+import { ChangeEvent, useState } from 'react';
 
 const Comment = ({
   comment,
   handleDeleteComment,
+  handlePutComment,
 }: {
   comment: CommentType;
   handleDeleteComment: (id: number) => void;
+  handlePutComment: ({
+    id,
+    newContent,
+  }: {
+    id: number;
+    newContent: string;
+  }) => Promise<void>;
 }) => {
   const { id, content, createdAt } = comment;
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [newContent, setNewContent] = useState<string>(content);
 
-  const handleEditButton = () => {};
+  const handleEditClick = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleChangeNewContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewContent(e.target.value);
+  };
+
+  const handleEditSubmit = () => {
+    handlePutComment({ id, newContent });
+    setEditMode(false);
+  };
 
   const handleDeleteButton = () => {
     handleDeleteComment(id);
@@ -39,10 +61,29 @@ const Comment = ({
         </div>
         <div className="flex flex-col gap-8 ml-36 md:ml-44 md:gap-12">
           <div className="text-12 font-normal leading-[14px] text-black-20 md:text-14 md:leading-[17px]">
-            {content}
+            {editMode ? (
+              <div className="relative">
+                <textarea
+                  value={newContent}
+                  onChange={handleChangeNewContent}
+                  placeholder="댓글 수정하기"
+                  className="h-64 p-12 border border-solid resize-none w-246 rounded-6 border-gray-30 md:w-376 xl:w-406"
+                />
+                <button
+                  onClick={handleEditSubmit}
+                  className="absolute bottom-10 right-12 btn_small_white"
+                >
+                  입력
+                </button>
+              </div>
+            ) : (
+              content
+            )}
+            {/* {content} */}
           </div>
+
           <div className="flex gap-12 text-10 leading-[12px] text-gray-40 underline md:text-12 md:leading-[14px]">
-            <div onClick={handleEditButton} className="cursor-pointer">
+            <div onClick={handleEditClick} className="cursor-pointer">
               수정
             </div>
             <div onClick={handleDeleteButton} className="cursor-pointer">

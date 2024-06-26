@@ -1,5 +1,6 @@
 import deleteComment from '@/pages/api/comments/deleteComments';
 import { getComments } from '@/pages/api/comments/getComments';
+import putComment from '@/pages/api/comments/putComments';
 import { CommentList, Comment as CommentType } from '@/types/comments';
 import { useEffect, useState } from 'react';
 
@@ -9,11 +10,12 @@ import CommentForm from './CommentForm';
 const Comments = () => {
   const [comments, setComments] = useState<CommentType[]>([]);
   const [cursorId, setCursorId] = useState<number | null>(null); // API에서 받아온 커서 id
-  const [cursor, setCursor] = useState<number | null>(null); // 무한스크롤에 사용되는 커서
+  const [cursor, setCursor] = useState<number | null | undefined>(); // 무한스크롤에 사용되는 커서
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getCommentsData = async (cursor?: number | null) => {
+      if (null === cursor) return;
       setIsLoading(true);
       try {
         const commentsData: CommentList = await getComments(cursor);
@@ -69,6 +71,26 @@ const Comments = () => {
     setComments((prevComments) => [newComment, ...prevComments]);
   };
 
+  const handlePutComment = async ({
+    id,
+    newContent,
+  }: {
+    id: number;
+    newContent: string;
+  }) => {
+    console.log('handlePutComment', id, newContent);
+    const newCommentData = await putComment({ id, content: newContent });
+
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.id === id) {
+          return newCommentData;
+        }
+        return comment;
+      }),
+    );
+  };
+
   const handleDeleteComment = async (targetId: number) => {
     await deleteComment(targetId);
     setComments((prevComments) =>
@@ -86,6 +108,7 @@ const Comments = () => {
               comment={comment}
               key={comment.id}
               handleDeleteComment={handleDeleteComment}
+              handlePutComment={handlePutComment}
             />
           ))}
           <div id="observer" className="h-10"></div>
