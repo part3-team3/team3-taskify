@@ -9,6 +9,6 @@ export interface Dashboard {
 }
 export interface DashboardResponse {
   cursorId: number;
-  totalCount: number | null;
+  totalCount: number;
   dashboards: Dashboard[];
 }
