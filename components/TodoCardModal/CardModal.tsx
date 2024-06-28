@@ -1,4 +1,5 @@
 import useMediaQuery from '@/hooks/useMediaQuery';
+import getModalSize from '@/utils/getModalSize';
 import { useState } from 'react';
 
 import Modal from '../Modal';
@@ -14,27 +15,11 @@ const CardModal = () => {
   // const isMobile = useMediaQuery('(max-width: 767px)');
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
-
-  let modalWidth = '327px';
-  let modalHeight = '708px';
-
-  if (isInEdit) {
-    modalWidth = '327px';
-    modalHeight = '869px';
-
-    if (isTablet || isDesktop) {
-      modalWidth = '506px';
-      modalHeight = '907px';
-    }
-  } else {
-    if (isTablet) {
-      modalWidth = '680px';
-      modalHeight = '770px';
-    } else if (isDesktop) {
-      modalWidth = '730px';
-      modalHeight = '763px';
-    }
-  }
+  const { modalWidth, modalHeight } = getModalSize({
+    isInEdit,
+    isTablet,
+    isDesktop,
+  });
 
   return (
     <div className="px-20 py-40 md:px-28 md:py-32">
