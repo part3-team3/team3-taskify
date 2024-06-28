@@ -1,6 +1,5 @@
 import { Card } from '@/types/card';
 import Image from 'next/image';
-import React from 'react';
 
 const Information = ({ card }: { card: Card }) => {
   return (

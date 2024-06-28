@@ -101,7 +101,7 @@ const Comments = () => {
     <>
       <CommentForm addComment={addComment} />
       {comments.length > 0 && (
-        <div className="overflow-scroll h-150">
+        <div className="h-150 overflow-scroll">
           {comments.map((comment) => (
             <Comment
               comment={comment}
