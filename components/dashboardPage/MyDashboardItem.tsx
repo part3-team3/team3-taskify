@@ -14,7 +14,7 @@ const MyDashboardItem = ({ myDashboard }: MyDashboardItemProps) => {
   };
   return (
     <>
-      <div className="flex h-58 w-260 flex-row items-center justify-between rounded-lg border border-solid border-gray-30 p-20">
+      <div className="flex h-58 w-260 flex-row items-center justify-between rounded-lg border border-solid border-gray-30 bg-white p-20 md:h-68 md:w-247 xl:h-70 xl:w-332">
         <div className="flex flex-row items-center">
           <div
             className={`${dashboardColor[myDashboard.color]} h-8 w-8 rounded-full`}

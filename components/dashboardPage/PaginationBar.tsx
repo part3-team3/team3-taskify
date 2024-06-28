@@ -14,7 +14,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
     <>
       <div className="flex">
         <button
-          className="flex h-36 w-36 items-center justify-center rounded-l border border-solid border-gray-30"
+          className="flex h-36 w-36 items-center justify-center rounded-l border border-solid border-gray-30 bg-white"
           disabled={activePage === 1}
           onClick={() => onPageChange(activePage - 1)}
         >
@@ -23,19 +23,19 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
               <Image
                 fill
                 src="/images/icon/ic-off-arrow-left.svg"
-                alt="내가 만든 대시보드"
+                alt="이전 목록"
               />
             ) : (
               <Image
                 fill
                 src="/images/icon/ic-on-arrow-left.svg"
-                alt="내가 만든 대시보드"
+                alt="이전 목록 없음"
               />
             )}
           </div>
         </button>
         <button
-          className="flex h-36 w-36 items-center justify-center rounded-r border border-solid border-gray-30"
+          className="flex h-36 w-36 items-center justify-center rounded-r border border-solid border-gray-30 bg-white"
           disabled={activePage === totalPage}
           onClick={() => onPageChange(activePage + 1)}
         >
@@ -44,13 +44,13 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
               <Image
                 fill
                 src="/images/icon/ic-off-arrow-right.svg"
-                alt="내가 만든 대시보드"
+                alt="다음 목록"
               />
             ) : (
               <Image
                 fill
                 src="/images/icon/ic-on-arrow-right.svg"
-                alt="내가 만든 대시보드"
+                alt="다음 목록 없음"
               />
             )}
           </div>
