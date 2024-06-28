@@ -1,6 +1,4 @@
-import DashboardList from "@/components/DashboardList";
-
-
+import DashboardList from "@/components/dashboardPage/DashboardList";
 const dashboardExample: React.FC =() => {
     return(
         <>
@@ -8,4 +6,4 @@ const dashboardExample: React.FC =() => {
         </>
     );
 };
-export default dashboardExample;;
+export default dashboardExample;
