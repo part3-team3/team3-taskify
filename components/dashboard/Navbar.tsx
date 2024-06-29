@@ -1,4 +1,3 @@
-// import InviteModal from '@/components/InviteModal';
 import Modal from '@/components/Modal';
 import instance from '@/lib/axios';
 import icAdd from '@/public/images/icon/ic-add.svg';
@@ -126,11 +125,4 @@ const NavBar = () => {
 
 export default NavBar;
 
-//////////
-/* {isModalOpen && (
-        <InviteModal
-          isOpen={isModalOpen}
-          dashboardId="9765" // Replace with your actual dashboardId
-          onClose={() => setIsModalOpen(false)}
-        />
-      )} */
+
