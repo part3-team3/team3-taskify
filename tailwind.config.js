@@ -58,9 +58,8 @@ module.exports = {
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
         '.btn_login_large_disabled': {
-          width: '520px',
+          width: '100%',
           height: '50px',
-          padding: '14px 236px',
           fontSize: '18px',
           fontWeight: '500',
           lineHeight: '22px',
@@ -70,9 +69,8 @@ module.exports = {
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 보라색(활성화) 버튼
         '.btn_login_large_active': {
-          width: '520px',
+          width: '100%',
           height: '50px',
-          padding: '14px 236px',
           fontSize: '18px',
           fontWeight: '500',
           lineHeight: '22px',
@@ -198,7 +196,7 @@ module.exports = {
         // 대시보드 수정 -> 변경 버튼(m)
         '.btn_small_purple': {
           width: '84px',
-          height: '28px',
+          height: '32px',
           padding: '7px 29px',
           fontSize: '12px',
           fontWeight: '500',
@@ -274,6 +272,40 @@ module.exports = {
           backgroundColor: '#ffffff',
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
+        },
+        '.input': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+        },
+        // 랜딩페이지 로그인 버튼
+        '.btn_landing_login': {
+          width: '235px',
+          height: '42px',
+          borderRadius: '8px',
+          backgroundColor: '#5534DA',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        // 회색 버튼
+        // 할일 카드 모달 -> 댓글 입력 버튼(d)
+        '.btn_todo_modal_desktop_disabled': {
+          width: '85px',
+          height: '32px',
+          padding: '7px 29px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#D9D9D9',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+        },
+        // 회색 테두리 스타일링
+        '.border-1px-solid-gray-30': {
+          border: '1px solid #D9D9D9',
         },
       });
     },
