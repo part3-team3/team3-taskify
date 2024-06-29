@@ -1,4 +1,4 @@
-const getModalSize = ({
+const getCardModalSize = ({
   isInEdit,
   isTablet,
   isDesktop,
@@ -34,4 +34,4 @@ const getModalSize = ({
   return { modalWidth, modalHeight };
 };
 
-export default getModalSize;
+export default getCardModalSize;

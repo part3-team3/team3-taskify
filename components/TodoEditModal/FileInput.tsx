@@ -1,18 +1,30 @@
+import FormData from '@/types/EditModalFormData';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
-const FileInput = () => {
+const FileInput = ({
+  setFormData,
+}: {
+  setFormData: Dispatch<SetStateAction<FormData>>;
+}) => {
+  const [fileValue, setFileValue] = useState<string>('');
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!e.target.files) {
+      return;
     }
+    setFileValue(e.target.value);
+    const selectedFile = e.target.files?.[0];
+    const previewImage = URL.createObjectURL(selectedFile);
+    setPreview(previewImage);
+
+    setFormData((prevForm) => {
+      return {
+        ...prevForm,
+        image: previewImage,
+      };
+    });
   };
 
   return (
@@ -24,12 +36,13 @@ const FileInput = () => {
           htmlFor="fileInput"
         >
           {preview ? (
-            <div className="relative">
-              <img
+            <div className="relative h-58 w-58 md:h-76 md:w-76">
+              <Image
                 src={preview as string}
-                className="h-58 w-58 rounded-6 object-cover md:h-76 md:w-76"
+                className="rounded-6 object-cover"
                 alt="미리보기"
-              ></img>
+                fill
+              />
               <Image
                 src="/images/icon/ic-pencil.svg"
                 className="absolute"
@@ -51,6 +64,7 @@ const FileInput = () => {
         <input
           onChange={handleFileChange}
           className="hidden"
+          value={fileValue}
           id="fileInput"
           accept="image/*"
           type="file"

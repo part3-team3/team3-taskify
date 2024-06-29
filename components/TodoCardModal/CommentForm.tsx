@@ -19,9 +19,9 @@ const CommentForm = ({
     e.preventDefault();
     const commentData = await postComments({
       content: content,
-      cardId: 8667,
-      columnId: 32815,
-      dashboardId: 9728,
+      cardId: 8736,
+      columnId: 33798,
+      dashboardId: 10039,
     });
 
     if (commentData) {
@@ -45,7 +45,7 @@ const CommentForm = ({
       </div>
       <button
         disabled={isButtonDisabled ? true : false}
-        className={`${isButtonDisabled ? 'btn_todo_modal_desktop_disabled absolute bottom-12 right-6 md:bottom-16 md:left-[323px] xl:left-[353px]' : 'absolute bottom-12 right-6 btn_desktop_white md:bottom-16 md:left-[323px] xl:left-[353px]'}`}
+        className={`${isButtonDisabled ? 'absolute bottom-12 right-6 btn_todo_modal_desktop_disabled md:bottom-16 md:left-[323px] xl:left-[353px]' : 'absolute bottom-12 right-6 btn_desktop_white md:bottom-16 md:left-[323px] xl:left-[353px]'}`}
       >
         입력
       </button>

@@ -1,6 +1,8 @@
 import useMediaQuery from '@/hooks/useMediaQuery';
-import getModalSize from '@/utils/getModalSize';
-import { useState } from 'react';
+import { getCard } from '@/pages/api/getCard';
+import { Card } from '@/types/card';
+import getCardModalSize from '@/utils/getCardModalSize';
+import { useEffect, useState } from 'react';
 
 import Modal from '../Modal';
 import TodoEditModal from '../todoEditModal/TodoEditModal';
@@ -9,17 +11,26 @@ import TodoCardModal from './TodoCardModal';
 const CardModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInEdit, setIsInEdit] = useState(false);
+  const [card, setCard] = useState<Card>();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // const isMobile = useMediaQuery('(max-width: 767px)');
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
-  const { modalWidth, modalHeight } = getModalSize({
+  const { modalWidth, modalHeight } = getCardModalSize({
     isInEdit,
     isTablet,
     isDesktop,
   });
+
+  useEffect(() => {
+    const getTodoCard = async () => {
+      const cardData: Card = await getCard();
+      setCard(cardData);
+    };
+    getTodoCard();
+  }, []);
 
   return (
     <div className="px-20 py-40 md:px-28 md:py-32">
@@ -36,9 +47,9 @@ const CardModal = () => {
         onClose={closeModal}
       >
         {isInEdit ? (
-          <TodoEditModal />
+          <TodoEditModal card={card} />
         ) : (
-          <TodoCardModal setIsInEdit={setIsInEdit} />
+          <TodoCardModal card={card} setIsInEdit={setIsInEdit} />
         )}
       </Modal>
     </div>

@@ -1,21 +1,32 @@
+import FormData from '@/types/EditModalFormData';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import SelectOption from './SelectOption';
+
+interface SelectProps {
+  type: 'status' | 'profile';
+  options: {
+    id: number;
+    title?: string;
+    nickname?: string;
+    profileImageUrl?: string;
+  }[];
+  children: string;
+  placeholder: string;
+  setData: Dispatch<SetStateAction<FormData>>;
+}
 
 const Select = ({
   type,
   options,
   children,
+  setData,
   placeholder,
-}: {
-  type: string;
-  options: string[];
-  children: string;
-  placeholder: string;
-}) => {
+}: SelectProps) => {
   const [selectMode, setSelectMode] = useState<boolean>(false);
-  const [select, setSelect] = useState<string>(placeholder);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedTags, setselectedTags] = useState<string | null>(null);
 
   const handleDropdownVisible = () => {
     setSelectMode(!selectMode);
@@ -32,7 +43,7 @@ const Select = ({
             onClick={handleDropdownVisible}
             className="relative flex h-42 w-287 items-center rounded-6 px-16 py-13 text-14 leading-[17px] text-gray-40 border-1px-solid-gray-30 md:h-48 md:w-217"
           >
-            {select}
+            {selectedUser !== null ? selectedUser : placeholder}
           </div>
           <div className="relative">
             <Image
@@ -47,9 +58,15 @@ const Select = ({
       </div>
       {selectMode && (
         <div className="absolute z-10 mt-2 flex h-max w-287 flex-col gap-13 rounded-6 bg-white px-8 py-13 border-1px-solid-gray-30 md:w-217">
-          {options.map((option) => (
+          {options?.map((option) => (
             <div key={option}>
-              <SelectOption type={type} setSelect={setSelect} option={option} />
+              <SelectOption
+                type={type}
+                setData={setData}
+                setSelectedUser={setSelectedUser}
+                setselectedTags={setselectedTags}
+                option={option}
+              />
             </div>
           ))}
         </div>

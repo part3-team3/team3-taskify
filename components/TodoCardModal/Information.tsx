@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Information = ({ card }: { card: Card }) => {
   return (
     <div>
-      <div className="flex h-64 pt-12 pb-10 pl-16 mt-16 border border-solid w-287 gap-62 rounded-8 border-gray-30 pr-50 md:h-155 md:w-180 md:flex-col md:gap-20 md:p-16 xl:w-200">
+      <div className="mt-16 flex h-64 w-287 gap-32 rounded-8 border border-solid border-gray-30 pb-10 pl-16 pr-50 pt-12 md:h-155 md:w-180 md:flex-col md:gap-20 md:p-16 xl:w-200">
         <div className="flex flex-col gap-4">
           <div className="text-10 font-semibold leading-[12px] md:text-12 md:leading-[20px]">
             담당자

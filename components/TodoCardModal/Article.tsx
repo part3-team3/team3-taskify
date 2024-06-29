@@ -5,7 +5,7 @@ import React from 'react';
 const Article = ({ card }: { card: Card }) => {
   return (
     <div>
-      <div className="py-16">
+      <div className="flex gap-6 py-16">
         {card.tags.map((tag: string) => (
           <div
             key={tag}
@@ -15,12 +15,12 @@ const Article = ({ card }: { card: Card }) => {
           </div>
         ))}
       </div>
-      <div className="text-12 font-normal leading-[22px] md:text-14 md:leading-[24px]">
+      <div className="whitespace-normal text-12 font-normal leading-[22px] md:text-14 md:leading-[24px]">
         {card.description}
       </div>
       <div className="relative mb-19 mt-16 h-168 w-287 md:h-[245px] md:w-[420px] xl:h-[263px] xl:w-[450px]">
         <Image
-          className="object-cover rounded-6"
+          className="rounded-6 object-cover"
           src={card.imageUrl}
           alt="카드 이미지"
           fill
