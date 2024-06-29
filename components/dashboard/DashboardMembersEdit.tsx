@@ -1,15 +1,5 @@
-// import {useState, useEffect} from React;
-// import instance from "@/lib/axios";
 
 const DashboardMembersEdit = () => {
-  // const [pages,setPages] = useState('');
-  // const [currentPage, setCurrentPage] = useState('');
-
-  // useEffect(FetchData) = () => {
-  //   const res = instance.get('')
-  //   FetchData,[]
-  // };
-
   return (
     <div className="px-20">
       <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
