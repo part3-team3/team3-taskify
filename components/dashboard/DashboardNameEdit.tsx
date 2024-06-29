@@ -8,9 +8,7 @@ import icDotPurple from '@/public/images/icon/ic-dot-purple.svg';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-// interface DashboardNameEditProps {
-//   dashboardId: string;
-// }
+
 const DashboardNameEdit = () => {
   const [title, setTitle] = useState('');
   const [color, setColor] = useState('');
@@ -56,6 +54,7 @@ const DashboardNameEdit = () => {
       return;
     }
 
+    //이름,컬러 수정정 요청
     const colorCode = getColorCode(color);
     const token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mzk5OCwidGVhbUlkIjoiNi0zIiwiaWF0IjoxNzE5NDgyMzk4LCJpc3MiOiJzcC10YXNraWZ5In0.duwqLvblOuUU7QTXyx1oKc0N14yhQL4qwvLUZcPG-zk'; // 로그인 후 받은 토큰
@@ -80,6 +79,8 @@ const DashboardNameEdit = () => {
       console.error('Error updating dashboard:', error);
     }
   };
+
+  //선택한 컬러 코드 가져오기
   const getColorCode = (colorName: string): string => {
     switch (colorName) {
       case 'green':
@@ -96,6 +97,8 @@ const DashboardNameEdit = () => {
         return ''; // Handle default case or throw error
     }
   };
+
+  
   const getColorName = (colorCode: string): string => {
     switch (colorCode) {
       case '#7AC555':
@@ -118,7 +121,6 @@ const DashboardNameEdit = () => {
 
   return (
     <div className="px-20">
-      {/* <form onSubmit={handleSubmit}> */}
       <div className="flex h-[256px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
         <div className="mb-30 flex items-center justify-between">
           <div className="text-xl font-bold">{title}</div>
