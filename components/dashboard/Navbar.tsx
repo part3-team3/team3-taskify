@@ -99,6 +99,7 @@ const NavBar = () => {
         </Link>
       </div>
 
+      // 초대하기 모달 
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
