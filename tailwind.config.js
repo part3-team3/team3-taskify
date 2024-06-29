@@ -16,7 +16,18 @@ module.exports = {
       fontSize: px0_100,
       spacing: px0_200,
       width: px0_1920,
+      height: px0_1920,
+      // 공지
+      padding: px0_1920,
 
+      maxWidth: {
+        ...px0_1920,
+        '1200': '1200px', // maxWidth를 1200px로 설정
+      },
+      // 공지
+      backgroundImage: {
+        'check-icon': "url('/images/icon/ic-check.svg')",
+      },
       colors: {
         red: '#D6173A',
         green: '#7AC555',
@@ -54,31 +65,90 @@ module.exports = {
         '.flex-center': {
           display: 'flex',
           justifyContent: 'center',
-          alineItems: 'center',
+          alignItems: 'center',
+        },
+        // 랜딩페이지 로그인 버튼
+        '.btn_landing_login': {
+          width: '235px',
+          height: '42px',
+          borderRadius: '8px',
+          backgroundColor: '#5534DA',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        // 공지
+        '.checkbox-custom': {
+          appearance: 'none',
+          backgroundColor: 'white',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+          width: '20px',
+          height: '20px',
+          cursor: 'pointer',
+          flexShrink: 0,
+          marginTop: '1px',
+          outline: 'none',
+        },
+        '.checkbox-custom:focus': {
+          border: '1px solid #5534DA',
+        },
+        '.checkbox-custom:checked': {
+          backgroundColor: '#5534DA',
+          border: "none",
+        },
+        '.input': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+          outline: 'none',
+        },
+        '.errorInput': {
+          border: '1px solid #D6173A',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+          outline: 'none',
+        },
+        '.input:focus': {
+          border: '1px solid #5534DA',
+        },
+        // 공지
+        // 회색 테두리 스타일링
+        '.border-1px-solid-gray-30': {
+          border: '1px solid #D9D9D9',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
         '.btn_login_large_disabled': {
-          width: '520px',
+          width: '100%',
           height: '50px',
-          padding: '14px 236px',
           fontSize: '18px',
           fontWeight: '500',
           lineHeight: '22px',
           color: '#ffffff',
           backgroundColor: '#9FA6B2',
           borderRadius: '8px',
+          // 공지
+          cursor: 'default',
+          outline: 'none',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 보라색(활성화) 버튼
         '.btn_login_large_active': {
-          width: '520px',
+          width: '100%',
           height: '50px',
-          padding: '14px 236px',
           fontSize: '18px',
           fontWeight: '500',
           lineHeight: '22px',
           color: '#ffffff',
           backgroundColor: '#5534DA',
           borderRadius: '8px',
+          cursor: 'pointer',
+          outline: 'none',
+        },
+        // 공지
+        '.btn_login_large_active:hover': {
+          // backgroundColor: 'black',
         },
         // 로그인, 회원가입 페이지 모바일 회색(비활성화) 버튼
         '.btn_login_small_disabled': {
@@ -198,7 +268,7 @@ module.exports = {
         // 대시보드 수정 -> 변경 버튼(m)
         '.btn_small_purple': {
           width: '84px',
-          height: '28px',
+          height: '32px',
           padding: '7px 29px',
           fontSize: '12px',
           fontWeight: '500',
@@ -271,6 +341,20 @@ module.exports = {
           fontWeight: '500',
           lineHeight: '14px',
           color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+        },
+        // 회색 버튼
+        // 할일 카드 모달 -> 댓글 입력 버튼(d)
+        '.btn_todo_modal_desktop_disabled': {
+          width: '85px',
+          height: '32px',
+          padding: '7px 29px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#D9D9D9',
           backgroundColor: '#ffffff',
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
