@@ -34,13 +34,7 @@ const DashboardInviteList = () => {
     };
     fetchData();
   }, []);
-  // const [pages,setPages] = useState('');
-  // const [currentPage, setCurrentPage] = useState('');
-
-  // useEffect(FetchData) = () => {
-  //   const res = instance.get('')
-  //   FetchData,[]
-  // };
+ 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>{error}</div>;
 
@@ -58,9 +52,7 @@ const DashboardInviteList = () => {
           </div>
         </button>
 
-        {/* <div className="text-sm">
-          {pages}페이지 중{currentPage}
-        </div> */}
+    
       </div>
       <p className="font-sm text-[1.125rem] text-[#9FA6B2]">이메일</p>
       <div>{email}</div>
