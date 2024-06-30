@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pretendard:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -27,4 +28,8 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.teskify {
+  font-family: 'Montserrat', sans-serif;
+  Color: #5534DA;
 }
