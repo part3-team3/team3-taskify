@@ -54,7 +54,7 @@ module.exports = {
         '.flex-center': {
           display: 'flex',
           justifyContent: 'center',
-          alineItems: 'center',
+          alignItems: 'center',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
         '.btn_login_large_disabled': {

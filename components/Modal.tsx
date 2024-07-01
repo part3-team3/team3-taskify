@@ -9,13 +9,7 @@ interface ModalProps {
   children: ReactNode;
 }
 
-const Modal = ({
-  isOpen,
-  onClose,
-  width = '540px',
-  height = '276px',
-  children,
-}: ModalProps) => {
+const Modal = ({ isOpen, onClose, width, height, children }: ModalProps) => {
   if (!isOpen) return null;
 
   const handleOverlayClick = () => {
@@ -28,7 +22,7 @@ const Modal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+      className="bg-black fixed inset-0 z-50 flex items-center justify-center bg-opacity-70"
       onClick={handleOverlayClick}
     >
       <div
