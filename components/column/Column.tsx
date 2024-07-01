@@ -1,6 +1,6 @@
 // Assuming getColumn is an async function that fetches the JSON data
 // import ColumnCard from '@/components/ColumnCard';
-import AddColumnModal from '@/components/column/AddColumnModal';
+import EditColumnModal from '@/components/column/EditColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
 import { getColumn } from '@/pages/api/column/getColumn';
@@ -101,14 +101,14 @@ const Column: React.FC = () => {
               className="cursor-pointer"
             />
             {showAddColumnStates[column.id] && (
-              <AddColumnModal
+              <EditColumnModal
                 columnId={column.id}
                 handleDeleteColumn={handleDeleteColumn}
               />
             )}
             <button
               onClick={() => addTodoModal(index)}
-              className="bg-blue-500 border-1px-solid-gray-30 flex h-40 w-full items-center justify-center rounded bg-white"
+              className="bg-blue-500 flex h-40 w-full items-center justify-center rounded bg-white border-1px-solid-gray-30"
             >
               <Image
                 src="/images/icon/ic-color-add.svg"
@@ -122,7 +122,7 @@ const Column: React.FC = () => {
         <button
           onClick={handleAddColumn}
           disabled={columns.length >= 10}
-          className="border-1px-solid-gray-30 mb-4 ml-20 mt-68 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black lg:w-[354px]"
+          className="mb-4 ml-20 mt-68 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black border-1px-solid-gray-30 lg:w-[354px]"
         >
           <div className="font-pretendard font-bold">새로운 컬럼 추가하기</div>
           <Image
