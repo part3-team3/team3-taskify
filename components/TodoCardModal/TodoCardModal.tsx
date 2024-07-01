@@ -1,8 +1,7 @@
 import useMediaQuery from '@/hooks/useMediaQuery';
-// import { getCard } from '@/pages/api/getCard';
 import { Card } from '@/types/card';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import Article from './Article';
 import Comments from './Comments';
@@ -16,27 +15,15 @@ const TodoModal = ({
   card: Card;
   setIsInEdit: Dispatch<SetStateAction<boolean>>;
 }) => {
-  // const [card, setCard] = useState<Card>();
   const [kebabButtonVisible, setKebabButtonVisible] = useState<boolean>(false);
 
   const isMobile = useMediaQuery('(max-width: 767px)');
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
 
-  // useEffect(() => {
-  //   const getTodoCard = async () => {
-  //     const cardData: Card = await getCard();
-  //     setCard(cardData);
-  //   };
-  //   getTodoCard();
-  // }, []);
-
   const handleMenuOpen = () => {
     setKebabButtonVisible(!kebabButtonVisible);
   };
-
-  // const handleEditSelect = () => {};
-  // const handleDeleteButton = () => {};
 
   return (
     card && (

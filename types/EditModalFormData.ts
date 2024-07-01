@@ -1,4 +1,4 @@
-export default interface FormData {
+export default interface TodoFormData {
   columnId: number;
   assigneeUserId: number;
   title: string;

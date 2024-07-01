@@ -1,4 +1,5 @@
-import getColumns from '@/pages/api/TodoEditModal/getColumns';
+import getColumns from '@/pages/api/TodoModalForm/getColumns';
+import TodoFormData from '@/types/EditModalFormData';
 import Column from '@/types/column';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -15,9 +16,10 @@ const Option = ({
   const handleOptionClick = () => {
     handleSelectOption?.(column);
   };
+  const addLeftMargin = isSelected === false;
 
   return (
-    <div className="flex" onClick={handleOptionClick}>
+    <div className="flex gap-6" onClick={handleOptionClick}>
       {isSelected && (
         <Image
           width={22}
@@ -26,7 +28,9 @@ const Option = ({
           alt="드롭다운 체크 아이콘"
         />
       )}
-      <div className="flex h-max w-max gap-6 rounded-11 bg-violet-10 px-8 py-4 text-12 leading-[14px] text-violet-20">
+      <div
+        className={`flex h-max w-max gap-6 rounded-11 bg-violet-10 px-8 py-4 text-12 leading-[14px] text-violet-20 ${addLeftMargin ? 'ml-28' : ''}`}
+      >
         <Image
           width={6}
           height={6}
@@ -46,7 +50,7 @@ const StatusDropdown = ({
 }: {
   label: string;
   columnId: number;
-  setFormData: Dispatch<SetStateAction<FormData>>;
+  setFormData: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [columnsData, setColumnsData] = useState<Column[]>([]);

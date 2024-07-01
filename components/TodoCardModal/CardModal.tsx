@@ -1,12 +1,12 @@
+import TodoCardModal from '@/components/TodoCardModal/TodoCardModal';
+import TodoEditModal from '@/components/TodoModalForm/TodoEditModal';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import { getCard } from '@/pages/api/getCard';
+import { getCard } from '@/pages/api/common/getCard';
 import { Card } from '@/types/card';
 import getCardModalSize from '@/utils/getCardModalSize';
 import { useEffect, useState } from 'react';
 
-import Modal from '../Modal';
-import TodoEditModal from '../todoEditModal/TodoEditModal';
-import TodoCardModal from './TodoCardModal';
+import Modal from '../common/Modal';
 
 const CardModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +30,9 @@ const CardModal = () => {
       setCard(cardData);
     };
     getTodoCard();
-  }, []);
+  }, [isInEdit]);
+
+  if (!card) return null;
 
   return (
     <div className="px-20 py-40 md:px-28 md:py-32">
@@ -47,7 +49,7 @@ const CardModal = () => {
         onClose={closeModal}
       >
         {isInEdit ? (
-          <TodoEditModal card={card} />
+          <TodoEditModal card={card} setIsInEdit={setIsInEdit} />
         ) : (
           <TodoCardModal card={card} setIsInEdit={setIsInEdit} />
         )}

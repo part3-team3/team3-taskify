@@ -1,7 +1,5 @@
 import { privateApi } from '@/lib/axios';
 
-// const TEAM_ID = '6-3';
-
 interface PostComment {
   content: string;
   cardId: number;

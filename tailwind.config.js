@@ -31,10 +31,24 @@ module.exports = {
       colors: {
         red: '#D6173A',
         green: '#7AC555',
+        green10: '#E7F7DB',
+        green20: '#86D549',
+
         purple: '#760DDE',
         orange: '#FFA500',
+
         pink: '#E876EA',
+        pink10: '#F7DBF0',
+        pink20: '#D549B6',
+
         blue: '#76A5EA',
+        blue10: '#DBE6F7',
+        blue20: '#4981D5',
+
+        yellow: {
+          10: '#F9EEE3',
+          20: '#D58D49',
+        },
 
         gray: {
           10: '#FAFAFA',

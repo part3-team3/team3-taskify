@@ -2,17 +2,14 @@ import { Card } from '@/types/card';
 import Image from 'next/image';
 import React from 'react';
 
+import Tag from '../common/Tag';
+
 const Article = ({ card }: { card: Card }) => {
   return (
     <div>
       <div className="flex gap-6 py-16">
-        {card.tags.map((tag: string) => (
-          <div
-            key={tag}
-            className="h-max w-max rounded-4 bg-violet-10 px-6 py-4 text-10 leading-[12px] text-violet-20"
-          >
-            {tag}
-          </div>
+        {card.tags.map((tag: string, index) => (
+          <Tag index={index} title={tag} key={tag} />
         ))}
       </div>
       <div className="whitespace-normal text-12 font-normal leading-[22px] md:text-14 md:leading-[24px]">
