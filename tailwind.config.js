@@ -16,14 +16,39 @@ module.exports = {
       fontSize: px0_100,
       spacing: px0_200,
       width: px0_1920,
+      height: px0_1920,
+      // 공지
+      padding: px0_1920,
 
+      maxWidth: {
+        ...px0_1920,
+        1200: '1200px', // maxWidth를 1200px로 설정
+      },
+      // 공지
+      backgroundImage: {
+        'check-icon': "url('/images/icon/ic-check.svg')",
+      },
       colors: {
         red: '#D6173A',
         green: '#7AC555',
+        green10: '#E7F7DB',
+        green20: '#86D549',
+
         purple: '#760DDE',
         orange: '#FFA500',
+
         pink: '#E876EA',
+        pink10: '#F7DBF0',
+        pink20: '#D549B6',
+
         blue: '#76A5EA',
+        blue10: '#DBE6F7',
+        blue20: '#4981D5',
+
+        yellow: {
+          10: '#F9EEE3',
+          20: '#D58D49',
+        },
 
         gray: {
           10: '#FAFAFA',
@@ -50,11 +75,73 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       addUtilities({
+        '.input': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+        },
+        // 회색 테두리 스타일링
+        '.border-1px-solid-gray-30': {
+          border: '1px solid #D9D9D9',
+        },
         // flex로 가운데 정렬시 3개 한번에 적용해줌
         '.flex-center': {
           display: 'flex',
           justifyContent: 'center',
-          alineItems: 'center',
+          alignItems: 'center',
+        },
+        // 랜딩페이지 로그인 버튼
+        '.btn_landing_login': {
+          width: '235px',
+          height: '42px',
+          borderRadius: '8px',
+          backgroundColor: '#5534DA',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        // 공지
+        '.checkbox-custom': {
+          appearance: 'none',
+          backgroundColor: 'white',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
+          width: '20px',
+          height: '20px',
+          cursor: 'pointer',
+          flexShrink: 0,
+          marginTop: '1px',
+          outline: 'none',
+        },
+        '.checkbox-custom:focus': {
+          border: '1px solid #5534DA',
+        },
+        '.checkbox-custom:checked': {
+          backgroundColor: '#5534DA',
+          border: 'none',
+        },
+        '.input': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+          outline: 'none',
+        },
+        '.errorInput': {
+          border: '1px solid #D6173A',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+          outline: 'none',
+        },
+        '.input:focus': {
+          border: '1px solid #5534DA',
+        },
+        // 공지
+        // 회색 테두리 스타일링
+        '.border-1px-solid-gray-30': {
+          border: '1px solid #D9D9D9',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
         '.btn_login_large_disabled': {
@@ -66,6 +153,9 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#9FA6B2',
           borderRadius: '8px',
+          // 공지
+          cursor: 'default',
+          outline: 'none',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 보라색(활성화) 버튼
         '.btn_login_large_active': {
@@ -77,6 +167,12 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#5534DA',
           borderRadius: '8px',
+          cursor: 'pointer',
+          outline: 'none',
+        },
+        // 공지
+        '.btn_login_large_active:hover': {
+          // backgroundColor: 'black',
         },
         // 로그인, 회원가입 페이지 모바일 회색(비활성화) 버튼
         '.btn_login_small_disabled': {
@@ -273,6 +369,7 @@ module.exports = {
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
         },
+
         '.input': {
           border: '1px solid #D9D9D9',
           borderRadius: '8px',
@@ -302,6 +399,38 @@ module.exports = {
           backgroundColor: '#ffffff',
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
+        },
+        // 랜딩페이지 로그인 버튼
+        '.btn_landing_login': {
+          width: '235px',
+          height: '42px',
+          borderRadius: '8px',
+          backgroundColor: '#5534DA',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
+        '.btn_login_large_disabled': {
+          width: '100%',
+          height: '50px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
+        // 로그인, 회원가입 페이지 데스크탑, 테블릿 보라색(활성화) 버튼
+        '.btn_login_large_active': {
+          width: '100%',
+          height: '50px',
+          fontSize: '18px',
+          fontWeight: '500',
+          lineHeight: '22px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '8px',
         },
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {

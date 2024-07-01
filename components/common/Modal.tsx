@@ -9,13 +9,7 @@ interface ModalProps {
   children: ReactNode;
 }
 
-const Modal = ({
-  isOpen,
-  onClose,
-  width = '540px',
-  height = '276px',
-  children,
-}: ModalProps) => {
+const Modal = ({ isOpen, onClose, width, height, children }: ModalProps) => {
   if (!isOpen) return null;
 
   const handleOverlayClick = () => {
@@ -33,9 +27,7 @@ const Modal = ({
     >
       <div
         style={{ width, height }}
-        className={
-          'whitespace-nowrap rounded-lg bg-white pb-28 pl-28 pr-28 pt-32'
-        }
+        className={'whitespace-nowrap rounded-lg bg-white px-20 py-28 md:px-28'}
         onClick={handleContentClick}
       >
         {children}
