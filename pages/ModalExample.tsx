@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Modal from '../components/Modal';
+import Modal from '../components/common/Modal';
 
 const ModalTest: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
