@@ -1,9 +1,12 @@
-import TodoModal from '@/components/TodoModal';
+import LandingPage from './LandingPage';
+
+
+
 
 export default function Home() {
   return (
     <>
-      <TodoModal />
+      <LandingPage />
     </>
   );
 }
