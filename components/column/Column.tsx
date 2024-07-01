@@ -1,4 +1,5 @@
 // Assuming getColumn is an async function that fetches the JSON data
+// import ColumnCard from '@/components/ColumnCard';
 import AddColumnModal from '@/components/column/AddColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
@@ -15,23 +16,15 @@ interface Column {
   updatedAt: string;
 }
 
-const dashboardId = 9872; // 대시보드아이디 정하기
-// const columnId = 33263; // 컬럼아이디 정하기
+const dashboardId = 9728;
 
 const Column: React.FC = () => {
   const [columns, setColumns] = useState<Column[]>([]);
-  // const [showAddColumn, setShowAddColumn] = useState(false);
   // 각 컬럼의 showAddColumn 상태를 관리하는 객체 상태 초기화
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
     [key: number]: boolean;
   }>(columns.reduce((acc, column) => ({ ...acc, [column.id]: false }), {}));
-  // 클릭 이벤트 핸들러
-  // const toggleShowAddColumn = (columnId: number) => {
-  //   setShowAddColumnStates((prev) => ({
-  //     ...prev,
-  //     [columnId]: !prev[columnId],
-  //   }));
-  // };
+
   const toggleShowAddColumn = (columnId: number) => {
     // 현재 클릭된 컬럼 ID를 제외하고 모든 컬럼의 모달 표시 상태를 false로 설정
     const updatedStates = Object.keys(showAddColumnStates).reduce(
@@ -88,13 +81,6 @@ const Column: React.FC = () => {
 
   return (
     <>
-      <Image
-        className="ml-auto flex"
-        src="/images/logo/gom.png"
-        width={38}
-        height={38}
-        alt="a bear avatar"
-      />
       <div className="flex flex-wrap bg-gray-10 lg:mx-[30px] lg:h-[1010px] lg:flex-nowrap lg:overflow-x-auto">
         {columns.map((column, index) => (
           <div
@@ -136,7 +122,7 @@ const Column: React.FC = () => {
         <button
           onClick={handleAddColumn}
           disabled={columns.length >= 10}
-          className="border-1px-solid-gray-30 mb-4 ml-20 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black lg:w-[354px]"
+          className="border-1px-solid-gray-30 mb-4 ml-20 mt-68 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black lg:w-[354px]"
         >
           <div className="font-pretendard font-bold">새로운 컬럼 추가하기</div>
           <Image
@@ -146,6 +132,7 @@ const Column: React.FC = () => {
             alt="button to add a column"
           />
         </button>
+        {/* <ColumnCard /> */}
       </div>
     </>
   );
