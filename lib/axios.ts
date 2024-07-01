@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API;
+const TOKEN = process.env.NEXT_PUBLIC_TOKEN;
 
-const instance = axios.create({
+export const privateApi = axios.create({
   baseURL: BASE_URL,
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
 });
-
-export default instance;

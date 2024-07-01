@@ -1,6 +1,5 @@
-// import InviteModal from '@/components/InviteModal';
 import Modal from '@/components/Modal';
-import instance from '@/lib/axios';
+import { privateApi } from '@/lib/axios';
 import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
@@ -21,14 +20,8 @@ const NavBar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mzk5OCwidGVhbUlkIjoiNi0zIiwiaWF0IjoxNzE5NDgyMzk4LCJpc3MiOiJzcC10YXNraWZ5In0.duwqLvblOuUU7QTXyx1oKc0N14yhQL4qwvLUZcPG-zk'; // 로그인 후 받은 토큰
       try {
-        const response = await instance.get(`dashboards/9765`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await privateApi.get(`dashboards/9765`);
         // console.log('API response:', response.data.title);
         setTitle(response.data.title);
         setCreatedByMe(response.data.createdByMe);
@@ -42,14 +35,8 @@ const NavBar = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mzk5OCwidGVhbUlkIjoiNi0zIiwiaWF0IjoxNzE5NDgyMzk4LCJpc3MiOiJzcC10YXNraWZ5In0.duwqLvblOuUU7QTXyx1oKc0N14yhQL4qwvLUZcPG-zk'; // 로그인 후 받은 토큰
       try {
-        const res = await instance.get(`/users/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await privateApi.get(`/users/me`);
         setNickname(res.data.nickname);
         // console.log('API response:', res.data.nickname);
         setProfile(res.data.profileImageUrl);
@@ -124,12 +111,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-//////////
-/* {isModalOpen && (
-        <InviteModal
-          isOpen={isModalOpen}
-          dashboardId="9765" // Replace with your actual dashboardId
-          onClose={() => setIsModalOpen(false)}
-        />
-      )} */
