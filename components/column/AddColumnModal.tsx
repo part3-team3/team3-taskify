@@ -1,7 +1,15 @@
 import Modal from '@/components/Modal';
 import React, { useEffect, useState } from 'react';
 
-const AddColumnModal = () => {
+interface AddColumnModalProps {
+  columnId: number;
+  handleDeleteColumn: (columnId: number) => Promise<void>;
+}
+
+const AddColumnModal: React.FC<AddColumnModalProps> = ({
+  handleDeleteColumn,
+  columnId,
+}) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -20,12 +28,15 @@ const AddColumnModal = () => {
           <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
           <p className="mb-10 h-21">이름</p>
           <input
-            className="mb-28 rounded border-1px-solid-gray-30"
+            className="border-1px-solid-gray-30 mb-28 rounded"
             placeholder="컬럼 제목을 입력해주세요"
           />
           <div className="flex justify-between">
             <button
-              onClick={() => setIsVisible(false)}
+              onClick={() => {
+                setIsVisible(false);
+                handleDeleteColumn(columnId);
+              }}
               className="text-blue-600 hover:text-blue-800 visited:text-purple-600 underline"
             >
               삭제하기
