@@ -1,4 +1,4 @@
-import Modal from '@/components/Modal';
+import Modal from '@/components/common/Modal';
 import { privateApi } from '@/lib/axios';
 import icAddWhite from '@/public/images/icon/ic-add-white.svg';
 import Image from 'next/image';

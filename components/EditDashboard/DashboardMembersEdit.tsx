@@ -1,6 +1,6 @@
 // import instance from "@/lib/axios";
 import { privateApi } from '@/lib/axios';
-import icOffArrowLeft from '@/public/images/icon/ic-off-arrow-left.svg';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const DashboardMembersEdit = () => {
@@ -9,6 +9,7 @@ const DashboardMembersEdit = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const size = 4;
 
   useEffect(() => {
@@ -54,6 +55,9 @@ const DashboardMembersEdit = () => {
       <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
         <div className="flex justify-between">
           <div className="mb-30 text-xl font-bold">구성원</div>
+          <div>
+            {totalPage}페이지 중 {page}
+          </div>
           <button onClick={handlePreviousPage} disabled={page === 1}>
             이전
           </button>

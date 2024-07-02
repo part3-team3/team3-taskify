@@ -1,4 +1,4 @@
-import PaginationBar from '@/components/dashboardPage/PaginationBar';
+import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import { getDashboard } from '@/pages/api/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
@@ -35,7 +35,7 @@ const SideBar = () => {
       <div className="relative mb-39 mt-20 h-28 w-24 md:hidden">
         <Image fill src="/images/logo/nav-logo-sm.png" alt="taskify 로고" />
       </div>
-      <div className="relative mb-60 mt-20 hidden h-34 w-109 md:block xl:h-34 w-109">
+      <div className="relative mb-60 mt-20 hidden h-34 w-109 md:block xl:h-34">
         <Image fill src="/images/logo/nav-logo-xl.png" alt="taskify 로고" />
       </div>
 
@@ -53,13 +53,16 @@ const SideBar = () => {
         {allDashboardList &&
           allDashboardList.map((myDashboard) => {
             return (
-              <li className="mb-38 h-fit w-fit md:mb-27 xl:mb-0" key={myDashboard.id}>
+              <li
+                className="mb-38 h-fit w-fit md:mb-27 xl:mb-0"
+                key={myDashboard.id}
+              >
                 <SideBarItem myDashboard={myDashboard} />
               </li>
             );
           })}
       </ul>
-      <div className="hidden md:block absolute bottom-111 left-12">
+      <div className="absolute bottom-111 left-12 hidden md:block">
         {allDashboardList && (
           <PaginationBar
             totalPage={totalPage}

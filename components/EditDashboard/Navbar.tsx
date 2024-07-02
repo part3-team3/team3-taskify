@@ -1,4 +1,5 @@
-import Modal from '@/components/Modal';
+import ProfileImage from '@/components/EditDashboard/ProfileImage';
+import Modal from '@/components/common/Modal';
 import { privateApi } from '@/lib/axios';
 import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
@@ -12,17 +13,21 @@ const NavBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
-  const [profile, setProfile] = useState('');
   const [createdByMe, setCreatedByMe] = useState(false);
+  const [value, setValue] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(true);
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setValue('');
+    setIsValidEmail(true);
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await privateApi.get(`dashboards/9765`);
-        // console.log('API response:', response.data.title);
         setTitle(response.data.title);
         setCreatedByMe(response.data.createdByMe);
       } catch (error) {
@@ -34,18 +39,47 @@ const NavBar = () => {
   }, []);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchNickname = async () => {
       try {
         const res = await privateApi.get(`/users/me`);
         setNickname(res.data.nickname);
-        // console.log('API response:', res.data.nickname);
-        setProfile(res.data.profileImageUrl);
       } catch (error) {
         console.error('Error fetching data', error);
       }
     };
-    fetchProfile();
+    fetchNickname();
   }, []);
+
+  // 초대 이메일 유효성 검사
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  // 이메일로 초대하기 모달 로직
+  const handleSubmit = async () => {
+    if (!validateEmail(value)) {
+      setIsValidEmail(false);
+      return;
+    }
+
+    try {
+      await privateApi.post('dashboards/9765/invitations', { email: value });
+      closeModal();
+    } catch (error) {
+      console.error('Error sending invitation:', error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const email = e.target.value;
+    setValue(email);
+    if (isValidEmail === false) {
+      setIsValidEmail(true);
+    }
+  };
+
+  const inputClassName = isValidEmail ? 'border-gray-300' : 'border-red-500';
 
   return (
     <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
@@ -76,10 +110,10 @@ const NavBar = () => {
           src={icLineVertical}
           width={0}
           height={38}
-          alt="선"
+          alt="구분선"
         />
         <Link href={'/mypage'} className="flex">
-          <Image src={profile} width={38} height={38} alt="프로필" />
+          <ProfileImage />
           <div className="mr-0 flex items-center justify-center lg:mr-80">
             {nickname}
           </div>
@@ -94,16 +128,27 @@ const NavBar = () => {
       >
         <h2 className="text-2xl font-bold">초대하기</h2>
         <p className="mt-[26px] text-18 text-gray-800">이메일</p>
-        <input
-          className="mt-[10px] h-48 w-484 rounded-md border border-gray-300"
-          type="text"
-          placeholder="이메일을 입력해주세요"
-        />
-        <div className="mt-[28px] flex justify-end gap-[12px]">
-          <button className="btn_modal_large_white" onClick={closeModal}>
-            취소
-          </button>
-          <button className="btn_modal_large_purple">초대</button>
+        <div className="relative">
+          <input
+            className={`mt-[10px] h-[48px] w-[484px] rounded-md border ${inputClassName}`}
+            type="text"
+            value={value}
+            onChange={handleChange}
+            placeholder="이메일을 입력해주세요"
+          />
+          {!isValidEmail && (
+            <p className="text-red-500 absolute left-0 mt-2 text-sm">
+              유효하지 않은 값입니다
+            </p>
+          )}
+          <div className="mt-[28px] flex justify-end gap-[12px]">
+            <button className="btn_modal_large_white" onClick={closeModal}>
+              취소
+            </button>
+            <button className="btn_modal_large_purple" onClick={handleSubmit}>
+              초대
+            </button>
+          </div>
         </div>
       </Modal>
     </div>
