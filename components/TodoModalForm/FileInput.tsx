@@ -1,12 +1,12 @@
 import postCardImage from '@/pages/api/common/postCardImage';
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const FileInput = ({
   setFormData,
 }: {
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const [fileValue, setFileValue] = useState<string>('');
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
@@ -25,7 +25,7 @@ const FileInput = ({
 
     const image = await postCardImage(formData);
 
-    setFormData((prevForm) => {
+    setFormData?.((prevForm: TodoFormData) => {
       return {
         ...prevForm,
         imageUrl: image.imageUrl,
@@ -49,13 +49,6 @@ const FileInput = ({
                 alt="미리보기"
                 fill
               />
-              {/* <Image
-                src="/images/icon/ic-pencil.svg"
-                className="absolute"
-                width={30}
-                height={30}
-                alt="펜슬아이콘"
-              /> */}
             </div>
           ) : (
             <div className="relative h-21 w-21 flex-center md:h-28 md:w-28">

@@ -1,4 +1,4 @@
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import moment from 'moment';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -11,11 +11,11 @@ const DateInput = ({
   date,
 }: {
   label: string;
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
-  date: string;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  date?: string;
 }) => {
-  const defaultDate = new Date(moment(date).format());
-  const [value, setValue] = useState<Date>(defaultDate);
+  const defaultDate = date ? new Date(moment(date).format()) : undefined;
+  const [value, setValue] = useState<Date | undefined>(defaultDate);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   const handleToggleCalendar = () => {
@@ -23,10 +23,10 @@ const DateInput = ({
   };
 
   const handleDateChange = (selectedDate: unknown) => {
-    console.log(selectedDate);
     setCalendarOpen(false);
     setValue(selectedDate as Date);
-    setFormData((prev) => ({
+
+    setFormData?.((prev) => ({
       ...prev,
       dueDate: moment(selectedDate as Date).format('YYYY-MM-DD HH:mm'),
     }));
@@ -45,15 +45,27 @@ const DateInput = ({
         onClick={handleToggleCalendar}
       >
         <Image
-          src="images/icon/ic-calendar.svg"
+          src={
+            value
+              ? 'images/icon/ic-calendar.svg'
+              : 'images/icon/ic-calendar-gray.svg'
+          }
           width={20}
           height={20}
           alt="달력아이콘"
         />
-        {moment(value).format('YYYY.MM.DD')}
+        {value ? (
+          moment(value).format('YYYY.MM.DD')
+        ) : (
+          <div className="text-14 leading-[17px] text-gray-40 md:text-16 md:leading-[19px]">
+            날짜를 입력해 주세요
+          </div>
+        )}
       </div>
       <div
-        className={`absolute left-0 top-[100%] z-10 ${calendarOpen ? 'block' : 'hidden'}`}
+        className={`absolute left-0 top-[100%] z-10 ${
+          calendarOpen ? 'block' : 'hidden'
+        }`}
       >
         <Calendar onChange={handleDateChange} value={value}></Calendar>
       </div>

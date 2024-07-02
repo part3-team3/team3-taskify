@@ -1,5 +1,5 @@
 import getColumns from '@/pages/api/TodoModalForm/getColumns';
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import Column from '@/types/column';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -73,7 +73,7 @@ const StatusDropdown = ({
 
   const handleSelectOption = (column: Column) => {
     setSelectedColumn(column);
-    setFormData((prev) => ({ ...prev, columnId: column.id }));
+    setFormData((prev: TodoFormData) => ({ ...prev, columnId: column.id }));
   };
 
   return (

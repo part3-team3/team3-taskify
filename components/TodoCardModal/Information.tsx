@@ -12,8 +12,9 @@ const Information = ({ card }: { card: Card }) => {
           <div className="flex items-center gap-8">
             <div className="relative h-26 w-26 md:h-34 md:w-34">
               <Image
+                className="rounded-[70%]"
                 fill
-                src={'/images/icon/younghoon.svg'}
+                src={card.assignee.profileImageUrl}
                 alt="담당자 프로필 이미지"
               />
             </div>
