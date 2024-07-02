@@ -1,5 +1,5 @@
 import SideBar from '@/components/sidebar/SideBar';
-import DashboardList from '@/components/dashboardPage/DashboardList';
+import DashboardList from '@/components/MyDashboard/DashboardList';
 
 const dashboardExample: React.FC = () => {
   return (

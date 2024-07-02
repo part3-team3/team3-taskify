@@ -1,4 +1,4 @@
-import PaginationBar from '@/components/dashboardPage/PaginationBar';
+import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import { getDashboard } from '@/pages/api/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
