@@ -369,9 +369,6 @@ module.exports = {
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
         },
-<<<<<<< feature/안상균/column
-=======
-
         '.input': {
           border: '1px solid #D9D9D9',
           borderRadius: '8px',
@@ -434,7 +431,6 @@ module.exports = {
           backgroundColor: '#5534DA',
           borderRadius: '8px',
         },
->>>>>>> develop
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
