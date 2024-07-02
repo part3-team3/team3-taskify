@@ -47,7 +47,7 @@ const LoginForm = () => {
     }));
   };
 
-  const isFormValid = !emailError && !passwordError && input.email && input.password;
+  const isFormValid = !emailError && !passwordError && Boolean(input.email) && Boolean(input.password);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -114,7 +114,7 @@ const LoginForm = () => {
         </div>
       </div>
       <div className='flex-center flex-col gap-24'>
-        <button type="submit" className={isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'}>로그인</button>
+        <button type="submit" className={isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'} disabled={!isFormValid}>로그인</button>
         <div>회원이 아니신가요? <Link className='text-violet-20 underline' href='/signup'>회원가입하기</Link></div>
       </div>
     </form>

@@ -4,8 +4,8 @@ import instagramIcon from '@/public/images/icon/ic-instagram.svg';
 import landingCard1 from '@/public/images/logo/img-landing-card1.png';
 import landingCard2 from '@/public/images/logo/img-landing-card2.png';
 import landingCard3 from '@/public/images/logo/img-landing-card3.png';
-import navLogo from '@/public/images/logo/landing-nav-logo-lg.png';
-import navSmallLogo from '@/public/images/logo/landing-nav-logo-sm.png';
+import navLogo from '@/public/images/logo/nav-logo-wh-lg.svg';
+import navSmallLogo from '@/public/images/logo/nav-logo-wh-sm.svg';
 import mainLogo from '@/public/images/logo/main-logo.png';
 import point1Logo from '@/public/images/logo/point1-logo.png';
 import point2Logo from '@/public/images/logo/point2-logo.png';
@@ -65,7 +65,7 @@ const LandingPage = () => {
 
       <div className="mx-auto max-w-1280">
         {/* 새로운 일정 관리 taskify section */}
-        <div className="mb-80 mt-42 flex flex-col px-40 sm:mb-184 sm:mt-94">
+        <div className="mb-80 mt-42 flex flex-col px-40 md:mb-184 md:mt-94">
           <div className="flex-center">
             <Image
               className="h-168 w-287 sm:h-315 sm:w-537 xl:h-423 xl:w-722"
@@ -74,21 +74,21 @@ const LandingPage = () => {
               priority
             />
           </div>
-          <div className="flex-col gap-18 flex-center pt-26 sm:pt-48">
+          <div className="flex-col gap-18 flex-center pt-26 md:pt-48">
             <div className="flex flex-col items-center gap-5 sm:flex-row sm:gap-24">
-              <div className="text-36 font-bold flex-center flex-col sm:flex-row sm:gap-16 ">
-                <div className='whitespace-nowrap sm:text-50 xl:text-76'>새로운 일정 관리</div>
-                <div className="teskify h-42 w-150 text-42 flex-center sm:w-210 sm:h-65 sm:text-64 xl:w-327 xl:text-90">Taskify</div>
+              <div className="text-36 font-bold flex items-center flex-col md:flex-row md:gap-24 ">
+                <div className='whitespace-nowrap flex-center h-48 text-40 md:h-100 md:text-56 xl:text-76'>새로운 일정 관리</div>
+                <div className="teskify h-51 w-150 text-42 flex-center sm:w-253 md:h-65 md:text-70 xl:w-327 xl:text-90">Taskify</div>
               </div>
             </div>
-            <div className="text-12 sm:text-16 xl:text-18">
+            <div className="text-12 md:text-16 xl:text-18">
               서비스의 메인 설명 들어갑니다.
             </div>
           </div>
           <div className="pt-70 flex-center">
             <Link
               href="/login"
-              className="text-14 btn_landing_login sm:h-50 sm:w-280 sm:text-16 xl:text-18"
+              className="text-14 btn_landing_login md:h-50 md:w-280 sm:text-16 xl:text-18"
             >
               로그인하기
             </Link>
@@ -96,9 +96,9 @@ const LandingPage = () => {
         </div>
 
         {/* point card section */}
-        <div className="flex flex-col gap-90 px-16 sm:px-40">
+        <div className="flex-center flex-col gap-90 px-16 sm:px-40">
           {/* point1 */}
-          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 xl:flex-row xl:h-600">
+          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 sm:max-w-700 xl:max-w-1200 xl:flex-row xl:h-600">
             <div className="flex-col flex-center sm:items-start sm:pl-60 xl:justify-start">
               <div className="pt-60 text-18 font-medium text-gray-40 sm:pt-63 sm:text-22 xl:pt-123">
                 Point 1
@@ -117,7 +117,7 @@ const LandingPage = () => {
             </div>
           </div>
           {/* point2 */}
-          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 xl:flex-row-reverse xl:h-600 xl:justify-normal">
+          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 sm:max-w-700 xl:max-w-1200 xl:flex-row-reverse xl:h-600 xl:justify-normal">
             <div className="flex-col flex-center sm:items-start sm:pl-60 xl:justify-start xl:w-1/2">
               <div className="pt-60 text-18 font-medium text-gray-40 sm:pt-63 sm:text-22 xl:pt-123">
                 Point 2

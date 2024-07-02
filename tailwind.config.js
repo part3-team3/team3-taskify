@@ -75,12 +75,6 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       addUtilities({
-        '.input': {
-          border: '1px solid #D9D9D9',
-          borderRadius: '8px',
-          width: '100%',
-          height: '50px',
-        },
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
@@ -368,12 +362,6 @@ module.exports = {
           backgroundColor: '#ffffff',
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
-        },
-        '.input': {
-          border: '1px solid #D9D9D9',
-          borderRadius: '8px',
-          width: '100%',
-          height: '50px',
         },
         // 랜딩페이지 로그인 버튼
         '.btn_landing_login': {

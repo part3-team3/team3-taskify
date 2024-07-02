@@ -180,7 +180,7 @@ const SignupForm = () => {
         </div>
       </div>
       <div className="flex-col gap-24 flex-center">
-        <button className={isFormValid  ? 'btn_login_large_active' : 'btn_login_large_disabled'}>가입하기</button>
+        <button type='submit' className={isFormValid  ? 'btn_login_large_active' : 'btn_login_large_disabled'} disabled={!isFormValid}>가입하기</button>
         <div>
           이미 가입하셨나요?{' '}
           <Link className="text-violet-20 underline" href="/login">
