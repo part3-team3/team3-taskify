@@ -2,6 +2,7 @@ import Modal from '@/components/common/Modal';
 import { getDashboard } from '@/pages/api/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import CreateDashboardContent from './CreateDashboardContent';
@@ -44,7 +45,7 @@ const DashboardList: React.FC = () => {
         <ul className="container grid h-388 w-260 grid-cols-1 grid-rows-6 gap-y-8 md:h-224 md:w-504 md:grid-cols-2 md:grid-rows-3 md:gap-x-8 xl:h-152 xl:w-1022 xl:grid-cols-3 xl:grid-rows-2 xl:gap-x-8">
           <div
             onClick={openModal}
-            className="flex h-58 w-260 flex-row items-center justify-between rounded-lg border border-solid border-gray-30 bg-white px-56 py-23 cursor-pointer	md:h-68 md:w-247 xl:h-70 xl:w-332"
+            className="flex h-58 w-260 cursor-pointer flex-row items-center justify-between rounded-lg border border-solid border-gray-30 bg-white px-56 py-23 md:h-68 md:w-247 xl:h-70 xl:w-332"
           >
             <p className="text-sm font-semibold">새로운 대시보드</p>
             <div className="relative h-22 w-22">
@@ -59,7 +60,9 @@ const DashboardList: React.FC = () => {
             allDashboardList.map((myDashboard) => {
               return (
                 <li className="w-fit" key={myDashboard.id}>
-                  <MyDashboardItem myDashboard={myDashboard} />
+                  <Link href={`/dashboard/${myDashboard.id}`}>
+                    <MyDashboardItem myDashboard={myDashboard} />
+                  </Link>
                 </li>
               );
             })}
@@ -79,13 +82,13 @@ const DashboardList: React.FC = () => {
           )}
         </div>
       </div>
-      <Modal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+      <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
         width="327px"
         height="293px"
       >
-        <CreateDashboardContent closeModal={closeModal}/>
+        <CreateDashboardContent closeModal={closeModal} />
       </Modal>
     </>
   );
