@@ -26,7 +26,7 @@ const ModalTest: React.FC = () => {
         <h2 className="text-2xl font-bold">테스트 모달 제목입니다</h2>
         <p className="mt-4">테스트 모달 내용입니다~</p>
 
-        <button className="btn_modal_large_white">취소</button>
+        <button className="btn_modal_large_white" onClick={closeModal}>취소</button>
         <button className="btn_modal_large_purple">생성</button>
       </Modal>
     </div>

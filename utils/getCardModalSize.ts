@@ -1,16 +1,16 @@
 const getCardModalSize = ({
-  isInEdit,
+  isFormModal,
   isTablet,
   isDesktop,
 }: {
-  isInEdit: boolean;
+  isFormModal: boolean;
   isTablet: boolean;
   isDesktop: boolean;
 }) => {
   let modalWidth;
   let modalHeight;
 
-  if (isInEdit) {
+  if (isFormModal) {
     modalWidth = '327px';
     modalHeight = '869px';
 

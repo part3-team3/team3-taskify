@@ -3,8 +3,9 @@ import FileInput from '@/components/TodoModalForm/FileInput';
 import Input from '@/components/TodoModalForm/Input';
 import Textarea from '@/components/TodoModalForm/Textarea';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import postCreateCard from '@/pages/api/TodoModalForm/postCreateCard';
 import putTodoEditModal from '@/pages/api/TodoModalForm/putTodoEditModal';
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -12,43 +13,65 @@ import AssigneeDropdown from './AssigneeDropdown';
 import StatusDropdown from './StatusDropdown';
 import TagsInput from './TagsInput';
 
-const TodoEditModal = ({
+const TodoFormModal = ({
   card,
   setIsInEdit,
 }: {
-  card: Card;
-  setIsInEdit: Dispatch<SetStateAction<boolean>>;
+  card?: Card;
+  setIsInEdit?: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { assignee, columnId, title, description, dueDate, tags, imageUrl } =
-    card;
+  const isEditForm = Boolean(card); // true or false
 
-  const [formData, setFormData] = useState<TodoFormData>({
+  const {
+    assignee = undefined,
+    columnId = 0,
+    title = '',
+    description = '',
+    dueDate = '',
+    tags = [],
+    imageUrl = '',
+  } = card || {};
+
+  const defaultData: TodoFormData = {
     columnId,
-    assigneeUserId: assignee.id,
+    assigneeUserId: assignee?.id || 0,
     title,
     description,
     dueDate,
     tags,
     imageUrl,
-  });
+  };
+
+  if (!isEditForm) {
+    defaultData.dashboardId = 0;
+  }
+
+  const [formData, setFormData] = useState<TodoFormData>(defaultData);
 
   const isMobile = useMediaQuery('(max-width: 767px)');
 
   const onSubmit = async () => {
-    const result = await putTodoEditModal(formData);
-    setIsInEdit(false);
-    console.log(result);
+    if (isEditForm) {
+      await putTodoEditModal(formData);
+      setIsInEdit?.(false);
+    } else {
+      await postCreateCard(formData);
+    }
   };
 
   return (
     <div className="flex flex-col gap-24 md:gap-32">
-      <div className="text-20 font-bold leading-[24px]">할일 수정</div>
+      <div className="text-20 font-bold leading-[24px]">
+        {isEditForm ? '할일 수정' : '할일 생성'}
+      </div>
       <div className={`${isMobile ? 'flex flex-col gap-24' : 'flex gap-16'}`}>
-        <StatusDropdown
-          label="상태"
-          columnId={columnId}
-          setFormData={setFormData}
-        />
+        {isEditForm && (
+          <StatusDropdown
+            label="상태"
+            columnId={columnId}
+            setFormData={setFormData}
+          />
+        )}
         <AssigneeDropdown
           label="담당자"
           assignee={assignee}
@@ -90,11 +113,11 @@ const TodoEditModal = ({
           onClick={onSubmit}
           className="btn_modal_small_purple md:btn_modal_large_purple"
         >
-          수정
+          {isEditForm ? '수정' : '생성'}
         </button>
       </div>
     </div>
   );
 };
 
-export default TodoEditModal;
+export default TodoFormModal;

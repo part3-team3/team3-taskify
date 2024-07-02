@@ -23,7 +23,7 @@ const Tag = ({ index, title }: { index: number; title: string }) => {
 
   return (
     <div
-      className={`h-max w-max rounded-4 px-6 py-4 text-10 leading-[12px]`}
+      className="h-max w-max rounded-4 px-6 py-4 text-10 leading-[12px]"
       style={{ color: colorSet.text, backgroundColor: colorSet.bg }}
     >
       {title}
