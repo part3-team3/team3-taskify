@@ -369,6 +369,22 @@ module.exports = {
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
         },
+        '.input': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+          width: '100%',
+          height: '50px',
+        },
+        // 랜딩페이지 로그인 버튼
+        '.btn_landing_login': {
+          width: '235px',
+          height: '42px',
+          borderRadius: '8px',
+          backgroundColor: '#5534DA',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
         // 회색 버튼
         // 할일 카드 모달 -> 댓글 입력 버튼(d)
         '.btn_todo_modal_desktop_disabled': {
@@ -414,6 +430,10 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#5534DA',
           borderRadius: '8px',
+        },
+        // 회색 테두리 스타일링
+        '.border-1px-solid-gray-30': {
+          border: '1px solid #D9D9D9',
         },
       });
     },
