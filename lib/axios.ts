@@ -4,14 +4,6 @@ import cookies from 'js-cookie';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API;
 
-
-
-export const privateApi = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${TOKEN}`,
-  },
-
 const instance = axios.create({
   baseURL: BASE_URL,
 });
