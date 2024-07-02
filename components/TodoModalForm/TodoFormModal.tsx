@@ -1,3 +1,4 @@
+import AssigneeDropdown from '@/components/TodoModalForm/AssigneeDropdown';
 import DateInput from '@/components/TodoModalForm/DateInput';
 import FileInput from '@/components/TodoModalForm/FileInput';
 import Input from '@/components/TodoModalForm/Input';
@@ -9,7 +10,6 @@ import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import AssigneeDropdown from './AssigneeDropdown';
 import StatusDropdown from './StatusDropdown';
 import TagsInput from './TagsInput';
 
