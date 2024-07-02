@@ -1,7 +1,7 @@
-import { privateApi } from '@/lib/axios';
+import axios from '@/lib/axios';
 
 const getColumns = async () => {
-  const res = await privateApi.get('/columns?dashboardId=10039');
+  const res = await axios.get('/columns?dashboardId=10039');
 
   return res.data.data;
 };

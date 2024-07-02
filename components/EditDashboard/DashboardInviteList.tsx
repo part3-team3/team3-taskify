@@ -1,5 +1,5 @@
 import Modal from '@/components/common/Modal';
-import { privateApi } from '@/lib/axios';
+import instance from '@/lib/axios';
 import icAddWhite from '@/public/images/icon/ic-add-white.svg';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';

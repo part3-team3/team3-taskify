@@ -119,7 +119,6 @@ const NavBar = () => {
           </div>
         </Link>
       </div>
-
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
