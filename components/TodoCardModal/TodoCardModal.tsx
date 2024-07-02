@@ -1,5 +1,6 @@
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Card } from '@/types/card';
+import Column from '@/types/column';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -10,9 +11,11 @@ import Information from './Information';
 
 const TodoModal = ({
   card,
+  columns,
   setIsInEdit,
 }: {
   card: Card;
+  columns: Column[];
   setIsInEdit: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [kebabButtonVisible, setKebabButtonVisible] = useState<boolean>(false);
@@ -29,7 +32,7 @@ const TodoModal = ({
     card && (
       <div>
         <div className="flex justify-between pt-12 text-20 font-bold leading-[24px] text-black-20 md:text-24 md:leading-[29px]">
-          <div className="flex">{card.title}</div>
+          <div className="flex whitespace-normal">{card.title}</div>
           <div className="relative bottom-24 flex items-center gap-16 md:bottom-0 md:gap-24">
             <div className="relative flex h-20 w-20 md:h-28 md:w-28">
               <Image
@@ -41,7 +44,6 @@ const TodoModal = ({
               <Dropdown
                 setIsInEdit={setIsInEdit}
                 kebabButtonVisible={kebabButtonVisible}
-                // handleEditSelect={handleEditSelect}
               />
             </div>
             <div className="relative flex h-24 w-24 md:h-32 md:w-32">
@@ -52,7 +54,7 @@ const TodoModal = ({
         {isMobile && <Information card={card} />}
         <div className="flex gap-24">
           <div>
-            <Article card={card} />
+            <Article card={card} columns={columns} />
             <Comments />
           </div>
           <div>{(isTablet || isDesktop) && <Information card={card} />}</div>

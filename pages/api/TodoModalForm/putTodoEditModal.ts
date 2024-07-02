@@ -1,7 +1,7 @@
 import { privateApi } from '@/lib/axios';
-import FormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 
-const putTodoEditModal = async (body: FormData) => {
+const putTodoEditModal = async (body: TodoFormData) => {
   const res = await privateApi.put('/cards/8736', body);
 
   return res.data;

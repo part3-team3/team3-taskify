@@ -1,4 +1,4 @@
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 const Input = ({
@@ -7,15 +7,21 @@ const Input = ({
   placeholder,
   essential,
   setFormData,
+  setCreateFormData,
 }: {
   label: string;
-  title: string;
+  title?: string;
   placeholder: string;
   essential?: string;
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
 }) => {
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => {
+    setFormData?.((prev: TodoFormData) => {
+      return { ...prev, title: e.target.value };
+    });
+
+    setCreateFormData?.((prev: TodoCreateFormData) => {
       return { ...prev, title: e.target.value };
     });
   };

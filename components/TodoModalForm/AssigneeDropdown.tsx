@@ -1,5 +1,5 @@
 import getMembers from '@/pages/api/TodoModalForm/getMembers';
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
 import { User } from '@/types/card';
 import Member from '@/types/member';
 import Image from 'next/image';
@@ -53,10 +53,12 @@ const AssigneeDropdown = ({
   label,
   assignee,
   setFormData,
+  setCreateFormData,
 }: {
   label: string;
-  assignee: User;
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
+  assignee?: User;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [membersData, setMembersData] = useState<Member[]>([]);
@@ -65,9 +67,9 @@ const AssigneeDropdown = ({
   useEffect(() => {
     const loadMembers = async () => {
       const members = await getMembers();
-      const currentMember = members.find(
-        (member: Member) => member.userId === assignee.id,
-      );
+      const currentMember = members.find((member: Member) => {
+        return member.userId === assignee?.id;
+      });
       setSelectedUser(currentMember);
       setMembersData(members);
     };
@@ -80,7 +82,9 @@ const AssigneeDropdown = ({
 
   const handleSelectOption = (user: Member) => {
     setSelectedUser(user);
-    setFormData((prev) => ({ ...prev, assigneeUserId: user.userId })); // 아직 초대된 멤버 목록이 없어서 userId를 못알아먹음
+
+    setFormData?.((prev) => ({ ...prev, assigneeUserId: user.userId }));
+    setCreateFormData?.((prev) => ({ ...prev, assigneeUserId: user.userId }));
   };
 
   return (

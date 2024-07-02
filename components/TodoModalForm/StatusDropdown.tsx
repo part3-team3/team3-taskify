@@ -1,5 +1,5 @@
 import getColumns from '@/pages/api/TodoModalForm/getColumns';
-import TodoFormData from '@/types/EditModalFormData';
+import TodoFormData from '@/types/ModalFormData';
 import Column from '@/types/column';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

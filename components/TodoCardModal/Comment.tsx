@@ -42,12 +42,13 @@ const Comment = ({
   return (
     <>
       <div className="flex flex-col">
-        <div className="flex gap-8 mt-20 md:gap-10">
-          <div className="relative flex justify-start h-26 w-26 md:h-34 md:w-34">
+        <div className="mt-20 flex gap-8 md:gap-10">
+          <div className="relative flex h-26 w-26 justify-start md:h-34 md:w-34">
             <Image
+              className="rounded-[70%]"
               fill
-              src={'/images/icon/younghoon.svg'}
-              alt="담당자 프로필 이미지"
+              src={comment.author.profileImageUrl}
+              alt="댓글 작성자 프로필 이미지"
             />
           </div>
           <div className="flex items-center gap-6 md:gap-8">
@@ -59,7 +60,7 @@ const Comment = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-8 ml-36 md:ml-44 md:gap-12">
+        <div className="ml-36 flex flex-col gap-8 md:ml-44 md:gap-12">
           <div className="text-12 font-normal leading-[14px] text-black-20 md:text-14 md:leading-[17px]">
             {editMode ? (
               <div className="relative">
@@ -67,7 +68,7 @@ const Comment = ({
                   value={newContent}
                   onChange={handleChangeNewContent}
                   placeholder="댓글 수정하기"
-                  className="h-64 p-12 border border-solid resize-none w-246 rounded-6 border-gray-30 md:w-376 xl:w-406"
+                  className="h-64 w-246 resize-none rounded-6 border border-solid border-gray-30 p-12 md:w-376 xl:w-406"
                 />
                 <button
                   onClick={handleEditSubmit}
@@ -77,7 +78,7 @@ const Comment = ({
                 </button>
               </div>
             ) : (
-              content
+              <pre className="whitespace-normal break-words">{content}</pre>
             )}
           </div>
 

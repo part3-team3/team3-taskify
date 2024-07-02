@@ -1,4 +1,4 @@
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
 import moment from 'moment';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -8,11 +8,14 @@ import 'react-calendar/dist/Calendar.css';
 const DateInput = ({
   label,
   setFormData,
+  setCreateFormData,
   date,
 }: {
   label: string;
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
-  date: string;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
+
+  date?: string;
 }) => {
   const defaultDate = new Date(moment(date).format());
   const [value, setValue] = useState<Date>(defaultDate);
@@ -23,10 +26,15 @@ const DateInput = ({
   };
 
   const handleDateChange = (selectedDate: unknown) => {
-    console.log(selectedDate);
     setCalendarOpen(false);
     setValue(selectedDate as Date);
-    setFormData((prev) => ({
+
+    setFormData?.((prev) => ({
+      ...prev,
+      dueDate: moment(selectedDate as Date).format('YYYY-MM-DD HH:mm'),
+    }));
+
+    setCreateFormData?.((prev) => ({
       ...prev,
       dueDate: moment(selectedDate as Date).format('YYYY-MM-DD HH:mm'),
     }));

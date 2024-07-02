@@ -4,7 +4,7 @@ import Input from '@/components/TodoModalForm/Input';
 import Textarea from '@/components/TodoModalForm/Textarea';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import putTodoEditModal from '@/pages/api/TodoModalForm/putTodoEditModal';
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -35,9 +35,8 @@ const TodoEditModal = ({
   const isMobile = useMediaQuery('(max-width: 767px)');
 
   const onSubmit = async () => {
-    const result = await putTodoEditModal(formData);
+    await putTodoEditModal(formData);
     setIsInEdit(false);
-    console.log(result);
   };
 
   return (

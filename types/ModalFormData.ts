@@ -1,4 +1,4 @@
-export default interface TodoFormData {
+export interface TodoFormData {
   columnId: number;
   assigneeUserId: number;
   title: string;
@@ -6,4 +6,8 @@ export default interface TodoFormData {
   dueDate: string;
   tags: string[];
   imageUrl: string;
+}
+
+export interface TodoCreateFormData extends TodoFormData {
+  dashboardId: number;
 }

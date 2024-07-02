@@ -1,23 +1,29 @@
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const TagsInput = ({
   label,
-  tags,
+  tags = [],
   placeholder,
   setFormData,
+  setCreateFormData,
 }: {
   label: string;
-  tags: string[];
+  tags?: string[];
   placeholder: string;
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
 }) => {
   const [currentTags, setCurrentTags] = useState<string>(tags.join(', ')); // tags를 문자열로 변환하여 초기값 설정
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTags = e.target.value.split(',').map((tag) => tag.trim());
     setCurrentTags(e.target.value); // inputValue 업데이트
-    setFormData((prev) => {
+
+    setFormData?.((prev) => {
+      return { ...prev, tags: newTags };
+    });
+    setCreateFormData?.((prev) => {
       return { ...prev, tags: newTags };
     });
   };
