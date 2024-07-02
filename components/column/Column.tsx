@@ -1,9 +1,8 @@
-// Assuming getColumn is an async function that fetches the JSON data
-// import ColumnCard from '@/components/ColumnCard';
 import EditColumnModal from '@/components/column/EditColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
 import { getColumn } from '@/pages/api/column/getColumn';
+// import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -16,7 +15,7 @@ interface Column {
   updatedAt: string;
 }
 
-const dashboardId = 9728;
+const dashboardId = 9728; //api로변경 예정
 
 const Column: React.FC = () => {
   const [columns, setColumns] = useState<Column[]>([]);
