@@ -1,4 +1,5 @@
-export default interface TodoFormData {
+export interface TodoFormData {
+  dashboardId?: number;
   columnId: number;
   assigneeUserId: number;
   title: string;

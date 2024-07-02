@@ -1,8 +1,10 @@
 import TodoCardModal from '@/components/TodoCardModal/TodoCardModal';
-import TodoEditModal from '@/components/TodoModalForm/TodoEditModal';
+import TodoFormModal from '@/components/TodoModalForm/TodoFormModal';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import getColumns from '@/pages/api/TodoModalForm/getColumns';
 import { getCard } from '@/pages/api/common/getCard';
 import { Card } from '@/types/card';
+import Column from '@/types/column';
 import getCardModalSize from '@/utils/getCardModalSize';
 import { useEffect, useState } from 'react';
 
@@ -12,14 +14,15 @@ const CardModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInEdit, setIsInEdit] = useState(false);
   const [card, setCard] = useState<Card>();
+  const [columns, setColumns] = useState<Column[]>();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // const isMobile = useMediaQuery('(max-width: 767px)');
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
-  const { modalWidth, modalHeight } = getCardModalSize({
-    isInEdit,
+  const { modalWidth } = getCardModalSize({
+    isFormModal: isInEdit,
     isTablet,
     isDesktop,
   });
@@ -27,12 +30,15 @@ const CardModal = () => {
   useEffect(() => {
     const getTodoCard = async () => {
       const cardData: Card = await getCard();
+      const columnData: Column[] = await getColumns();
       setCard(cardData);
+      setColumns(columnData);
     };
     getTodoCard();
   }, [isInEdit]);
 
   if (!card) return null;
+  if (!columns) return null;
 
   return (
     <div className="px-20 py-40 md:px-28 md:py-32">
@@ -44,14 +50,18 @@ const CardModal = () => {
       </button>
       <Modal
         width={modalWidth}
-        height={modalHeight}
+        height={'auto'}
         isOpen={isModalOpen}
         onClose={closeModal}
       >
         {isInEdit ? (
-          <TodoEditModal card={card} setIsInEdit={setIsInEdit} />
+          <TodoFormModal card={card} setIsInEdit={setIsInEdit} />
         ) : (
-          <TodoCardModal card={card} setIsInEdit={setIsInEdit} />
+          <TodoCardModal
+            card={card}
+            columns={columns}
+            setIsInEdit={setIsInEdit}
+          />
         )}
       </Modal>
     </div>

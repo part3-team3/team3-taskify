@@ -4,7 +4,6 @@ import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
 import CreateDashboardContent from './CreateDashboardContent';
 import MyDashboardItem from './MyDashboardItem';
 import PaginationBar from './PaginationBar';
@@ -15,6 +14,7 @@ const DashboardList: React.FC = () => {
   const [size, setSize] = useState(5);
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -42,6 +42,7 @@ const DashboardList: React.FC = () => {
   return (
     <>
       <div className="mx-auto w-fit">
+
         <ul className="container grid h-388 w-260 grid-cols-1 grid-rows-6 gap-y-8 md:h-224 md:w-504 md:grid-cols-2 md:grid-rows-3 md:gap-x-8 xl:h-152 xl:w-1022 xl:grid-cols-3 xl:grid-rows-2 xl:gap-x-8">
           <div
             onClick={openModal}
@@ -90,6 +91,7 @@ const DashboardList: React.FC = () => {
       >
         <CreateDashboardContent closeModal={closeModal} />
       </Modal>
+
     </>
   );
 };

@@ -1,3 +1,4 @@
+
 import CreateDashboardContent from '@/components/MyDashboard/CreateDashboardContent';
 import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import Modal from '@/components/common/Modal';
@@ -76,7 +77,9 @@ const SideBar = () => {
             );
           })}
       </ul>
+
       <div className="absolute bottom-15 left-12 hidden md:block">
+
         {allDashboardList && (
           <PaginationBar
             totalPage={totalPage}

@@ -1,4 +1,4 @@
-import TodoFormData from '@/types/EditModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 const Textarea = ({
@@ -9,13 +9,13 @@ const Textarea = ({
   setFormData,
 }: {
   label: string;
-  description: string;
+  description?: string;
   essential: string;
   placeholder: string;
-  setFormData: Dispatch<SetStateAction<TodoFormData>>;
+  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData((prev) => {
+    setFormData?.((prev: TodoFormData) => {
       return { ...prev, description: e.target.value };
     });
   };
@@ -32,7 +32,7 @@ const Textarea = ({
       <textarea
         defaultValue={description}
         onChange={handleDescriptionChange}
-        className="placeholder:gray-40 h-84 w-287 resize-none rounded-6 px-16 py-13 text-14 leading-[17px] border-1px-solid-gray-30 md:h-96 md:w-450"
+        className="placeholder:gray-40 h-84 w-287 resize-none rounded-6 px-16 py-13 text-14 leading-[17px] border-1px-solid-gray-30 md:h-96 md:w-450 md:placeholder:text-16 md:placeholder:leading-[19px]"
         placeholder={placeholder}
       />
     </div>

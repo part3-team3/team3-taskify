@@ -10,3 +10,4 @@ export const getDashboard = async ({ page=1, size=5 }) => {
         console.log(err)
     }
 };
+

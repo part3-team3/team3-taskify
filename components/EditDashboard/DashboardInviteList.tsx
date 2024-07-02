@@ -1,7 +1,6 @@
-import Modal from '@/components/Modal';
-import instance from '@/lib/axios';
+import Modal from '@/components/common/Modal';
+import { privateApi } from '@/lib/axios';
 import icAddWhite from '@/public/images/icon/ic-add-white.svg';
-// import icAdd from '@/public/images/icon/ic-add.svg';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -16,15 +15,8 @@ const DashboardInviteList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mzk5OCwidGVhbUlkIjoiNi0zIiwiaWF0IjoxNzE5NDgyMzk4LCJpc3MiOiJzcC10YXNraWZ5In0.duwqLvblOuUU7QTXyx1oKc0N14yhQL4qwvLUZcPG-zk'; // 로그인 후 받은 토큰
       try {
-        const res = await instance.get(`dashboards/9765/invitations`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('API email:', res.data.email);
+        const res = await privateApi.get(`dashboards/9765/invitations`);
         setEmail(res.data.email);
       } catch (error) {
         setError('Failed to fetch data');
@@ -34,28 +26,28 @@ const DashboardInviteList = () => {
     };
     fetchData();
   }, []);
- 
+
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div className="px-20">
-      <div className="flex h-[477px] w-[620px] justify-between rounded-lg bg-white px-24 pt-25">
-        <div className="mb-30 flex text-xl font-bold">초대내역</div>
-        <button
-          className="flex h-[32px] w-[105px] rounded-md bg-[#5534DA] bg-white px-2.5 py-4 text-sm text-gray-600"
-          onClick={openModal}
-        >
-          <div className="flex gap-[8px] text-sm text-white">
-            <Image src={icAddWhite} width={16} height={16} alt="초대" />
-            초대하기
-          </div>
-        </button>
-
-    
+      <div className="flex h-[477px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
+        <div className="flex justify-between">
+          <div className="mb-30 flex text-xl font-bold">초대내역</div>
+          <button
+            className="flex h-[32px] w-[105px] rounded-md bg-[#5534DA] bg-white px-2.5 py-4 text-sm text-gray-600"
+            onClick={openModal}
+          >
+            <div className="flex gap-[8px] text-sm text-white">
+              <Image src={icAddWhite} width={16} height={16} alt="초대" />
+              초대하기
+            </div>
+          </button>
+        </div>
+        <p className="font-sm flex text-[1.125rem] text-[#9FA6B2]">이메일</p>
+        <div>{email}</div>
       </div>
-      <p className="font-sm text-[1.125rem] text-[#9FA6B2]">이메일</p>
-      <div>{email}</div>
 
       <Modal
         isOpen={isModalOpen}

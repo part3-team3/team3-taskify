@@ -1,3 +1,4 @@
+import DashboardList from '@/components/MyDashboard/DashboardList';
 import SideBar from '@/components/sidebar/SideBar';
 import DashboardList from '@/components/MyDashboard/DashboardList';
 
