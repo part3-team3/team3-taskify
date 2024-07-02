@@ -33,6 +33,7 @@ const ProfileImage = () => {
     fetchProfile();
   }, []);
 
+  // 닉네임의 첫 글자 가져오기
   const firstLetter = nickname.charAt(0).toUpperCase();
 
   return (
