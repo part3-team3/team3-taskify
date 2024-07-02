@@ -1,4 +1,4 @@
-import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 const Input = ({
@@ -7,21 +7,15 @@ const Input = ({
   placeholder,
   essential,
   setFormData,
-  setCreateFormData,
 }: {
   label: string;
   title?: string;
   placeholder: string;
   essential?: string;
   setFormData?: Dispatch<SetStateAction<TodoFormData>>;
-  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
 }) => {
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData?.((prev: TodoFormData) => {
-      return { ...prev, title: e.target.value };
-    });
-
-    setCreateFormData?.((prev: TodoCreateFormData) => {
       return { ...prev, title: e.target.value };
     });
   };
@@ -38,7 +32,7 @@ const Input = ({
       <input
         defaultValue={title}
         onChange={handleTitleChange}
-        className="placeholder:gray-40 h-42 w-287 rounded-6 px-16 py-13 text-14 leading-[17px] border-1px-solid-gray-30 md:h-48 md:w-450"
+        className="placeholder:gray-40 h-42 w-287 rounded-6 px-16 py-13 text-14 leading-[17px] border-1px-solid-gray-30 md:h-48 md:w-450 md:placeholder:text-16 md:placeholder:leading-[19px]"
         placeholder={placeholder}
       />
     </div>

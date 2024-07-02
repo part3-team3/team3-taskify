@@ -53,12 +53,10 @@ const AssigneeDropdown = ({
   label,
   assignee,
   setFormData,
-  setCreateFormData,
 }: {
   label: string;
   assignee?: User;
   setFormData?: Dispatch<SetStateAction<TodoFormData>>;
-  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [membersData, setMembersData] = useState<Member[]>([]);
@@ -84,7 +82,6 @@ const AssigneeDropdown = ({
     setSelectedUser(user);
 
     setFormData?.((prev) => ({ ...prev, assigneeUserId: user.userId }));
-    setCreateFormData?.((prev) => ({ ...prev, assigneeUserId: user.userId }));
   };
 
   return (
@@ -101,7 +98,9 @@ const AssigneeDropdown = ({
             {selectedUser ? (
               <Option user={selectedUser} />
             ) : (
-              '이름을 입력해 주세요'
+              <div className="text-14 leading-[17px] text-gray-40 md:text-16 md:leading-[19px]">
+                이름을 입력해 주세요
+              </div>
             )}
           </div>
           <div className="relative">

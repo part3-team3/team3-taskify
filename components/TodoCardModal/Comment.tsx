@@ -18,7 +18,9 @@ const Comment = ({
     newContent: string;
   }) => Promise<void>;
 }) => {
-  const { id, content, createdAt } = comment;
+  const { id, content, createdAt, author } = comment;
+  const { nickname, profileImageUrl } = author;
+
   const [editMode, setEditMode] = useState<boolean>(false);
   const [newContent, setNewContent] = useState<string>(content);
 
@@ -47,13 +49,13 @@ const Comment = ({
             <Image
               className="rounded-[70%]"
               fill
-              src={comment.author.profileImageUrl}
+              src={profileImageUrl}
               alt="댓글 작성자 프로필 이미지"
             />
           </div>
           <div className="flex items-center gap-6 md:gap-8">
             <div className="text-12 font-semibold leading-[14px] text-black-20 md:text-14 md:leading-[17px]">
-              {comment.author.nickname}
+              {nickname}
             </div>
             <div className="text-10 font-normal leading-[12px] text-gray-40 md:text-12 md:leading-[14px]">
               {formatDate(createdAt)}

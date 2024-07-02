@@ -1,5 +1,5 @@
 import TodoCardModal from '@/components/TodoCardModal/TodoCardModal';
-import TodoEditModal from '@/components/TodoModalForm/TodoEditModal';
+import TodoFormModal from '@/components/TodoModalForm/TodoFormModal';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import getColumns from '@/pages/api/TodoModalForm/getColumns';
 import { getCard } from '@/pages/api/common/getCard';
@@ -55,7 +55,7 @@ const CardModal = () => {
         onClose={closeModal}
       >
         {isInEdit ? (
-          <TodoEditModal card={card} setIsInEdit={setIsInEdit} />
+          <TodoFormModal card={card} setIsInEdit={setIsInEdit} />
         ) : (
           <TodoCardModal
             card={card}

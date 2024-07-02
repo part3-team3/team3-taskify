@@ -1,14 +1,12 @@
 import postCardImage from '@/pages/api/common/postCardImage';
-import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const FileInput = ({
   setFormData,
-  setCreateFormData,
 }: {
   setFormData?: Dispatch<SetStateAction<TodoFormData>>;
-  setCreateFormData?: Dispatch<SetStateAction<TodoCreateFormData>>;
 }) => {
   const [fileValue, setFileValue] = useState<string>('');
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
@@ -28,12 +26,6 @@ const FileInput = ({
     const image = await postCardImage(formData);
 
     setFormData?.((prevForm: TodoFormData) => {
-      return {
-        ...prevForm,
-        imageUrl: image.imageUrl,
-      };
-    });
-    setCreateFormData?.((prevForm) => {
       return {
         ...prevForm,
         imageUrl: image.imageUrl,
