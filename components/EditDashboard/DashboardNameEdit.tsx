@@ -1,4 +1,4 @@
-import instance from '@/lib/axios';
+import { privateApi } from '@/lib/axios';
 import icCheckColor from '@/public/images/icon/ic-check-color.svg';
 import icDotBlue from '@/public/images/icon/ic-dot-blue.svg';
 import icDotGreen from '@/public/images/icon/ic-dot-green.svg';
@@ -7,7 +7,6 @@ import icDotPink from '@/public/images/icon/ic-dot-pink.svg';
 import icDotPurple from '@/public/images/icon/ic-dot-purple.svg';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-
 
 const DashboardNameEdit = () => {
   const [title, setTitle] = useState('');
@@ -18,15 +17,8 @@ const DashboardNameEdit = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mzk5OCwidGVhbUlkIjoiNi0zIiwiaWF0IjoxNzE5NDgyMzk4LCJpc3MiOiJzcC10YXNraWZ5In0.duwqLvblOuUU7QTXyx1oKc0N14yhQL4qwvLUZcPG-zk'; // 로그인 후 받은 토큰
       try {
-        const response = await instance.get(`dashboards/9765`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('API response:', response.data);
+        const response = await privateApi.get(`dashboards/9765`);
         setTitle(response.data.title);
         setColor(getColorName(response.data.color));
       } catch (error) {
@@ -54,23 +46,12 @@ const DashboardNameEdit = () => {
       return;
     }
 
-    //이름,컬러 수정정 요청
     const colorCode = getColorCode(color);
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mzk5OCwidGVhbUlkIjoiNi0zIiwiaWF0IjoxNzE5NDgyMzk4LCJpc3MiOiJzcC10YXNraWZ5In0.duwqLvblOuUU7QTXyx1oKc0N14yhQL4qwvLUZcPG-zk'; // 로그인 후 받은 토큰
     try {
-      const response = await instance.put(
-        'dashboards/9765',
-        {
-          title: inputTitle,
-          color: colorCode,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const response = await privateApi.put('dashboards/9765', {
+        title: inputTitle,
+        color: colorCode,
+      });
       console.log('Dashboard updated:', response.data);
       setTitle(inputTitle);
       alert('이름이 변경되었습니다.');
@@ -79,8 +60,6 @@ const DashboardNameEdit = () => {
       console.error('Error updating dashboard:', error);
     }
   };
-
-  //선택한 컬러 코드 가져오기
   const getColorCode = (colorName: string): string => {
     switch (colorName) {
       case 'green':
@@ -97,8 +76,6 @@ const DashboardNameEdit = () => {
         return ''; // Handle default case or throw error
     }
   };
-
-  
   const getColorName = (colorCode: string): string => {
     switch (colorCode) {
       case '#7AC555':
@@ -121,6 +98,7 @@ const DashboardNameEdit = () => {
 
   return (
     <div className="px-20">
+      {/* <form onSubmit={handleSubmit}> */}
       <div className="flex h-[256px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
         <div className="mb-30 flex items-center justify-between">
           <div className="text-xl font-bold">{title}</div>
