@@ -1,3 +1,4 @@
+import AssigneeDropdown from '@/components/TodoModalForm/AssigneeDropdown';
 import DateInput from '@/components/TodoModalForm/DateInput';
 import FileInput from '@/components/TodoModalForm/FileInput';
 import Input from '@/components/TodoModalForm/Input';
@@ -9,16 +10,17 @@ import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import AssigneeDropdown from './AssigneeDropdown';
 import StatusDropdown from './StatusDropdown';
 import TagsInput from './TagsInput';
 
 const TodoFormModal = ({
   card,
   setIsInEdit,
+  setIsModalOpen,
 }: {
   card?: Card;
   setIsInEdit?: Dispatch<SetStateAction<boolean>>;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const isEditForm = Boolean(card); // true or false
 
@@ -57,6 +59,10 @@ const TodoFormModal = ({
     } else {
       await postCreateCard(formData);
     }
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -106,7 +112,10 @@ const TodoFormModal = ({
       />
       <FileInput setFormData={setFormData} />
       <div className="flex gap-12 md:justify-end">
-        <button className="btn_modal_small_white md:btn_modal_large_white">
+        <button
+          onClick={handleModalClose}
+          className="btn_modal_small_white md:btn_modal_large_white"
+        >
           취소
         </button>
         <button

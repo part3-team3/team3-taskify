@@ -1,9 +1,10 @@
-import ColumnCard from '@/components/ColumnCard';
+import ColumnCard from '@/components/column/ColumnCard';
 import EditColumnModal from '@/components/column/EditColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
 import { getCardList } from '@/pages/api/column/getCardList';
 import { getColumn } from '@/pages/api/column/getColumn';
+import { Card } from '@/types/card';
 // import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -53,14 +54,14 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
   }, [dashboardId]);
 
   // cards
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState<Card[]>([]);
 
   // 카드 목록 불러오기
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const fetchedCards = await getCardList(columnId);
-        setCards(fetchedCards);
+        setCards(fetchedCards.cards);
       } catch (error) {
         console.error('Failed to fetch cards:', error);
       }

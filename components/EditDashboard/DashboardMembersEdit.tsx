@@ -1,6 +1,5 @@
 // import instance from "@/lib/axios";
-import { privateApi } from '@/lib/axios';
-import Image from 'next/image';
+import axios from '@/lib/axios';
 import { useEffect, useState } from 'react';
 
 const DashboardMembersEdit = () => {
@@ -17,7 +16,7 @@ const DashboardMembersEdit = () => {
       try {
         const dashboardId = 9765;
 
-        const res = await privateApi.get(`members`, {
+        const res = await axios.get(`members`, {
           params: {
             page,
             size,

@@ -18,7 +18,6 @@ const CardModal = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // const isMobile = useMediaQuery('(max-width: 767px)');
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
   const { modalWidth } = getCardModalSize({
@@ -48,6 +47,7 @@ const CardModal = () => {
       >
         테스트 모달 열기
       </button>
+
       <Modal
         width={modalWidth}
         height={'auto'}
@@ -55,7 +55,11 @@ const CardModal = () => {
         onClose={closeModal}
       >
         {isInEdit ? (
-          <TodoFormModal card={card} setIsInEdit={setIsInEdit} />
+          <TodoFormModal
+            setIsModalOpen={setIsModalOpen}
+            card={card}
+            setIsInEdit={setIsInEdit}
+          />
         ) : (
           <TodoCardModal
             card={card}
