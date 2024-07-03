@@ -20,33 +20,24 @@ interface Column {
 //   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
 const dashboardId = 9728; //api로 변경 예정
 
-const Column = ({ columnId }) => {
+const ColumnComponent = ({ columnId }: { columnId: number }) => {
   const [columns, setColumns] = useState<Column[]>([]);
-  // 각 컬럼의 showAddColumn 상태를 관리하는 객체 상태 초기화
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
     [key: number]: boolean;
-  }>(columns.reduce((acc, column) => ({ ...acc, [column.id]: false }), {}));
+  }>({});
 
   const toggleShowAddColumn = (columnId: number) => {
-    // 현재 클릭된 컬럼 ID를 제외하고 모든 컬럼의 모달 표시 상태를 false로 설정
-    const updatedStates = Object.keys(showAddColumnStates).reduce(
-      (acc, id) => {
-        acc[parseInt(id)] = false;
-        return acc;
-      },
-      {} as { [key: number]: boolean },
-    );
-
-    // 현재 클릭된 컬럼의 모달 표시 상태를 토글
-    updatedStates[columnId] = !showAddColumnStates[columnId];
-
-    setShowAddColumnStates(updatedStates);
+    setShowAddColumnStates((prevState) => ({
+      ...prevState,
+      [columnId]: !prevState[columnId],
+    }));
   };
 
   const handleDeleteColumn = async (columnId: number) => {
     await deleteColumn(columnId);
     setColumns(columns.filter((column) => column.id !== columnId));
   };
+
   useEffect(() => {
     const fetchColumns = async () => {
       const data = await getColumn(dashboardId.toString()); // 컬럼 api 받아오기
@@ -54,30 +45,31 @@ const Column = ({ columnId }) => {
     };
     fetchColumns();
   }, []);
+
   // cards
   const [cards, setCards] = useState([]);
 
+  // 카드 목록 불러오기
   useEffect(() => {
-    // Define an async function to fetch cards
     const fetchCards = async () => {
       try {
         const fetchedCards = await getCardList(columnId);
-        setCards(fetchedCards); // Update state with fetched cards
+        setCards(fetchedCards);
       } catch (error) {
         console.error('Failed to fetch cards:', error);
       }
     };
 
     fetchCards(); // Call the fetch function
-  }, [columnId]); // Dependency array, re-fetch if columnId changes
+  }, [columnId]); // columnId가 변경될 때마다 fetchCards 함수를 호출
 
   const handleAddColumn = async () => {
     if (columns.length <= 10) {
-      await addColumn(dashboardId);
-      const newColumn = columns[columns.length - 1];
+      const newColumn = await addColumn(dashboardId);
       setColumns([...columns, newColumn]);
     }
   };
+
   const addTodoModal = (index: number) => {
     alert(`${index}행입니다. 할일 카드 모달 연결 예정입니다~`);
   };
@@ -135,27 +127,12 @@ const Column = ({ columnId }) => {
             alt="button to add a column"
           />
         </button>
-        <ColumnCard
-          cards={cards.map((card) => ({
-            id: card.id,
-            title: card.title,
-            description: card.description,
-            tags: card.tags,
-            dueDate: card.dueDate,
-            assignee: {
-              id: card.assignee.id,
-              nickname: card.assignee.nickname,
-              profileImageUrl: card.assignee.profileImageUrl,
-            },
-            imageUrl: card.imageUrl,
-            teamId: card.teamId,
-            dashboardId: card.dashboardId,
-            columnId: card.columnId,
-          }))}
-        />
+        {cards.map((card) => (
+          <ColumnCard card={card} key={card.id} />
+        ))}
       </div>
     </>
   );
 };
 
-export default Column;
+export default ColumnComponent;
