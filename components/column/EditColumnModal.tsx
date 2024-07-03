@@ -43,11 +43,14 @@ const AddColumnModal: React.FC<AddColumnModalProps> = ({
             </button>
             <button
               className="btn_modal_large_white"
-              onClick={() => setIsVisible(false)}
+              onClick={() => {
+                setIsVisible(false);
+                window.location.reload();
+              }}
             >
               취소
             </button>
-            <button className="btn_modal_large_purple">생성</button>
+            <button className="btn_modal_large_purple">변경</button>
           </div>
         </Modal>
       )}

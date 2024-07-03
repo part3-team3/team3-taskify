@@ -1,9 +1,10 @@
 import ColumnCard from '@/components/ColumnCard';
 import EditColumnModal from '@/components/column/EditColumnModal';
+import NewColumnModal from '@/components/column/NewColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
 import { getCardList } from '@/pages/api/column/getCardList';
-import { getColumn } from '@/pages/api/column/getColumn';
+import { getColumnList } from '@/pages/api/column/getColumnList';
 // import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -11,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 
 interface Column {
   id: number;
+  color: string;
   title: string;
   teamId: string;
   dashboardId: number;
@@ -24,6 +26,10 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
   const router = useRouter();
   const { dashboardId } = router.query;
   const [columns, setColumns] = useState<Column[]>([]);
+  const [showNewColumnModal, setShowNewColumnModal] = useState(false);
+  const [showEditColumnModal, setShowEditColumnModal] = useState<number | null>(
+    null,
+  ); // 현재 열려 있는 EditColumnModal의 columnId
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
     [key: number]: boolean;
   }>({});
@@ -40,10 +46,19 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
     setColumns(columns.filter((column) => column.id !== columnId));
   };
 
+  const handleConfirmAddColumn = () => {
+    handleAddColumn(); // 실제 컬럼 추가 로직을 실행
+    setShowNewColumnModal(false); // 모달 닫기
+  };
+
+  const handleOpenNewColumnModal = () => {
+    setShowNewColumnModal(true); // 모달 열기
+  };
+
   useEffect(() => {
     const fetchColumns = async () => {
       if (dashboardId !== undefined) {
-        const data = await getColumn(dashboardId.toString()); // 왠지 이렇게해야 작동중
+        const data = await getColumnList(dashboardId.toString()); // 왠지 이렇게 해야 작동 중
         setColumns(data.data);
       } else {
         console.error('dashboardId is undefined');
@@ -88,23 +103,27 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
             key={column.id}
             className="mx-[30px] my-[22px] flex h-full w-full min-w-[308px] flex-wrap bg-gray-10 lg:h-[40px] lg:w-[354px]"
           >
-            <div className="my-[22px] mr-15 w-[8px]">ㅇ</div>
+            <div
+              className="my-[22px] mr-15 h-[8px] w-[8px] rounded-full"
+              style={{ backgroundColor: column.color }}
+            ></div>
             <div className="my-[22px] mr-15 font-[700]"> {column.title}</div>
             <div className="my-[22px] mr-auto flex h-[20px] w-[20px] items-center justify-center rounded bg-[#EEEEEE] text-xs text-[#787496]">
               0
             </div>
             <Image
-              onClick={() => toggleShowAddColumn(column.id)}
+              onClick={() => setShowEditColumnModal(column.id)}
               src="/images/icon/ic-setting.svg"
               width={24}
               height={24}
               alt="settings button"
               className="cursor-pointer"
             />
-            {showAddColumnStates[column.id] && (
+            {showEditColumnModal === column.id && (
               <EditColumnModal
                 columnId={column.id}
                 handleDeleteColumn={handleDeleteColumn}
+                closeModal={() => setShowEditColumnModal(null)} // 모달 닫기
               />
             )}
             <button
@@ -121,7 +140,7 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
           </div>
         ))}
         <button
-          onClick={handleAddColumn}
+          onClick={handleOpenNewColumnModal}
           disabled={columns.length >= 10}
           className="mb-4 ml-20 mt-68 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black border-1px-solid-gray-30 lg:w-[354px]"
         >
@@ -133,10 +152,18 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
             alt="button to add a column"
           />
         </button>
+
         {cards.map((card) => (
           <ColumnCard card={card} key={card.id} />
         ))}
       </div>
+      {showNewColumnModal && (
+        <NewColumnModal
+          closeModal={() => setShowNewColumnModal(false)}
+          onAddColumn={handleConfirmAddColumn} // 이 부분 수정
+          dashboardId={9728}
+        />
+      )}
     </>
   );
 };

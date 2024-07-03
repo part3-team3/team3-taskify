@@ -12,7 +12,8 @@ interface ModalProps {
 const Modal = ({ isOpen, onClose, width, height, children }: ModalProps) => {
   if (!isOpen) return null;
 
-  const handleOverlayClick = () => {
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     onClose();
   };
 
