@@ -76,7 +76,7 @@ const LoginForm = () => {
       // Strict 동일한 사이트에서만 전송되도록 처리 CSRF공격 방지 유용
       cookies.set('accessToken', accessToken
         , { expires: 7, secure: true, sameSite: 'Strict' });
-      router.push('mydashboard')
+      router.replace('mydashboard')
       console.log('로그인 성공');
     } catch(error) {
       if (isAxiosError(error)) {
