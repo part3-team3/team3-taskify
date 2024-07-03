@@ -1,9 +1,10 @@
-// Assuming getColumn is an async function that fetches the JSON data
-// import ColumnCard from '@/components/ColumnCard';
+import ColumnCard from '@/components/ColumnCard';
 import EditColumnModal from '@/components/column/EditColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
+import { getCardList } from '@/pages/api/column/getCardList';
 import { getColumn } from '@/pages/api/column/getColumn';
+// import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -16,9 +17,10 @@ interface Column {
   updatedAt: string;
 }
 
-const dashboardId = 9728;
+//   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
+const dashboardId = 9728; //api로 변경 예정
 
-const Column: React.FC = () => {
+const Column = ({ columnId }) => {
   const [columns, setColumns] = useState<Column[]>([]);
   // 각 컬럼의 showAddColumn 상태를 관리하는 객체 상태 초기화
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
@@ -50,24 +52,25 @@ const Column: React.FC = () => {
       const data = await getColumn(dashboardId.toString()); // 컬럼 api 받아오기
       setColumns(data.data); // JSON사용하기 위해 변경
     };
-
     fetchColumns();
   }, []);
+  // cards
+  const [cards, setCards] = useState([]);
 
-  // const handleAddColumn = async () => {
-  //   if (columns.length < 10) {
-  //     const newColumn: Column = {
-  //       id: columns.length + 1,
-  //       title: `${columns.length + 1}열입니다`,
-  //       teamId: '',
-  //       dashboardId: 0,
-  //       createdAt: '',
-  //       updatedAt: '',
-  //     };
-  //     await addColumn(dashboardId);
-  //     setColumns([...columns, newColumn]);
-  //   }
-  // };
+  useEffect(() => {
+    // Define an async function to fetch cards
+    const fetchCards = async () => {
+      try {
+        const fetchedCards = await getCardList(columnId);
+        setCards(fetchedCards); // Update state with fetched cards
+      } catch (error) {
+        console.error('Failed to fetch cards:', error);
+      }
+    };
+
+    fetchCards(); // Call the fetch function
+  }, [columnId]); // Dependency array, re-fetch if columnId changes
+
   const handleAddColumn = async () => {
     if (columns.length <= 10) {
       await addColumn(dashboardId);
@@ -132,7 +135,24 @@ const Column: React.FC = () => {
             alt="button to add a column"
           />
         </button>
-        {/* <ColumnCard /> */}
+        <ColumnCard
+          cards={cards.map((card) => ({
+            id: card.id,
+            title: card.title,
+            description: card.description,
+            tags: card.tags,
+            dueDate: card.dueDate,
+            assignee: {
+              id: card.assignee.id,
+              nickname: card.assignee.nickname,
+              profileImageUrl: card.assignee.profileImageUrl,
+            },
+            imageUrl: card.imageUrl,
+            teamId: card.teamId,
+            dashboardId: card.dashboardId,
+            columnId: card.columnId,
+          }))}
+        />
       </div>
     </>
   );
