@@ -6,6 +6,7 @@ import { getCardList } from '@/pages/api/column/getCardList';
 import { getColumn } from '@/pages/api/column/getColumn';
 // import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 interface Column {
@@ -18,9 +19,10 @@ interface Column {
 }
 
 //   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
-const dashboardId = 9728; //api로 변경 예정
 
 const ColumnComponent = ({ columnId }: { columnId: number }) => {
+  const router = useRouter();
+  const { dashboardId } = router.query;
   const [columns, setColumns] = useState<Column[]>([]);
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
     [key: number]: boolean;
@@ -40,11 +42,15 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
 
   useEffect(() => {
     const fetchColumns = async () => {
-      const data = await getColumn(dashboardId.toString()); // 컬럼 api 받아오기
-      setColumns(data.data); // JSON사용하기 위해 변경
+      if (dashboardId !== undefined) {
+        const data = await getColumn(dashboardId.toString()); // 왠지 이렇게해야 작동중
+        setColumns(data.data);
+      } else {
+        console.error('dashboardId is undefined');
+      }
     };
     fetchColumns();
-  }, []);
+  }, [dashboardId]);
 
   // cards
   const [cards, setCards] = useState([]);
