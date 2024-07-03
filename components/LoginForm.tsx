@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 import invisible from '@/public/images/icon/ic-invisible.svg';
 import visible from '@/public/images/icon/ic-visible.svg';
 import axios from '@/lib/axios';
@@ -14,6 +14,7 @@ interface InputState {
   email: string;
   password: string;
 }
+
 
 const LoginForm = () => {
   const [emailError, setEmailError] = useState('');
@@ -31,19 +32,25 @@ const LoginForm = () => {
   const [modalMessage, setModalMessage] = useState('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
-
-    if (e.target.name === 'email') {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setEmailError(!emailPattern.test(e.target.value) ? '이메일 형식으로 작성해 주세요.' : '');
-    } else if(e.target.name === 'password') {
-      setPasswordError(e.target.value.length > 7 ? '' : '8자 이상 입력해 주세요.');
-    }
   };
 
+  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (name === 'email') {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setEmailError(!emailPattern.test(value) ? '이메일 형식으로 작성해 주세요.' : '');
+    }
+
+    if (name === 'password') {
+      setPasswordError(value.length < 8 ? '8자 이상 입력해 주세요.' : '');
+    }
+  }
   const togglePasswordVisibility = (field: 'password' | 'confirmPassword') => {
     setPasswordVisibility((prev) => ({
       ...prev,
@@ -91,6 +98,7 @@ const LoginForm = () => {
           <input
             name='email'
             value={input.email}
+            onBlur={onBlur}
             onChange={onChange}
             className={`px-16 py-15 ${emailError ? 'errorInput' : 'input'}`}
             placeholder="이메일을 입력해 주세요"
@@ -105,6 +113,7 @@ const LoginForm = () => {
             id="pw"
             name='password'
             value={input.password}
+            onBlur={onBlur}
             onChange={onChange}
             className={`px-16 py-15 ${passwordError ? 'errorInput' : 'input'}`}
             placeholder="8자 이상 입력해 주세요"
