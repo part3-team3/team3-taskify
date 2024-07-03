@@ -1,5 +1,5 @@
 import Modal from '@/components/common/Modal';
-import instance from '@/lib/axios';
+import axios from '@/lib/axios';
 import icAddWhite from '@/public/images/icon/ic-add-white.svg';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ const DashboardInviteList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await privateApi.get(`dashboards/9765/invitations`);
+        const res = await axios.get(`dashboards/9765/invitations`);
         setEmail(res.data.email);
       } catch (error) {
         setError('Failed to fetch data');
