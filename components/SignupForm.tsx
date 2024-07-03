@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import cookies from 'js-cookie';
+import { isAxiosError } from 'axios';
+import SimpleModal from './common/SimpleModal';
 
 interface InputState {
   email: string;
@@ -32,6 +34,9 @@ const SignupForm = () => {
     password: false,
     confirmPassword: false,
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const togglePasswordVisibility = (field: 'password' | 'confirmPassword') => {
     setPasswordVisibility((prev) => ({
@@ -80,10 +85,17 @@ const SignupForm = () => {
         , { expires: 1, secure: true, sameSite: 'Strict' });
       router.replace('mydashboard')
       console.log('로그인 성공');
-    } catch (error) {
-      console.error('로그인 실패:', error);
+    } catch(error) {
+      if (isAxiosError(error)) {
+        openModal();
+        setModalMessage(error.response?.data.message)
+        console.log(error);
+      }
     }
   }
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   
   const isFormValid = checked && !emailError && !nameError && !passwordError && !checkPasswordError && input.email && input.nickname && input.password && input.checkPassword;
   
@@ -188,6 +200,14 @@ const SignupForm = () => {
           </Link>
         </div>
       </div>
+      {modalMessage && (<SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <div className="pb-44 sm:pb-24">{modalMessage}</div>
+
+        <button onClick={closeModal} className="btn_modal_small_purple sm:btn_modal_large_purple absolute bottom-28 sm:right-28">확인</button>
+      </SimpleModal>)}
     </form>
   );
 };

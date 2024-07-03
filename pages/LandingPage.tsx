@@ -98,7 +98,7 @@ const LandingPage = () => {
         {/* point card section */}
         <div className="flex-center flex-col gap-90 px-16 sm:px-40">
           {/* point1 */}
-          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 sm:max-w-700 xl:max-w-1200 xl:flex-row xl:h-600">
+          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 md:max-w-700 xl:max-w-1200 xl:flex-row xl:h-600">
             <div className="flex-col flex-center sm:items-start sm:pl-60 xl:justify-start">
               <div className="pt-60 text-18 font-medium text-gray-40 sm:pt-63 sm:text-22 xl:pt-123">
                 Point 1
@@ -117,7 +117,7 @@ const LandingPage = () => {
             </div>
           </div>
           {/* point2 */}
-          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 sm:max-w-700 xl:max-w-1200 xl:flex-row-reverse xl:h-600 xl:justify-normal">
+          <div className="flex h-686 w-full flex-col justify-between rounded-lg bg-black-30 sm:h-972 md:max-w-700 xl:max-w-1200 xl:flex-row-reverse xl:h-600 xl:justify-normal">
             <div className="flex-col flex-center sm:items-start sm:pl-60 xl:justify-start xl:w-1/2">
               <div className="pt-60 text-18 font-medium text-gray-40 sm:pt-63 sm:text-22 xl:pt-123">
                 Point 2

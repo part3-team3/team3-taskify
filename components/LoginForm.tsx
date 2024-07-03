@@ -6,6 +6,8 @@ import visible from '@/public/images/icon/ic-visible.svg';
 import axios from '@/lib/axios';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { isAxiosError } from 'axios';
+import SimpleModal from './common/SimpleModal';
 
 
 interface InputState {
@@ -25,6 +27,8 @@ const LoginForm = () => {
     password: '',
   });
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput({
@@ -67,11 +71,17 @@ const LoginForm = () => {
         , { expires: 7, secure: true, sameSite: 'Strict' });
       router.push('mydashboard')
       console.log('로그인 성공');
-    } catch (error) {
-      console.log(error)
-      console.error('로그인 실패:', error);
+    } catch(error) {
+      if (isAxiosError(error)) {
+        openModal();
+        setModalMessage(error.response?.data.message)
+        console.log(error);
+      }
     }
   };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <form onSubmit={handleSubmit} className='w-full px-12 flex flex-col gap-20'>
@@ -117,6 +127,14 @@ const LoginForm = () => {
         <button type="submit" className={isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'} disabled={!isFormValid}>로그인</button>
         <div>회원이 아니신가요? <Link className='text-violet-20 underline' href='/signup'>회원가입하기</Link></div>
       </div>
+      {modalMessage && (<SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <div className="pb-44 sm:pb-24">{modalMessage}</div>
+
+        <button onClick={closeModal} className="btn_modal_small_purple sm:btn_modal_large_purple absolute bottom-28 sm:right-28">확인</button>
+      </SimpleModal>)}
     </form>
   );
 };
