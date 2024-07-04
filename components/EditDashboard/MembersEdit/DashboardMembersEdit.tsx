@@ -1,10 +1,15 @@
 // import instance from "@/lib/axios";
+import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import axios from '@/lib/axios';
 import { useEffect, useState } from 'react';
 
+import MembersList from './MembersList';
+
 const DashboardMembersEdit = () => {
   //members 상태를 배열로 초기화
-  const [members, setMembers] = useState<string[]>([]);
+  const [members, setMembers] = useState<
+    { nickname: string; profileImage: string | null }[]
+  >([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -23,12 +28,17 @@ const DashboardMembersEdit = () => {
             dashboardId,
           },
         });
+
         // "isOwner": true 값을 제외하고 nickname만 추출
-        const nicknames = res.data.members
+        const membersData = res.data.members
           .filter((member: { isOwner: boolean }) => !member.isOwner)
-          .map((member: { nickname: string }) => member.nickname);
-        setMembers(nicknames);
-        console.log(nicknames);
+          .map((member: { nickname: string; profileImage: string | null }) => ({
+            nickname: member.nickname,
+            profileImage: member.profileImage,
+          }));
+
+        setMembers(membersData);
+        setTotalPage(Math.ceil(res.data.totalCount / size));
       } catch (error) {
         setError('Failed to fetch data');
       } finally {
@@ -39,12 +49,8 @@ const DashboardMembersEdit = () => {
     fetchData();
   }, [page]);
 
-  const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  const onPageChange = (pageNumber: number) => {
+    setPage(pageNumber);
   };
 
   if (loading) return <div>로딩중..</div>;
@@ -52,25 +58,23 @@ const DashboardMembersEdit = () => {
   return (
     <div className="px-20">
       <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
-        <div className="flex justify-between">
-          <div className="mb-30 text-xl font-bold">구성원</div>
-          <div>
-            {totalPage}페이지 중 {page}
-          </div>
-          <button onClick={handlePreviousPage} disabled={page === 1}>
-            이전
-          </button>
-          <button onClick={handleNextPage}>다음</button>
+        <div className="mb-30 text-xl font-bold">구성원</div>
+        <div className="mt-8 flex items-center justify-end">
+          {totalPage > 1 && (
+            <>
+              <p className="mr-12 text-xs font-normal">
+                {totalPage}페이지 중 {page}
+              </p>
+              <PaginationBar
+                totalPage={totalPage}
+                activePage={page}
+                onPageChange={onPageChange}
+              />
+            </>
+          )}
         </div>
-
         <p className="font-sm mb-24 text-[1.125rem] text-[#9FA6B2]">이름</p>
-        <div>
-          {members.map((nickname, index) => (
-            <div key={index}>{nickname}</div>
-          ))}
-        </div>
-
-        <div className="flex justify-end"></div>
+        <MembersList members={members} />
       </div>
     </div>
   );

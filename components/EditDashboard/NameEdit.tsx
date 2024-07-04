@@ -1,4 +1,4 @@
-import { privateApi } from '@/lib/axios';
+import instance from '@/lib/axios';
 import icCheckColor from '@/public/images/icon/ic-check-color.svg';
 import icDotBlue from '@/public/images/icon/ic-dot-blue.svg';
 import icDotGreen from '@/public/images/icon/ic-dot-green.svg';
@@ -18,7 +18,7 @@ const DashboardNameEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await privateApi.get(`dashboards/9765`);
+        const response = await instance.get(`dashboards/9765`);
         setTitle(response.data.title);
         setColor(getColorName(response.data.color));
       } catch (error) {
@@ -48,7 +48,7 @@ const DashboardNameEdit = () => {
 
     const colorCode = getColorCode(color);
     try {
-      const response = await privateApi.put('dashboards/9765', {
+      const response = await instance.put('dashboards/9765', {
         title: inputTitle,
         color: colorCode,
       });
@@ -163,7 +163,3 @@ const DashboardNameEdit = () => {
 };
 
 export default DashboardNameEdit;
-
-//////////////////////
-////////////////////
-//////////////////////

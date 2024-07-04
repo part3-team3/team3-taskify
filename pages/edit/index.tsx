@@ -1,12 +1,11 @@
-// import Head from 'next/head';
-import DashboardNameEdit from '@/components/EditDashboard/DashboardNameEdit';
+import DashboardNameEdit from '@/components/EditDashboard/NameEdit';
 import NavBar from '@/components/EditDashboard/Navbar';
 import icArrowForward from '@/public/images/icon/ic-arrow-forward.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import DashboardInviteList from '../../components/EditDashboard/DashboardInviteList';
-import DashboardMembersEdit from '../../components/EditDashboard/DashboardMembersEdit';
+import DashboardInviteList from '../../components/EditDashboard/InviteEdit/DashboardInviteList';
+import DashboardMembersEdit from '../../components/EditDashboard/MembersEdit/DashboardMembersEdit';
 
 const HomePage = () => {
   return (

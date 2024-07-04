@@ -1,3 +1,4 @@
+import MembersImage from '@/components/EditDashboard/MembersImage';
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
 import Modal from '@/components/common/Modal';
 import axios from '@/lib/axios';
@@ -7,7 +8,7 @@ import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 const NavBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,6 +39,11 @@ const NavBar = () => {
     fetchData();
   }, []);
 
+  //페이지 새로고침
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+  // 사용자 이름 가져오기
   useEffect(() => {
     const fetchNickname = async () => {
       try {
@@ -71,7 +77,7 @@ const NavBar = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
     setValue(email);
     if (isValidEmail === false) {
@@ -83,14 +89,17 @@ const NavBar = () => {
 
   return (
     <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
-      <div className="flex gap-8 px-[40px] text-xl font-bold">
+      <div className="flex hidden gap-8 px-[40px] text-xl font-bold md:flex">
         {title}
         {createdByMe && (
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
       <div className="flex gap-[16px]">
-        <button className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600">
+        <button
+          onClick={handleRefresh}
+          className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600"
+        >
           <div className="flex gap-[8px] text-base">
             <Image src={icSetting} width={20} height={20} alt="관리" />
             관리
@@ -105,6 +114,7 @@ const NavBar = () => {
             초대하기
           </div>
         </button>
+
         <Image
           className="mr-8"
           src={icLineVertical}
@@ -113,8 +123,10 @@ const NavBar = () => {
           alt="구분선"
         />
         <Link href={'/mypage'} className="flex">
-          <ProfileImage />
-          <div className="mr-0 flex items-center justify-center lg:mr-80">
+          <div className="pr-0 sm:pr-12">
+            <ProfileImage />
+          </div>
+          <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
             {nickname}
           </div>
         </Link>
