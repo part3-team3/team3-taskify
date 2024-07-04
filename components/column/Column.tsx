@@ -21,7 +21,7 @@ interface Column {
 
 //   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
 
-const ColumnComponent = ({ columnId }: { columnId: number }) => {
+const ColumnComponent = ({ columnId }: { columnId?: number }) => {
   const router = useRouter();
   const { dashboardId } = router.query;
   const [columns, setColumns] = useState<Column[]>([]);
