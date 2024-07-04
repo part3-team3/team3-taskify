@@ -8,9 +8,13 @@ import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 const NavBar = () => {
+  const router = useRouter();
+  const { dashboardId } = router.query;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
@@ -28,7 +32,7 @@ const NavBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`dashboards/9765`);
+        const response = await axios.get(`dashboards/${dashboardId}`);
         setTitle(response.data.title);
         setCreatedByMe(response.data.createdByMe);
       } catch (error) {
@@ -41,7 +45,11 @@ const NavBar = () => {
 
   //페이지 새로고침
   const handleRefresh = () => {
-    window.location.reload();
+    if (router.pathname === `/dashboard/${dashboardId}/edit`) {
+      window.location.reload();
+    } else {
+      router.push(`/dashboard/${dashboardId}/edit`);
+    }
   };
   // 사용자 이름 가져오기
   useEffect(() => {
@@ -68,10 +76,10 @@ const NavBar = () => {
       setIsValidEmail(false);
       return;
     }
-
     try {
       await axios.post('dashboards/9765/invitations', { email: value });
       closeModal();
+      router.reload();
     } catch (error) {
       console.error('Error sending invitation:', error);
     }
@@ -148,7 +156,7 @@ const NavBar = () => {
             placeholder="이메일을 입력해주세요"
           />
           {!isValidEmail && (
-            <p className="text-red-500 absolute left-0 mt-2 text-sm">
+            <p className="absolute left-0 mt-2 text-sm text-red">
               유효하지 않은 값입니다
             </p>
           )}

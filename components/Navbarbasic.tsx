@@ -3,7 +3,7 @@ import instance from '@/lib/axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
-import MembersImage from '../../components/EditDashboard/MembersImage';
+import MembersImage from './EditDashboard/MembersImage';
 
 const NavBar = () => {
   const [nickname, setNickname] = useState('');

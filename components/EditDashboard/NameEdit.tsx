@@ -6,9 +6,13 @@ import icDotOrange from '@/public/images/icon/ic-dot-orange.svg';
 import icDotPink from '@/public/images/icon/ic-dot-pink.svg';
 import icDotPurple from '@/public/images/icon/ic-dot-purple.svg';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 const DashboardNameEdit = () => {
+  const router = useRouter();
+  const { dashboardId } = router.query;
+
   const [title, setTitle] = useState('');
   const [color, setColor] = useState('');
   const [loading, setLoading] = useState(true);
@@ -18,7 +22,7 @@ const DashboardNameEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await instance.get(`dashboards/9765`);
+        const response = await instance.get(`dashboards/${dashboardId}`);
         setTitle(response.data.title);
         setColor(getColorName(response.data.color));
       } catch (error) {
