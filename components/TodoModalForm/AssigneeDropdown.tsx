@@ -1,5 +1,5 @@
 import getMembers from '@/pages/api/TodoModalForm/getMembers';
-import { TodoCreateFormData, TodoFormData } from '@/types/ModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 import { User } from '@/types/card';
 import Member from '@/types/member';
 import Image from 'next/image';

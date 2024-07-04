@@ -1,6 +1,6 @@
-import { privateApi } from '@/lib/axios';
+import axios from '@/lib/axios';
 
 export const getCard = async () => {
-  const res = await privateApi.get('cards/8736');
+  const res = await axios.get('cards/8736');
   return res.data;
 };

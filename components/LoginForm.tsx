@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 import invisible from '@/public/images/icon/ic-invisible.svg';
 import visible from '@/public/images/icon/ic-visible.svg';
 import axios from '@/lib/axios';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { isAxiosError } from 'axios';
+import SimpleModal from './common/SimpleModal';
 
 
 interface InputState {
   email: string;
   password: string;
 }
+
 
 const LoginForm = () => {
   const [emailError, setEmailError] = useState('');
@@ -25,21 +28,29 @@ const LoginForm = () => {
     password: '',
   });
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
-
-    if (e.target.name === 'email') {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setEmailError(!emailPattern.test(e.target.value) ? '이메일 형식으로 작성해 주세요.' : '');
-    } else if(e.target.name === 'password') {
-      setPasswordError(e.target.value.length > 7 ? '' : '8자 이상 입력해 주세요.');
-    }
   };
 
+  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (name === 'email') {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setEmailError(!emailPattern.test(value) ? '이메일 형식으로 작성해 주세요.' : '');
+    }
+
+    if (name === 'password') {
+      setPasswordError(value.length < 8 ? '8자 이상 입력해 주세요.' : '');
+    }
+  }
   const togglePasswordVisibility = (field: 'password' | 'confirmPassword') => {
     setPasswordVisibility((prev) => ({
       ...prev,
@@ -47,7 +58,7 @@ const LoginForm = () => {
     }));
   };
 
-  const isFormValid = !emailError && !passwordError && input.email && input.password;
+  const isFormValid = !emailError && !passwordError && Boolean(input.email) && Boolean(input.password);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,13 +76,19 @@ const LoginForm = () => {
       // Strict 동일한 사이트에서만 전송되도록 처리 CSRF공격 방지 유용
       cookies.set('accessToken', accessToken
         , { expires: 7, secure: true, sameSite: 'Strict' });
-      router.push('mydashboard')
+      router.replace('mydashboard')
       console.log('로그인 성공');
-    } catch (error) {
-      console.log(error)
-      console.error('로그인 실패:', error);
+    } catch(error) {
+      if (isAxiosError(error)) {
+        openModal();
+        setModalMessage(error.response?.data.message)
+        console.log(error);
+      }
     }
   };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <form onSubmit={handleSubmit} className='w-full px-12 flex flex-col gap-20'>
@@ -81,6 +98,7 @@ const LoginForm = () => {
           <input
             name='email'
             value={input.email}
+            onBlur={onBlur}
             onChange={onChange}
             className={`px-16 py-15 ${emailError ? 'errorInput' : 'input'}`}
             placeholder="이메일을 입력해 주세요"
@@ -95,6 +113,7 @@ const LoginForm = () => {
             id="pw"
             name='password'
             value={input.password}
+            onBlur={onBlur}
             onChange={onChange}
             className={`px-16 py-15 ${passwordError ? 'errorInput' : 'input'}`}
             placeholder="8자 이상 입력해 주세요"
@@ -114,9 +133,17 @@ const LoginForm = () => {
         </div>
       </div>
       <div className='flex-center flex-col gap-24'>
-        <button type="submit" className={isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'}>로그인</button>
+        <button type="submit" className={isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'} disabled={!isFormValid}>로그인</button>
         <div>회원이 아니신가요? <Link className='text-violet-20 underline' href='/signup'>회원가입하기</Link></div>
       </div>
+      {modalMessage && (<SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <div className="pb-44 sm:pb-24">{modalMessage}</div>
+
+        <button onClick={closeModal} className="btn_modal_small_purple sm:btn_modal_large_purple absolute bottom-28 sm:right-28">확인</button>
+      </SimpleModal>)}
     </form>
   );
 };

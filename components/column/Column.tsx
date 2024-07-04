@@ -1,10 +1,13 @@
-// Assuming getColumn is an async function that fetches the JSON data
-// import ColumnCard from '@/components/ColumnCard';
+import ColumnCard from '@/components/column/ColumnCard';
 import EditColumnModal from '@/components/column/EditColumnModal';
 import { addColumn } from '@/pages/api/column/addColumn';
 import { deleteColumn } from '@/pages/api/column/deleteColumn';
+import { getCardList } from '@/pages/api/column/getCardList';
 import { getColumn } from '@/pages/api/column/getColumn';
+import { Card } from '@/types/card';
+// import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 interface Column {
@@ -16,65 +19,64 @@ interface Column {
   updatedAt: string;
 }
 
-const dashboardId = 9728;
+//   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
 
-const Column: React.FC = () => {
+const ColumnComponent = ({ columnId }: { columnId: number }) => {
+  const router = useRouter();
+  const { dashboardId } = router.query;
   const [columns, setColumns] = useState<Column[]>([]);
-  // 각 컬럼의 showAddColumn 상태를 관리하는 객체 상태 초기화
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
     [key: number]: boolean;
-  }>(columns.reduce((acc, column) => ({ ...acc, [column.id]: false }), {}));
+  }>({});
 
   const toggleShowAddColumn = (columnId: number) => {
-    // 현재 클릭된 컬럼 ID를 제외하고 모든 컬럼의 모달 표시 상태를 false로 설정
-    const updatedStates = Object.keys(showAddColumnStates).reduce(
-      (acc, id) => {
-        acc[parseInt(id)] = false;
-        return acc;
-      },
-      {} as { [key: number]: boolean },
-    );
-
-    // 현재 클릭된 컬럼의 모달 표시 상태를 토글
-    updatedStates[columnId] = !showAddColumnStates[columnId];
-
-    setShowAddColumnStates(updatedStates);
+    setShowAddColumnStates((prevState) => ({
+      ...prevState,
+      [columnId]: !prevState[columnId],
+    }));
   };
 
   const handleDeleteColumn = async (columnId: number) => {
     await deleteColumn(columnId);
     setColumns(columns.filter((column) => column.id !== columnId));
   };
+
   useEffect(() => {
     const fetchColumns = async () => {
-      const data = await getColumn(dashboardId.toString()); // 컬럼 api 받아오기
-      setColumns(data.data); // JSON사용하기 위해 변경
+      if (dashboardId !== undefined) {
+        const data = await getColumn(dashboardId.toString()); // 왠지 이렇게해야 작동중
+        setColumns(data.data);
+      } else {
+        console.error('dashboardId is undefined');
+      }
+    };
+    fetchColumns();
+  }, [dashboardId]);
+
+  // cards
+  const [cards, setCards] = useState<Card[]>([]);
+
+  // 카드 목록 불러오기
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const fetchedCards = await getCardList(columnId);
+        setCards(fetchedCards.cards);
+      } catch (error) {
+        console.error('Failed to fetch cards:', error);
+      }
     };
 
-    fetchColumns();
-  }, []);
+    fetchCards(); // Call the fetch function
+  }, [columnId]); // columnId가 변경될 때마다 fetchCards 함수를 호출
 
-  // const handleAddColumn = async () => {
-  //   if (columns.length < 10) {
-  //     const newColumn: Column = {
-  //       id: columns.length + 1,
-  //       title: `${columns.length + 1}열입니다`,
-  //       teamId: '',
-  //       dashboardId: 0,
-  //       createdAt: '',
-  //       updatedAt: '',
-  //     };
-  //     await addColumn(dashboardId);
-  //     setColumns([...columns, newColumn]);
-  //   }
-  // };
   const handleAddColumn = async () => {
     if (columns.length <= 10) {
-      await addColumn(dashboardId);
-      const newColumn = columns[columns.length - 1];
+      const newColumn = await addColumn(dashboardId);
       setColumns([...columns, newColumn]);
     }
   };
+
   const addTodoModal = (index: number) => {
     alert(`${index}행입니다. 할일 카드 모달 연결 예정입니다~`);
   };
@@ -132,10 +134,12 @@ const Column: React.FC = () => {
             alt="button to add a column"
           />
         </button>
-        {/* <ColumnCard /> */}
+        {cards.map((card) => (
+          <ColumnCard card={card} key={card.id} />
+        ))}
       </div>
     </>
   );
 };
 
-export default Column;
+export default ColumnComponent;

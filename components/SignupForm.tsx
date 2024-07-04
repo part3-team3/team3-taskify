@@ -3,9 +3,11 @@ import visible from '@/public/images/icon/ic-visible.svg';
 import axios from '@/lib/axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import cookies from 'js-cookie';
+import { isAxiosError } from 'axios';
+import SimpleModal from './common/SimpleModal';
 
 interface InputState {
   email: string;
@@ -14,13 +16,22 @@ interface InputState {
   checkPassword: string;
 }
 
+interface PasswordVisibilityState {
+  password: boolean;
+  confirmPassword: boolean;
+}
+
+interface ValidateFieldParams {
+  name: 'email' | 'nickname' | 'password' | 'checkPassword';
+  value: string;
+}
+
 const SignupForm = () => {
   const [checked, setChecked] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [nameError, setNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [checkPasswordError, setCheckPasswordError] = useState('');
-  const router = useRouter();
   const [input, setInput] = useState<InputState>({
     email: '',
     nickname: '',
@@ -33,7 +44,12 @@ const SignupForm = () => {
     confirmPassword: false,
   });
 
-  const togglePasswordVisibility = (field: 'password' | 'confirmPassword') => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false); // 성공 여부 추가
+  const router = useRouter();
+
+  const togglePasswordVisibility = (field: keyof PasswordVisibilityState) => {
     setPasswordVisibility((prev) => ({
       ...prev,
       [field]: !prev[field],
@@ -44,23 +60,35 @@ const SignupForm = () => {
     setChecked(!checked);
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
+  };
 
-    if (e.target.name === 'email') {
+  const validateField = ({ name, value }: ValidateFieldParams) => {
+    if (name === 'email') {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setEmailError(!emailPattern.test(e.target.value) ? '이메일 형식으로 작성해 주세요.' : '');
-    } else if(e.target.name === 'name') {
-      setNameError(e.target.value ? '' : '닉네임을 입력해 주세요.') 
-    } else if(e.target.name === 'password') {
-      setPasswordError(e.target.value.length > 7 ? '' : '8자 이상 입력해 주세요.')
-    } else if(e.target.name === 'checkPassword') {
-      setCheckPasswordError(e.target.value === input.password ? '' : '비밀번호가 일치하지 않습니다.')
+      setEmailError(!emailPattern.test(value) ? '이메일 형식으로 작성해 주세요.' : '');
+    } else if (name === 'nickname') {
+      setNameError(value ? '' : '닉네임을 입력해 주세요.');
+    } else if (name === 'password') {
+      setPasswordError(value.length > 7 ? '' : '8자 이상 입력해 주세요.');
+      if (input.checkPassword) {
+        setCheckPasswordError(value === input.checkPassword ? '' : '비밀번호가 일치하지 않습니다.');
+      }
+    } else if (name === 'checkPassword') {
+      setCheckPasswordError(value === input.password ? '' : '비밀번호가 일치하지 않습니다.');
     }
-  }
+  };
+
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    validateField({ name: name as 'email' | 'nickname' | 'password' | 'checkPassword', value });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {email, nickname, password} = input;
@@ -78,12 +106,27 @@ const SignupForm = () => {
       // Strict 동일한 사이트에서만 전송되도록 처리 CSRF공격 방지 유용
       cookies.set('accessToken', accessToken
         , { expires: 1, secure: true, sameSite: 'Strict' });
-      router.replace('mydashboard')
+      setModalMessage('가입이 완료되었습니다!');
+      setIsSuccess(true); // 성공 상태 설정
+      openModal();
       console.log('로그인 성공');
-    } catch (error) {
-      console.error('로그인 실패:', error);
+    } catch(error) {
+      if (isAxiosError(error)) {
+        openModal();
+        setModalMessage(error.response?.data.message)
+        setIsSuccess(false); // 실패 상태 설정
+        console.log(error);
+      }
     }
   }
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    if (isSuccess) {
+      router.replace('mydashboard'); // 성공 시 페이지 이동
+    }
+  };
   
   const isFormValid = checked && !emailError && !nameError && !passwordError && !checkPasswordError && input.email && input.nickname && input.password && input.checkPassword;
   
@@ -95,6 +138,7 @@ const SignupForm = () => {
           <input
             name='email'
             value={input.email}
+            onBlur={onBlur}
             onChange={onChange}
             className={`px-16 py-15 ${emailError ? 'errorInput' : 'input'}`}
             placeholder="이메일을 입력해 주세요"
@@ -108,6 +152,7 @@ const SignupForm = () => {
           <input
             name='nickname'
             value={input.nickname}
+            onBlur={onBlur}
             onChange={onChange}
             className={`px-16 py-15 ${nameError ? 'errorInput' : 'input'}`}
             placeholder="닉네임을 입력해 주세요"
@@ -123,6 +168,7 @@ const SignupForm = () => {
               id="pw"
               name='password'
               value={input.password}
+              onBlur={onBlur}
               onChange={onChange}
               className={`px-16 py-15 ${passwordError ? 'errorInput' : 'input'}`}
               placeholder="8자 이상 입력해 주세요"
@@ -146,6 +192,7 @@ const SignupForm = () => {
               id="pw-confirm"
               name='checkPassword'
               value={input.checkPassword}
+              onBlur={onBlur}
               onChange={onChange}
               className={`px-16 py-15 ${checkPasswordError ? 'errorInput' : 'input'}`}
               placeholder="비밀번호를 한번 더 입력해 주세요"
@@ -180,7 +227,7 @@ const SignupForm = () => {
         </div>
       </div>
       <div className="flex-col gap-24 flex-center">
-        <button className={isFormValid  ? 'btn_login_large_active' : 'btn_login_large_disabled'}>가입하기</button>
+        <button type='submit' className={isFormValid  ? 'btn_login_large_active' : 'btn_login_large_disabled'} disabled={!isFormValid}>가입하기</button>
         <div>
           이미 가입하셨나요?{' '}
           <Link className="text-violet-20 underline" href="/login">
@@ -188,6 +235,14 @@ const SignupForm = () => {
           </Link>
         </div>
       </div>
+      {modalMessage && (<SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <div className="pb-44 sm:pb-24">{modalMessage}</div>
+
+        <button onClick={closeModal} className="btn_modal_small_purple sm:btn_modal_large_purple absolute bottom-28 sm:right-28">확인</button>
+      </SimpleModal>)}
     </form>
   );
 };

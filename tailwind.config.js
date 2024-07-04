@@ -75,12 +75,6 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       addUtilities({
-        '.input': {
-          border: '1px solid #D9D9D9',
-          borderRadius: '8px',
-          width: '100%',
-          height: '50px',
-        },
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
@@ -369,12 +363,6 @@ module.exports = {
           border: '1px solid #D9D9D9',
           borderRadius: '4px',
         },
-        '.input': {
-          border: '1px solid #D9D9D9',
-          borderRadius: '8px',
-          width: '100%',
-          height: '50px',
-        },
         // 랜딩페이지 로그인 버튼
         '.btn_landing_login': {
           width: '235px',
@@ -434,6 +422,32 @@ module.exports = {
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
+        },
+        // 회색 버튼
+        // 할일 수정 모달(d, t), 할일 생성 모달(d, t)
+        '.btn_modal_large_gray': {
+          width: '120px',
+          height: '48px',
+          padding: '14px 46px',
+          fontSize: '16px',
+          fontWeight: '500',
+          lineHeight: '19px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
+        // 회색 버튼
+        // 할일 수정 모달(m), 할일 생성 모달(m)
+        '.btn_modal_small_gray': {
+          width: '138px',
+          height: '42px',
+          padding: '12px 56px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
         },
       });
     },
