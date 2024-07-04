@@ -1,5 +1,5 @@
 import { Invitation } from '@/types/myDashboardTypes';
-import Image from 'next/image';
+//import Image from 'next/image';
 
 interface InvitedDashboardItemProps {
   invitedDashboard: Invitation;

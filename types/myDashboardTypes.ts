@@ -33,3 +33,9 @@ export interface InvitationResponse {
   cursorId: number;
   invitations: Invitation[];
 }
+
+export interface InvitedParams {
+  title?: string | string[] | undefined;
+  cursorId?: number | null | undefined;
+  size?: number;
+}
