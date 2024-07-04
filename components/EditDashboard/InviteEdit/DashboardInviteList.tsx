@@ -57,7 +57,7 @@ const DashboardInviteList = () => {
 
   const onCancelInvitation = async (id: number) => {
     try {
-      await axios.delete(`dashboards/9765/invitations/${id}`);
+      await axios.delete(`dashboards/${dashboardId}/invitations/${id}`);
       setInvitations((prevInvitations) =>
         prevInvitations.filter((invitation) => invitation.id !== id),
       );

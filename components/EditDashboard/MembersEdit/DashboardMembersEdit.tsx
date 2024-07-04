@@ -78,7 +78,6 @@ const DashboardMembersEdit = () => {
 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>{error}</div>;
-
   return (
     <div className="px-20">
       <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">

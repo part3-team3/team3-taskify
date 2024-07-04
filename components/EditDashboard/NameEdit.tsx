@@ -52,7 +52,7 @@ const DashboardNameEdit = () => {
 
     const colorCode = getColorCode(color);
     try {
-      const response = await instance.put('dashboards/9765', {
+      const response = await instance.put('dashboards/${dashboardId}', {
         title: inputTitle,
         color: colorCode,
       });
