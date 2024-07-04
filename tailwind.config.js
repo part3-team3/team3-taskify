@@ -423,6 +423,32 @@ module.exports = {
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
         },
+        // 회색 버튼
+        // 할일 수정 모달(d, t), 할일 생성 모달(d, t)
+        '.btn_modal_large_gray': {
+          width: '120px',
+          height: '48px',
+          padding: '14px 46px',
+          fontSize: '16px',
+          fontWeight: '500',
+          lineHeight: '19px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
+        // 회색 버튼
+        // 할일 수정 모달(m), 할일 생성 모달(m)
+        '.btn_modal_small_gray': {
+          width: '138px',
+          height: '42px',
+          padding: '12px 56px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
       });
     },
   ],
