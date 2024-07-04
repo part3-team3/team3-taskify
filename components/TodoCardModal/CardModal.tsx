@@ -58,6 +58,7 @@ const CardModal = () => {
           <TodoFormModal
             setIsModalOpen={setIsModalOpen}
             card={card}
+            isInEdit={isInEdit}
             setIsInEdit={setIsInEdit}
           />
         ) : (

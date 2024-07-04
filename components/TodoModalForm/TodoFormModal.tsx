@@ -15,10 +15,12 @@ import TagsInput from './TagsInput';
 
 const TodoFormModal = ({
   card,
+  isInEdit,
   setIsInEdit,
   setIsModalOpen,
 }: {
   card?: Card;
+  isInEdit?: boolean;
   setIsInEdit?: Dispatch<SetStateAction<boolean>>;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -64,6 +66,9 @@ const TodoFormModal = ({
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const isEditModalButtonDisabled =
+    (formData.title && formData.description).trim() === '' ? true : false;
 
   return (
     <div className="flex flex-col gap-24 md:gap-32">
@@ -120,7 +125,8 @@ const TodoFormModal = ({
         </button>
         <button
           onClick={onSubmit}
-          className="btn_modal_small_purple md:btn_modal_large_purple"
+          disabled={isInEdit && isEditModalButtonDisabled ? true : false}
+          className={`${isInEdit && isEditModalButtonDisabled ? 'btn_modal_small_gray md:btn_modal_large_gray' : 'btn_modal_small_purple md:btn_modal_large_purple'}`}
         >
           {isEditForm ? '수정' : '생성'}
         </button>

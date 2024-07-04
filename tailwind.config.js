@@ -222,6 +222,19 @@ module.exports = {
           border: '1px solid #D9D9D9',
           borderRadius: '8px',
         },
+        // 회색 버튼
+        // 할일 수정 모달(d, t), 할일 생성 모달(d, t)
+        '.btn_modal_large_gray': {
+          width: '120px',
+          height: '48px',
+          padding: '14px 46px',
+          fontSize: '16px',
+          fontWeight: '500',
+          lineHeight: '19px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '8px',
+        },
         // 보라색 버튼
         // 로그인 페이지 비밀번호 불일치 모달(m), 회원가입 페이지 가입 완료, 이미 사용중 이메일 모달(m), 마이페이지 비밀번호 틀렸습니다 모달(m)
         // 대시보드 생성 모달(m), 할일 수정 모달(m), 할일 생성 모달(m),
@@ -250,6 +263,19 @@ module.exports = {
           color: '#787486',
           backgroundColor: '#FFFFFF',
           border: '1px solid #D9D9D9',
+          borderRadius: '8px',
+        },
+        // 회색 버튼
+        // 할일 수정 모달(m), 할일 생성 모달(m)
+        '.btn_modal_small_gray': {
+          width: '138px',
+          height: '42px',
+          padding: '12px 56px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
           borderRadius: '8px',
         },
         // 보라색 버튼
