@@ -1,4 +1,4 @@
-import { privateApi } from '@/lib/axios';
+import instance from '@/lib/axios';
 import { useEffect, useState } from 'react';
 
 const colors = [
@@ -18,7 +18,7 @@ const ProfileImage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await privateApi.get(`/users/me`);
+        const res = await instance.get(`/users/me`);
         setNickname(res.data.nickname);
         setProfileImageUrl(res.data.profileImageUrl);
         if (res.data.profileImageUrl === null) {
@@ -39,7 +39,7 @@ const ProfileImage = () => {
   return (
     <div className="mx-auto mr-12 flex items-center justify-center">
       <div
-        className="flex h-38 h-[calc(1em/0.7)] w-38 w-[calc(1em/0.7)] justify-center rounded-full text-sm text-white"
+        className="flex h-38 w-38 justify-center rounded-full text-sm text-white"
         style={{
           backgroundColor: profileImageUrl === null ? bgColor : 'transparent',
         }}
@@ -52,7 +52,7 @@ const ProfileImage = () => {
           <img
             src={profileImageUrl}
             alt={nickname}
-            className="h-full w-full rounded-full"
+            className="flex h-38 w-38 justify-center rounded-full"
           />
         )}
       </div>
@@ -61,3 +61,8 @@ const ProfileImage = () => {
 };
 
 export default ProfileImage;
+
+/////
+/////
+/////
+/////
