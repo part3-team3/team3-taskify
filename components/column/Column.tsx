@@ -21,7 +21,7 @@ interface Column {
 
 //   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
 
-const ColumnComponent = ({ columnId }: { columnId: number }) => {
+const ColumnComponent = ({ columnId }: { columnId?: number }) => {
   const router = useRouter();
   const { dashboardId } = router.query;
   const [columns, setColumns] = useState<Column[]>([]);
@@ -70,7 +70,10 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
     fetchCards(); // Call the fetch function
   }, [columnId]); // columnId가 변경될 때마다 fetchCards 함수를 호출
 
-  const handleAddColumn = async () => {
+  const handleAddColumn = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    const dashboardId = Number(router.query.dashboardId);
     if (columns.length <= 10) {
       const newColumn = await addColumn(dashboardId);
       setColumns([...columns, newColumn]);
