@@ -32,7 +32,7 @@ const TodoCreateModal = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
       >
-        <TodoFormModal />
+        <TodoFormModal setIsModalOpen={setIsModalOpen} />
       </Modal>
     </div>
   );

@@ -1,7 +1,7 @@
-import { privateApi } from '@/lib/axios';
+import axios from '@/lib/axios';
 
 const deleteComment = async (commentId: number) => {
-  await privateApi.delete(`/comments/${commentId}`);
+  await axios.delete(`/comments/${commentId}`);
 };
 
 export default deleteComment;

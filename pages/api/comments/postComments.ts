@@ -1,4 +1,4 @@
-import { privateApi } from '@/lib/axios';
+import axios from '@/lib/axios';
 
 interface PostComment {
   content: string;
@@ -8,7 +8,7 @@ interface PostComment {
 }
 
 const postComments = async (body: PostComment) => {
-  const res = await privateApi.post('comments', body);
+  const res = await axios.post('comments', body);
   return res;
 };
 

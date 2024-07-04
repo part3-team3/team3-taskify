@@ -1,6 +1,6 @@
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
 import Modal from '@/components/common/Modal';
-import { privateApi } from '@/lib/axios';
+import axios from '@/lib/axios';
 import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
@@ -27,7 +27,7 @@ const NavBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await privateApi.get(`dashboards/9765`);
+        const response = await axios.get(`dashboards/9765`);
         setTitle(response.data.title);
         setCreatedByMe(response.data.createdByMe);
       } catch (error) {
@@ -41,7 +41,7 @@ const NavBar = () => {
   useEffect(() => {
     const fetchNickname = async () => {
       try {
-        const res = await privateApi.get(`/users/me`);
+        const res = await axios.get(`/users/me`);
         setNickname(res.data.nickname);
       } catch (error) {
         console.error('Error fetching data', error);
@@ -64,7 +64,7 @@ const NavBar = () => {
     }
 
     try {
-      await privateApi.post('dashboards/9765/invitations', { email: value });
+      await axios.post('dashboards/9765/invitations', { email: value });
       closeModal();
     } catch (error) {
       console.error('Error sending invitation:', error);
@@ -119,7 +119,6 @@ const NavBar = () => {
           </div>
         </Link>
       </div>
-
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
