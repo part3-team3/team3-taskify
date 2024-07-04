@@ -5,7 +5,6 @@ import { deleteColumn } from '@/pages/api/column/deleteColumn';
 import { getCardList } from '@/pages/api/column/getCardList';
 import { getColumn } from '@/pages/api/column/getColumn';
 import { Card } from '@/types/card';
-// import { getUsers } from '@/pages/api/column/getUsers';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -19,15 +18,14 @@ interface Column {
   updatedAt: string;
 }
 
-//   "assigneeUserId": 3976, "dashboardId": 9728, "columnId": 32815,
-
-const ColumnComponent = ({ columnId }: { columnId?: number }) => {
+const ColumnComponent = () => {
   const router = useRouter();
-  const { dashboardId } = router.query;
+  const dashboardId = Number(router.query.dashboardId);
   const [columns, setColumns] = useState<Column[]>([]);
   const [showAddColumnStates, setShowAddColumnStates] = useState<{
     [key: number]: boolean;
   }>({});
+  const [cards, setCards] = useState<Card[]>([]);
 
   const toggleShowAddColumn = (columnId: number) => {
     setShowAddColumnStates((prevState) => ({
@@ -43,37 +41,37 @@ const ColumnComponent = ({ columnId }: { columnId?: number }) => {
 
   useEffect(() => {
     const fetchColumns = async () => {
-      if (dashboardId !== undefined) {
-        const data = await getColumn(dashboardId.toString()); // 왠지 이렇게해야 작동중
+      if (!isNaN(dashboardId)) {
+        const data = await getColumn(dashboardId);
         setColumns(data.data);
       } else {
-        console.error('dashboardId is undefined');
+        console.error('dashboardId is not a valid number');
       }
     };
     fetchColumns();
   }, [dashboardId]);
 
-  // cards
-  const [cards, setCards] = useState<Card[]>([]);
-
-  // 카드 목록 불러오기
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const fetchedCards = await getCardList(columnId);
-        setCards(fetchedCards.cards);
+        const fetchedCards = await Promise.all(
+          columns.map(async (column) => {
+            const { cards } = await getCardList(column.id);
+            return cards;
+          }),
+        );
+        const flattenedCards = fetchedCards.flat();
+        setCards(flattenedCards);
+        console.log('카드 불러오기 성공');
       } catch (error) {
         console.error('Failed to fetch cards:', error);
       }
     };
 
-    fetchCards(); // Call the fetch function
-  }, [columnId]); // columnId가 변경될 때마다 fetchCards 함수를 호출
+    fetchCards();
+  }, [columns]);
 
-  const handleAddColumn = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    const dashboardId = Number(router.query.dashboardId);
+  const handleAddColumn = async () => {
     if (columns.length <= 10) {
       const newColumn = await addColumn(dashboardId);
       setColumns([...columns, newColumn]);
@@ -90,12 +88,12 @@ const ColumnComponent = ({ columnId }: { columnId?: number }) => {
         {columns.map((column, index) => (
           <div
             key={column.id}
-            className="mx-[30px] my-[22px] flex h-full w-full min-w-[308px] flex-wrap bg-gray-10 lg:h-[40px] lg:w-[354px]"
+            className="mx-[30px] my-[22px] flex h-full w-full min-w-[314px] flex-wrap bg-gray-10 lg:h-[40px] lg:w-[354px]"
           >
             <div className="my-[22px] mr-15 w-[8px]">ㅇ</div>
             <div className="my-[22px] mr-15 font-[700]"> {column.title}</div>
             <div className="my-[22px] mr-auto flex h-[20px] w-[20px] items-center justify-center rounded bg-[#EEEEEE] text-xs text-[#787496]">
-              0
+              {/* 0 */}
             </div>
             <Image
               onClick={() => toggleShowAddColumn(column.id)}
@@ -111,17 +109,26 @@ const ColumnComponent = ({ columnId }: { columnId?: number }) => {
                 handleDeleteColumn={handleDeleteColumn}
               />
             )}
-            <button
-              onClick={() => addTodoModal(index)}
-              className="bg-blue-500 flex h-40 w-full items-center justify-center rounded bg-white border-1px-solid-gray-30"
-            >
-              <Image
-                src="/images/icon/ic-color-add.svg"
-                width={22}
-                height={22}
-                alt="add button"
-              />
-            </button>
+            {column.id === column.id && (
+              <>
+                <button
+                  onClick={() => addTodoModal(index)}
+                  className="bg-blue-500 mb-[16px] flex h-40 w-full items-center justify-center rounded bg-white border-1px-solid-gray-30"
+                >
+                  <Image
+                    src="/images/icon/ic-color-add.svg"
+                    width={22}
+                    height={22}
+                    alt="add button"
+                  />
+                </button>
+                {cards
+                  .filter((card) => card.columnId === column.id)
+                  .map((card) => (
+                    <ColumnCard card={card} key={card.id} />
+                  ))}
+              </>
+            )}
           </div>
         ))}
         <button
@@ -137,9 +144,6 @@ const ColumnComponent = ({ columnId }: { columnId?: number }) => {
             alt="button to add a column"
           />
         </button>
-        {cards.map((card) => (
-          <ColumnCard card={card} key={card.id} />
-        ))}
       </div>
     </>
   );
