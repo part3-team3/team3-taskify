@@ -28,7 +28,7 @@ const AddColumnModal: React.FC<AddColumnModalProps> = ({
           <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
           <p className="mb-10 h-21">이름</p>
           <input
-            className="mb-28 rounded border-1px-solid-gray-30"
+            className="mb-28 rounded border-1px-solid-gray-30 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px]"
             placeholder="컬럼 제목을 입력해주세요"
           />
           <div className="flex justify-between">

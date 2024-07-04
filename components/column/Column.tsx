@@ -86,7 +86,8 @@ const ColumnComponent = ({ columnId }: { columnId: number }) => {
 
   const handleAddColumn = async () => {
     if (columns.length <= 10) {
-      const newColumn = await addColumn(dashboardId);
+      const columnTitle = localStorage.getItem('newColumnTitle');
+      const newColumn = await addColumn(dashboardId, columnTitle);
       setColumns([...columns, newColumn]);
     }
   };
