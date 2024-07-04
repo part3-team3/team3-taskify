@@ -273,7 +273,7 @@ module.exports = {
         '.btn_desktop_white': {
           width: '85px',
           height: '32px',
-          padding: '7px 29px',
+          padding: '7px 25px',
           fontSize: '14px',
           fontWeight: '500',
           lineHeight: '17px',

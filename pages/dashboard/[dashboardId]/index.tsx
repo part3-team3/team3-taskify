@@ -11,9 +11,9 @@ const Index = () => {
         <NavBar />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div style={{ width: '300px' }}>
+        {/* <div style={{ width: '300px' }}>
           <DashboardExample />
-        </div>
+        </div> */}
         <div style={{ width: '1620px' }}>
           <Column /> {/* Add the required 'columnId' prop */}
         </div>

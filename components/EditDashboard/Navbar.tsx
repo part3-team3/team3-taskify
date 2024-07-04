@@ -88,7 +88,7 @@ const NavBar = () => {
   const inputClassName = isValidEmail ? 'border-gray-300' : 'border-red-500';
 
   return (
-    <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
+    <div className="flex h-60 w-1620 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
       <div className="flex hidden gap-8 px-[40px] text-xl font-bold md:flex">
         {title}
         {createdByMe && (
