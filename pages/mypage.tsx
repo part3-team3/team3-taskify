@@ -1,7 +1,36 @@
 
+import ChangePassword from '@/components/Mypage/ChangePassword';
+import ProfileChange from '@/components/Mypage/ProfileChange';
+import SideBar from '@/components/sidebar/SideBar';
+import arrow from '@/public/images/icon/ic-on-arrow-left.svg'
+import Image from 'next/image';
+
 const MyPage = () => {
   return (
-    <div>my page</div>
+    <div className='relative text-black-20'>
+      <div className='h-60 w-full pl-67 md:pl-160 xl:pl-300 flex items-center justify-between border-b border-gray-30 md:pr-40 md:h-70 xl:pr-80'>
+        <div className='text-20 pl-40 font-bold'>계정관리</div>
+        <div className='flex items-center gap-12 pr-13'>
+          <div className='rounded-50 w-34 h-34 bg-black'></div>
+          <div>배유철</div>
+        </div>
+      </div>
+      <div className='absolute top-0 left-0'>
+        <SideBar />
+      </div>
+      <div className='pl-65 md:pl-160 xl:pl-300'>
+        <div className='px-12 md:px-20'>
+          <div className='flex gap-4 pt-15 cursor-pointer'>
+            <Image className='w-20 h-20 md:w-24 md:h-24' src={arrow} alt='returnarrow' />
+            <div className='text-14 text-cente md:text-16 hover:underline'>돌아가기</div>
+          </div>
+          <div className='flex flex-col gap-12'>
+            <ProfileChange />
+            <ChangePassword />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
