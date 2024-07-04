@@ -1,5 +1,5 @@
 import Modal from '@/components/common/Modal';
-import { getDashboard } from '@/pages/api/getDashboard';
+import { getDashboard } from '@/pages/api/mydashboard/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import PaginationBar from './PaginationBar';
 
 const DashboardList: React.FC = () => {
   const [page, setPage] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [size, setSize] = useState(5);
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);

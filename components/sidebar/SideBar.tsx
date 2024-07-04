@@ -2,7 +2,7 @@
 import CreateDashboardContent from '@/components/MyDashboard/CreateDashboardContent';
 import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import Modal from '@/components/common/Modal';
-import { getDashboard } from '@/pages/api/getDashboard';
+import { getDashboard } from '@/pages/api/mydashboard/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 import Link from 'next/link';

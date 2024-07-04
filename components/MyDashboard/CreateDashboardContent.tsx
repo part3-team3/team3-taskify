@@ -1,4 +1,4 @@
-import { getDashboard } from '@/pages/api/postDashboard';
+import { postDashboard } from '@/pages/api/mydashboard/postDashboard';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -33,7 +33,7 @@ const CreateDashboardModalContent: React.FC<
     }
 
     try {
-      const response = await getDashboard({
+      const response = await postDashboard({
         title: inputTitle,
         color: clickedColor,
       });
