@@ -38,11 +38,11 @@ const InvitedDashboardItem = ({
     <>
       <div className="mb-32 md:flex md:w-full md:h-70 md:mb-0 md:items-center	md:border-b xl:h-72">
         <div className="flex md:w-182 xl:w-348">
-          <p className="mr-28 md:hidden">이름</p>
+          <p className="mr-28  text-sm text-normal text-gray-40 md:hidden">이름</p>
           <p className='md:pl-30 xl:pl-36'>{invitedDashboard.dashboard.title}</p>
         </div>
         <div className="flex md:w-112 xl:w-302">
-          <p className="mr-16 md:hidden ">초대자</p>
+          <p className="mr-16 text-sm text-normal text-gray-40 md:hidden ">초대자</p>
           <p>{invitedDashboard.inviter.nickname}</p>
         </div>
         <div className="flex gap-10 md:w-154 md:gap-9 xl:w-316">

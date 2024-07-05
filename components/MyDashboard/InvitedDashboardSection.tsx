@@ -111,7 +111,7 @@ const InvitedDashboardSection: React.FC = () => {
               </p>
 
               <SearchBar initialValue={title as string} />
-              <div className='hidden md:flex md:mb-4'>
+              <div className='hidden md:flex md:mb-4 md:text-base md:text-normal md:text-gray-40'>
                 <p className='md:w-182 xl:w-348'>이름</p>
                 <p className=" md:w-112 xl:w-302">초대자</p>
                 <p className="md:w-154 xl:w-316">수락 여부</p>
