@@ -1,10 +1,14 @@
 import { Dashboard } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 
-interface MyDashboardItemProps {
+interface SideBarItemDashboardProps {
   myDashboard: Dashboard;
+  isActive: boolean;
 }
-const SideBarItem = ({ myDashboard }: MyDashboardItemProps) => {
+const SideBarItemDashboard = ({
+  myDashboard,
+  isActive,
+}: SideBarItemDashboardProps) => {
   const dashboardColor: { [coloKkey: string]: string } = {
     '#7AC555': 'bg-green',
     '#760DDE': 'bg-purple',
@@ -13,7 +17,11 @@ const SideBarItem = ({ myDashboard }: MyDashboardItemProps) => {
     '#76A5EA': 'bg-blue',
   };
   return (
-    <div className="flex h-20 w-20 flex-row items-center justify-center md:justify-normal md:h-43 md:w-134 xl:h-45 xl:w-276">
+    <div
+      className={`flex h-20 w-20 flex-row items-center justify-center rounded md:justify-normal md:h-43 md:w-134 xl:h-45 xl:w-276 ${
+        isActive ? 'bg-violet-10' : ''
+      }`}
+    >
       <div
         className={`${dashboardColor[myDashboard.color]} h-8 w-8 rounded-full`}
       ></div>
@@ -33,4 +41,4 @@ const SideBarItem = ({ myDashboard }: MyDashboardItemProps) => {
   );
 };
 
-export default SideBarItem;
+export default SideBarItemDashboard;
