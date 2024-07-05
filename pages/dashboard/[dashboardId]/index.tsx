@@ -1,18 +1,18 @@
 import NavBar from '@/components/EditDashboard/Navbar';
-import ColumnList from '@/components/column/ColumnList';
+import Column from '@/components/column/Column';
 import SideBar from '@/components/sidebar/SideBar';
 import React from 'react';
 
 const Index = () => {
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div style={{ width: '300px' }}>
+      <div className="flex">
+        <div className="w-[300px]">
           <SideBar />
         </div>
-        <div style={{ width: '1620px' }}>
+        <div className="min-w-0 flex-1">
           <NavBar />
-          <ColumnList />
+          <Column />
         </div>
       </div>
     </>

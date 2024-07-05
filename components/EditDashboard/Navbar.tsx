@@ -6,29 +6,35 @@ import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
+
 import { MenuProps } from 'antd';
 import dynamic from 'next/dynamic';
+
+
+
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+
 
 const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
   ssr: false,
 });
 
+
+
 const items: MenuProps['items'] = [
   {
     key: '1',
-    label: <Link href="/">로그아웃</Link>,
+    label: <a href="/">로그아웃</a>,
   },
   {
     key: '2',
-    label: <Link href="/mypage">내 정보</Link>,
+    label: <a href="/mypage">내 정보</a>,
   },
   {
     key: '3',
-    label: <Link href="/mydashboard">내 대시보드</Link>,
+    label: <a href="/mydashboard">내 대시보드</a>,
   },
 ];
 
