@@ -1,4 +1,3 @@
-
 import CreateDashboardContent from '@/components/MyDashboard/CreateDashboardContent';
 import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import Modal from '@/components/common/Modal';
@@ -18,36 +17,41 @@ const SideBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const getDashboardData = async () => {
+    try {
+      const getDashboardRes: DashboardResponse = await getDashboard({
+        page,
+        size,
+      });
+      setAllDashboardList(getDashboardRes.dashboards);
+      setTotalPage(Math.ceil(getDashboardRes.totalCount / size));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const getDashboardData = async () => {
-      try {
-        const getDashboardRes: DashboardResponse = await getDashboard({
-          page,
-          size,
-        });
-        setAllDashboardList(getDashboardRes.dashboards);
-        setTotalPage(Math.ceil(getDashboardRes.totalCount / size));
-      } catch (err) {
-        console.log(err);
-      }
-    };
     getDashboardData();
   }, [page, size]);
 
   const onPageChange = (pageNumber: number) => {
     setPage(pageNumber);
   };
+  
+  const handleDashboardCreated = () => {
+    getDashboardData();
+  };
   return (
     <aside className="blcok flex h-screen w-67 flex-col items-center border-r border-solid border-gray-30 bg-white md:w-160 xl:w-300 xl:items-start xl:px-12">
       <Link href={`/`}>
-      <div className="relative mb-39 mt-20 h-28 w-24 md:hidden">
-        <Image fill src="/images/logo/nav-logo-sm.png" alt="taskify 로고" />
-      </div>
-      <div className="relative mb-60 mt-20 hidden h-34 w-109 md:block xl:h-34">
-        <Image fill src="/images/logo/nav-logo-xl.png" alt="taskify 로고" />
-      </div>
+        <div className="relative mb-39 mt-20 h-28 w-24 md:hidden">
+          <Image fill src="/images/logo/nav-logo-sm.png" alt="taskify 로고" />
+        </div>
+        <div className="relative mb-60 mt-20 hidden h-34 w-109 md:block xl:h-34">
+          <Image fill src="/images/logo/nav-logo-xl.png" alt="taskify 로고" />
+        </div>
       </Link>
-      
 
       <ul className="flex flex-col items-center justify-start md:items-start">
         <div
@@ -79,7 +83,6 @@ const SideBar = () => {
       </ul>
 
       <div className="absolute bottom-15 left-12 hidden md:block">
-
         {allDashboardList && (
           <PaginationBar
             totalPage={totalPage}
@@ -94,7 +97,10 @@ const SideBar = () => {
         width="327px"
         height="293px"
       >
-        <CreateDashboardContent closeModal={closeModal} />
+        <CreateDashboardContent
+          closeModal={closeModal}
+          onDashboardCreated={handleDashboardCreated}
+        />
       </Modal>
     </aside>
   );

@@ -1,13 +1,13 @@
-import { getInvitedDashboard, getSearchDashboard } from '@/pages/api/mydashboard/getInvitedDashboard';
+import {
+  getInvitedDashboard,
+  getSearchDashboard,
+} from '@/pages/api/mydashboard/getInvitedDashboard';
 import { Invitation, InvitationResponse } from '@/types/myDashboardTypes';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-
-
 import InvitedDashboardItem from './InvitedDashboardItem';
 import SearchBar from './SearchBar';
-
 
 const InvitedDashboardSection: React.FC = () => {
   const [allInvitedDashboardList, setAllInvitedDashboardList] = useState<
@@ -21,9 +21,7 @@ const InvitedDashboardSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const getInvitedDashboardData = async (
-      cursor?: number | null,
-    ) => {
+    const getInvitedDashboardData = async (cursor?: number | null) => {
       if (null === cursor) return;
       setIsLoading(true);
       try {
@@ -81,7 +79,9 @@ const InvitedDashboardSection: React.FC = () => {
   }, [cursorId, isLoading]);
 
   useEffect(() => {
-    const getSearchDashboardData = async (query: string | string[] | undefined) => {
+    const getSearchDashboardData = async (
+      query: string | string[] | undefined,
+    ) => {
       try {
         const getSearchDashboardRes: InvitationResponse =
           await getSearchDashboard(query as string);
@@ -93,12 +93,16 @@ const InvitedDashboardSection: React.FC = () => {
     getSearchDashboardData(title);
   }, [title]);
 
+  const handleInvitationAction = (invitationId: number) => {
+    setAllInvitedDashboardList((prevDashboards) =>
+      prevDashboards.filter((dashboard) => dashboard.id !== invitationId),
+    );
+  };
+
   return (
     <>
       <div className="mx-auto w-fit">
-        <SearchBar
-          initialValue={title as string}
-        />
+        <SearchBar initialValue={title as string} />
 
         <ul className="">
           {allInvitedDashboardList.length > 0 && (
@@ -109,6 +113,7 @@ const InvitedDashboardSection: React.FC = () => {
                     <li className="w-fit" key={invitedDashboard.id}>
                       <InvitedDashboardItem
                         invitedDashboard={invitedDashboard}
+                        onAction={handleInvitationAction}
                       />
                     </li>
                   );

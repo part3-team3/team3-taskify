@@ -18,30 +18,32 @@ const DashboardList: React.FC = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const getDashboardData = async () => {
+    try {
+      const getDashboardRes: DashboardResponse = await getDashboard({
+        page,
+        size,
+      });
+      setAllDashboardList(getDashboardRes.dashboards);
+      setTotalPage(Math.ceil(getDashboardRes.totalCount / size));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const getDashboardData = async () => {
-      try {
-        const getDashboardRes: DashboardResponse = await getDashboard({
-          page,
-          size,
-        });
-        setAllDashboardList(getDashboardRes.dashboards);
-        setTotalPage(Math.ceil(getDashboardRes.totalCount / size));
-      } catch (err) {
-        console.log(err);
-      }
-    };
     getDashboardData();
   }, [page, size]);
 
   const onPageChange = (pageNumber: number) => {
     setPage(pageNumber);
   };
-
+  const handleDashboardCreated = () => {
+    getDashboardData();
+  };
   return (
     <>
       <div className="mx-auto w-fit">
-
         <ul className="container grid h-388 w-260 grid-cols-1 grid-rows-6 gap-y-8 md:h-224 md:w-504 md:grid-cols-2 md:grid-rows-3 md:gap-x-8 xl:h-152 xl:w-1022 xl:grid-cols-3 xl:grid-rows-2 xl:gap-x-8">
           <div
             onClick={openModal}
@@ -88,9 +90,11 @@ const DashboardList: React.FC = () => {
         width="327px"
         height="293px"
       >
-        <CreateDashboardContent closeModal={closeModal} />
+        <CreateDashboardContent
+          closeModal={closeModal}
+          onDashboardCreated={handleDashboardCreated}
+        />
       </Modal>
-
     </>
   );
 };

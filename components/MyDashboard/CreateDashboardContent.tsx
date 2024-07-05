@@ -2,14 +2,14 @@ import { postDashboard } from '@/pages/api/mydashboard/postDashboard';
 import Image from 'next/image';
 import { useState } from 'react';
 
-
 interface CreateDashboardModalContentProps {
   closeModal: () => void;
+  onDashboardCreated: () => void;
 }
 
 const CreateDashboardModalContent: React.FC<
   CreateDashboardModalContentProps
-> = ({ closeModal }) => {
+> = ({ closeModal, onDashboardCreated }) => {
   const [inputTitle, setInputTitle] = useState('');
   const [clickedColor, setClickedColor] = useState<string | null>(null);
 
@@ -37,6 +37,7 @@ const CreateDashboardModalContent: React.FC<
         title: inputTitle,
         color: clickedColor,
       });
+      onDashboardCreated();
       closeModal();
     } catch (error) {
       alert('대시보드 생성에 실패했습니다. 다시 시도해주세요.');
@@ -52,7 +53,7 @@ const CreateDashboardModalContent: React.FC<
         placeholder="대시보드 제목 입력"
         value={inputTitle}
         onChange={handleTitleInput}
-        className="mb-4 w-full border-1px-solid-gray-30 p-2"
+        className="mb-4 w-full p-2 border-1px-solid-gray-30"
       />
       <div className="mb-4 flex space-x-2">
         {[
