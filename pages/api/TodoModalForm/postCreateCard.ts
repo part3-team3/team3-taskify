@@ -1,7 +1,7 @@
 import axios from '@/lib/axios';
-import { TodoCreateFormData } from '@/types/ModalFormData';
+import { TodoFormData } from '@/types/ModalFormData';
 
-const postCreateCard = async (createFormData: TodoCreateFormData) => {
+const postCreateCard = async (createFormData: TodoFormData) => {
   const res = await axios.post('cards', createFormData);
   return res.data;
 };

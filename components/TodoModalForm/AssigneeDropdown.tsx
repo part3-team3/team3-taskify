@@ -21,7 +21,7 @@ const Option = ({
   const addLeftMargin = isSelected === false;
 
   return (
-    <div className="flex" onClick={handleOptionClick}>
+    <div className="flex gap-6" onClick={handleOptionClick}>
       {isSelected && (
         <Image
           width={22}
@@ -31,7 +31,7 @@ const Option = ({
         />
       )}
       <div
-        className={`flex h-max w-max items-center gap-6 rounded-11 px-8 py-4 text-12 leading-[14px] ${addLeftMargin ? 'ml-28' : ''}`}
+        className={`flex h-max w-max items-center gap-6 rounded-11 py-4 text-12 leading-[14px] ${addLeftMargin ? 'ml-28' : ''}`}
       >
         <div className="relative h-26 w-26">
           <Image
@@ -93,7 +93,7 @@ const AssigneeDropdown = ({
         <div>
           <div
             onClick={handleDropdownVisible}
-            className="relative flex h-42 w-287 items-center rounded-6 px-16 py-13 border-1px-solid-gray-30 md:h-48 md:w-217"
+            className="relative flex items-center px-16 h-42 w-287 rounded-6 py-13 border-1px-solid-gray-30 md:h-48 md:w-217"
           >
             {selectedUser ? (
               <Option user={selectedUser} />
@@ -115,7 +115,7 @@ const AssigneeDropdown = ({
         </div>
       </div>
       {isDropdownOpen && (
-        <div className="absolute z-10 mt-2 flex h-max w-287 flex-col gap-13 rounded-6 bg-white px-8 py-13 border-1px-solid-gray-30 md:w-217">
+        <div className="absolute z-10 flex flex-col px-8 mt-2 bg-white h-max w-287 gap-13 rounded-6 py-13 border-1px-solid-gray-30 md:w-217">
           {membersData?.map((user) => (
             <div key={user.id}>
               <Option

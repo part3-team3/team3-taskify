@@ -1,7 +1,7 @@
 import axios from '@/lib/axios';
 
-const getColumns = async () => {
-  const res = await axios.get('/columns?dashboardId=10039');
+const getColumns = async (dashboardId: number) => {
+  const res = await axios.get(`/columns?dashboardId=${dashboardId}`);
 
   return res.data.data;
 };
