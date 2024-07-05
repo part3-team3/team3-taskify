@@ -106,7 +106,11 @@ const EditColumnModal: React.FC<EditColumnModalProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          {isDuplicate && <p className="text-red">중복된 칼럼 이름입니다.</p>}
+          {isDuplicate && (
+            <p className="absolute mt-[-20px] text-[14px] text-red">
+              중복된 칼럼 이름입니다.
+            </p>
+          )}
           <div className="flex justify-between">
             <button
               onClick={openDeleteConfirmModal}
@@ -142,13 +146,15 @@ const EditColumnModal: React.FC<EditColumnModalProps> = ({
             setIsDeleteConfirmVisible(false);
             setIsVisible(true);
           }}
-          width="400px"
-          height="200px"
+          width="540px"
+          height="250px"
         >
-          <h2 className="mb-4 text-xl font-bold">정말 삭제하시겠습니까?</h2>
-          <div className="mt-8 flex justify-end">
+          <h2 className="font-pretendard flex h-full flex-col items-center justify-center text-center font-medium text-[18]">
+            칼럼의 모든 카드가 삭제됩니다.
+          </h2>
+          <div className="mt-[-35px] flex justify-end gap-[12px]">
             <button
-              className="mr-4 btn_modal_large_white"
+              className="btn_modal_large_white"
               onClick={() => {
                 setIsDeleteConfirmVisible(false);
                 setIsVisible(true);
@@ -157,7 +163,7 @@ const EditColumnModal: React.FC<EditColumnModalProps> = ({
               취소
             </button>
             <button className="btn_modal_large_purple" onClick={handleDelete}>
-              확인
+              삭제
             </button>
           </div>
         </Modal>

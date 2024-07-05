@@ -89,7 +89,7 @@ const ColumnComponent = () => {
 
   return (
     <>
-      <div className="flex flex-wrap bg-gray-10 xl:mx-[30px] xl:h-[1010px] xl:flex-nowrap xl:overflow-x-auto">
+      <div className="flex flex-wrap bg-gray-10 xl:h-[1010px] xl:flex-nowrap xl:overflow-x-auto">
         {columns.map((column) => (
           <ColumnBox
             key={column.id}
