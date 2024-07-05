@@ -8,10 +8,11 @@ import React from 'react';
 
 // getServerSideProps 사용
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  console.log(req.headers.cookie);
   const cookies = cookie.parse(req.headers.cookie || '');
   const isLoggedIn = cookies['accessToken'] ? true : false;
 
-  // 이미 로그인된 사용자일 경우 메인 페이지로 리다이렉트
+  // 이미 로그인된 사용자일 경우 마이 페이지로 리다이렉트
   if (isLoggedIn) {
     return {
       redirect: {
