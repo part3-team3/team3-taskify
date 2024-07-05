@@ -6,10 +6,22 @@ import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
-import { Dropdown, MenuProps } from 'antd';
+
+import { MenuProps } from 'antd';
+import dynamic from 'next/dynamic';
+
+
+
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+
+
+const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
+  ssr: false,
+});
+
+
 
 const items: MenuProps['items'] = [
   {

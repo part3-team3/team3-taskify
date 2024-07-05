@@ -46,7 +46,14 @@ const TodoModal = ({
                 kebabButtonVisible={kebabButtonVisible}
               />
             </div>
-            <div className="relative flex h-24 w-24 md:h-32 md:w-32">
+
+            <div
+              onClick={handleModalClose}
+              className="relative flex h-24 w-24 cursor-pointer md:h-32 md:w-32"
+            >
+
+           
+
               <Image src="/images/icon/ic-x.svg" fill alt="x아이콘" />
             </div>
           </div>
@@ -55,7 +62,7 @@ const TodoModal = ({
         <div className="flex gap-24">
           <div>
             <Article card={card} columns={columns} />
-            <Comments />
+            <Comments card={card} />
           </div>
           <div>{(isTablet || isDesktop) && <Information card={card} />}</div>
         </div>
