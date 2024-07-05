@@ -31,7 +31,11 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
     const fetchMembers = async () => {
       if (!dashboardId || isNaN(Number(dashboardId))) return;
       try {
-        const res = await axios.get(`/members`);
+        const res = await axios.get(`/members`, {
+          params: {
+            dashboardId,
+          },
+        });
         console.log('API Response:', res.data);
         const filteredMembers = res.data.members.filter(
           (member: Member) => !member.isOwner,
@@ -60,7 +64,7 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
     return (
       <div
         key={index}
-        className={`flex h-34 w-34 items-center justify-center rounded-full text-sm text-white sm:h-34 sm:w-34 md:h-38 md:w-38 ${index !== 0 ? '-ml-2' : ''}`}
+        className={`flex h-34 w-34 items-center justify-center rounded-full text-sm text-white sm:h-34 sm:w-34 md:h-38 md:w-38 ${index !== 0 ? '-ml-8' : ''}`}
         style={{
           backgroundColor: member.profileImageUrl ? 'transparent' : randomColor,
         }}
