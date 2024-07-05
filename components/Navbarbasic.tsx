@@ -1,6 +1,5 @@
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
 import instance from '@/lib/axios';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 const NavBarbasic = () => {

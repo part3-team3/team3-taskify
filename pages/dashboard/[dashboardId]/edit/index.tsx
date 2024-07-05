@@ -13,15 +13,22 @@ const HomePage = () => {
   const dashboardId = Number(router.query.dashboardId);
 
   const handleDelete = async () => {
+    if (!dashboardId || isNaN(dashboardId)) return;
     try {
-      await axios.delete(`dashboards/${dashboardId}`);
+      await axios.delete(`/dashboards/${dashboardId}`, {
+        params: {
+          dashboardId,
+        },
+      });
       alert('대시보드가 삭제되었습니다.');
-      router.push(`dashboards/${dashboardId}`);
+      router.push('/dashboards');
     } catch (error) {
       console.error('대시보드 삭제에 실패했습니다:', error);
       alert('대시보드 삭제에 실패했습니다');
     }
   };
+
+  //돌아가기 버튼
   const handleBack = () => {
     router.push(`/dashboard/${dashboardId}`);
   };
