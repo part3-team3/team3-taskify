@@ -1,6 +1,7 @@
 import instance from '@/lib/axios';
 import { isAxiosError } from 'axios';
 import { useState } from 'react';
+
 import SimpleModal from '../common/SimpleModal';
 
 interface InputState {
@@ -38,7 +39,7 @@ const ChangePassword = () => {
       setCurrentPwError(value.length > 7 ? '' : '8자 이상 입력해 주세요.');
     } else if (name === 'newPw') {
       if (value === input.currentPw) {
-        setNewPwError('기존 비밀번호와 동일합니다.');
+        setNewPwError('현재 비밀번호와 일치합니다.');
       } else {
         setNewPwError(value.length > 7 ? '' : '8자 이상 입력해 주세요.');
       }
@@ -66,7 +67,12 @@ const ChangePassword = () => {
     const { currentPw, newPw } = input;
 
     try {
-      await instance.put('auth/password', { password:currentPw, newPassword:newPw });
+      await instance.put('auth/password', {
+        password: currentPw,
+        newPassword: newPw,
+      });
+      const res = instance.get('users/me');
+      console.log(res);
 
       console.log('비밀번호 변경 성공');
       setModalMessage('비밀번호가 성공적으로 변경되었습니다.');
@@ -112,12 +118,14 @@ const ChangePassword = () => {
             onChange={onChange}
             name="currentPw"
             value={input.currentPw}
-            className={`placeholder:text-14 md:placeholder:text-16 pl-16 text-14 md:h-48 md:text-16 ${currentPwError ? 'MyPageErrorInput':'MyPageInput'}`}
+            className={`pl-16 text-14 placeholder:text-14 md:h-48 md:text-16 md:placeholder:text-16 ${currentPwError ? 'MyPageErrorInput' : 'MyPageInput'}`}
             placeholder="현재 비밀번호 입력"
             type="password"
             autoComplete="password"
           />
-          {currentPwError && <div className="text-14 text-red">{currentPwError}</div>}
+          {currentPwError && (
+            <div className="text-14 text-red">{currentPwError}</div>
+          )}
         </div>
         <div className="flex flex-col gap-10">
           <h2 className="text-16 md:text-18">새 비밀번호</h2>
@@ -126,7 +134,7 @@ const ChangePassword = () => {
             onChange={onChange}
             value={input.newPw}
             name="newPw"
-            className={`placeholder:text-14 md:placeholder:text-16 pl-16 text-14 md:h-48 md:text-16 ${newPwError ? 'MyPageErrorInput':'MyPageInput'}`}
+            className={`pl-16 text-14 placeholder:text-14 md:h-48 md:text-16 md:placeholder:text-16 ${newPwError ? 'MyPageErrorInput' : 'MyPageInput'}`}
             placeholder="새 비밀번호 입력"
             type="password"
             autoComplete="password"
@@ -140,12 +148,14 @@ const ChangePassword = () => {
             onChange={onChange}
             value={input.checkNewPw}
             name="checkNewPw"
-            className={`placeholder:text-14 md:placeholder:text-16 pl-16 text-14 md:h-48 md:text-16 ${checkNewPwError ? 'MyPageErrorInput':'MyPageInput'}`}
+            className={`pl-16 text-14 placeholder:text-14 md:h-48 md:text-16 md:placeholder:text-16 ${checkNewPwError ? 'MyPageErrorInput' : 'MyPageInput'}`}
             placeholder="새 비밀번호 입력"
             type="password"
             autoComplete="password"
           />
-          {checkNewPwError && <div className="text-14 text-red">{checkNewPwError}</div>}
+          {checkNewPwError && (
+            <div className="text-14 text-red">{checkNewPwError}</div>
+          )}
         </div>
         <div className="flex justify-end">
           <button
