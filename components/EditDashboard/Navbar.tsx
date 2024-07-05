@@ -32,9 +32,11 @@ const NavBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`dashboards/${dashboardId}`);
-        setTitle(response.data.title);
-        setCreatedByMe(response.data.createdByMe);
+        if (dashboardId) {
+          const response = await axios.get(`dashboards/${dashboardId}`);
+          setTitle(response.data.title);
+          setCreatedByMe(response.data.createdByMe);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -77,7 +79,9 @@ const NavBar = () => {
       return;
     }
     try {
-      await axios.post('dashboards/9765/invitations', { email: value });
+      await axios.post(`dashboards/${dashboardId}/invitations`, {
+        email: value,
+      });
       closeModal();
       router.reload();
     } catch (error) {

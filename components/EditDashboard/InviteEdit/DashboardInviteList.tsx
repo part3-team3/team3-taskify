@@ -84,7 +84,9 @@ const DashboardInviteList = () => {
       return;
     }
     try {
-      await axios.post('dashboards/9765/invitations', { email: value });
+      await axios.post(`dashboards/${dashboardId}/invitations`, {
+        email: value,
+      });
       closeModal();
       router.reload();
     } catch (error) {

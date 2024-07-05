@@ -1,4 +1,4 @@
-import instance from '@/lib/axios';
+import axios from '@/lib/axios';
 import icCheckColor from '@/public/images/icon/ic-check-color.svg';
 import icDotBlue from '@/public/images/icon/ic-dot-blue.svg';
 import icDotGreen from '@/public/images/icon/ic-dot-green.svg';
@@ -21,8 +21,9 @@ const DashboardNameEdit = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!dashboardId) return;
       try {
-        const response = await instance.get(`dashboards/${dashboardId}`);
+        const response = await axios.get(`dashboards/${dashboardId}`);
         setTitle(response.data.title);
         setColor(getColorName(response.data.color));
       } catch (error) {
@@ -52,7 +53,7 @@ const DashboardNameEdit = () => {
 
     const colorCode = getColorCode(color);
     try {
-      const response = await instance.put('dashboards/${dashboardId}', {
+      const response = await axios.put(`dashboards/${dashboardId}`, {
         title: inputTitle,
         color: colorCode,
       });
