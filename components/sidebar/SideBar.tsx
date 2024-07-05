@@ -38,7 +38,7 @@ const SideBar = () => {
   const onPageChange = (pageNumber: number) => {
     setPage(pageNumber);
   };
-  
+
   const handleDashboardCreated = () => {
     getDashboardData();
   };
@@ -75,7 +75,9 @@ const SideBar = () => {
                 key={myDashboard.id}
               >
                 <Link href={`/dashboard/${myDashboard.id}`}>
-                  <SideBarItem myDashboard={myDashboard} />
+                  <SideBarItem
+                    myDashboard={myDashboard}
+                  />
                 </Link>
               </li>
             );
