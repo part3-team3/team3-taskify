@@ -4,9 +4,11 @@ import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const FileInput = ({
+  columnId,
   setFormData,
 }: {
-  setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  columnId?: number;
+  setFormData: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const [fileValue, setFileValue] = useState<string>('');
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
@@ -16,21 +18,24 @@ const FileInput = ({
       return;
     }
     setFileValue(e.target.value);
-    const selectedFile = e.target.files?.[0];
+    const selectedFile = e.target.files[0];
     const previewImage = URL.createObjectURL(selectedFile);
     setPreview(previewImage);
+    console.log(preview);
 
     const formData = new FormData();
     formData.append('image', selectedFile);
 
-    const image = await postCardImage(formData);
+    if (columnId !== undefined) {
+      const image = await postCardImage(formData, columnId); // 코드잇용 url 받아옴
 
-    setFormData?.((prevForm: TodoFormData) => {
-      return {
-        ...prevForm,
-        imageUrl: image.imageUrl,
-      };
-    });
+      setFormData((prevForm: TodoFormData) => {
+        return {
+          ...prevForm,
+          imageUrl: image.imageUrl,
+        };
+      });
+    }
   };
 
   return (
@@ -38,16 +43,17 @@ const FileInput = ({
       <div className="md:text-18 md:leading-[21px]">이미지</div>
       <div className="h-58 w-58 rounded-6 bg-gray-20 md:h-76 md:w-76">
         <label
-          className="h-58 w-58 flex-center md:h-76 md:w-76"
+          className="cursor-pointer h-58 w-58 flex-center md:h-76 md:w-76"
           htmlFor="fileInput"
         >
           {preview ? (
             <div className="relative h-58 w-58 md:h-76 md:w-76">
               <Image
                 src={preview as string}
-                className="rounded-6 object-cover"
+                className="rounded-6"
                 alt="미리보기"
                 fill
+                objectFit="cover"
               />
             </div>
           ) : (
