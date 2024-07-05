@@ -6,11 +6,11 @@ import React from 'react';
 const Index = () => {
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div style={{ width: '300px' }}>
+      <div className="flex">
+        <div className="w-[300px]">
           <SideBar />
         </div>
-        <div style={{ width: '1620px' }}>
+        <div className="min-w-0 flex-1">
           <NavBar />
           <Column />
         </div>
