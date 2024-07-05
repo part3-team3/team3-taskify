@@ -1,13 +1,14 @@
 import deleteComment from '@/pages/api/comments/deleteComments';
 import { getComments } from '@/pages/api/comments/getComments';
 import putComment from '@/pages/api/comments/putComments';
+import { Card } from '@/types/card';
 import { CommentList, Comment as CommentType } from '@/types/comments';
 import { useEffect, useState } from 'react';
 
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 
-const Comments = () => {
+const Comments = ({ card }: { card: Card }) => {
   const [comments, setComments] = useState<CommentType[]>([]);
   const [cursorId, setCursorId] = useState<number | null>(null); // API에서 받아온 커서 id
   const [cursor, setCursor] = useState<number | null | undefined>(); // 무한스크롤에 사용되는 커서
@@ -18,7 +19,7 @@ const Comments = () => {
       if (null === cursor) return;
       setIsLoading(true);
       try {
-        const commentsData: CommentList = await getComments(cursor);
+        const commentsData: CommentList = await getComments(card.id, cursor);
         setComments((prevComments) => [
           ...prevComments,
           ...commentsData.comments.filter(
