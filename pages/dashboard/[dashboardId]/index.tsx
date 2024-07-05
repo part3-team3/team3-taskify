@@ -1,3 +1,4 @@
+import NavBar from '@/components/EditDashboard/Navbar';
 import Column from '@/components/column/Column';
 import React from 'react';
 

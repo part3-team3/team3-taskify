@@ -1,3 +1,4 @@
+import MembersImage from '@/components/EditDashboard/MembersImage';
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
 import Modal from '@/components/common/Modal';
 import axios from '@/lib/axios';
@@ -7,9 +8,13 @@ import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 const NavBar = () => {
+  const router = useRouter();
+  const { dashboardId } = router.query;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
@@ -27,9 +32,11 @@ const NavBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`dashboards/9765`);
-        setTitle(response.data.title);
-        setCreatedByMe(response.data.createdByMe);
+        if (dashboardId) {
+          const response = await axios.get(`dashboards/${dashboardId}`);
+          setTitle(response.data.title);
+          setCreatedByMe(response.data.createdByMe);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,6 +45,15 @@ const NavBar = () => {
     fetchData();
   }, []);
 
+  //페이지 새로고침
+  const handleRefresh = () => {
+    if (router.pathname === `/dashboard/${dashboardId}/edit`) {
+      window.location.reload();
+    } else {
+      router.push(`/dashboard/${dashboardId}/edit`);
+    }
+  };
+  // 사용자 이름 가져오기
   useEffect(() => {
     const fetchNickname = async () => {
       try {
@@ -62,16 +78,18 @@ const NavBar = () => {
       setIsValidEmail(false);
       return;
     }
-
     try {
-      await axios.post('dashboards/9765/invitations', { email: value });
+      await axios.post(`dashboards/${dashboardId}/invitations`, {
+        email: value,
+      });
       closeModal();
+      router.reload();
     } catch (error) {
       console.error('Error sending invitation:', error);
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
     setValue(email);
     if (isValidEmail === false) {
@@ -83,14 +101,17 @@ const NavBar = () => {
 
   return (
     <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
-      <div className="flex gap-8 px-[40px] text-xl font-bold">
+      <div className="flex hidden gap-8 px-[40px] text-xl font-bold md:flex">
         {title}
         {createdByMe && (
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
       <div className="flex gap-[16px]">
-        <button className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600">
+        <button
+          onClick={handleRefresh}
+          className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600"
+        >
           <div className="flex gap-[8px] text-base">
             <Image src={icSetting} width={20} height={20} alt="관리" />
             관리
@@ -105,6 +126,7 @@ const NavBar = () => {
             초대하기
           </div>
         </button>
+
         <Image
           className="mr-8"
           src={icLineVertical}
@@ -113,8 +135,10 @@ const NavBar = () => {
           alt="구분선"
         />
         <Link href={'/mypage'} className="flex">
-          <ProfileImage />
-          <div className="mr-0 flex items-center justify-center lg:mr-80">
+          <div className="pr-0 sm:pr-12">
+            <ProfileImage />
+          </div>
+          <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
             {nickname}
           </div>
         </Link>
@@ -136,7 +160,7 @@ const NavBar = () => {
             placeholder="이메일을 입력해주세요"
           />
           {!isValidEmail && (
-            <p className="text-red-500 absolute left-0 mt-2 text-sm">
+            <p className="absolute left-0 mt-2 text-sm text-red">
               유효하지 않은 값입니다
             </p>
           )}

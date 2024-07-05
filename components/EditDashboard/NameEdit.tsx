@@ -1,4 +1,4 @@
-import { privateApi } from '@/lib/axios';
+import axios from '@/lib/axios';
 import icCheckColor from '@/public/images/icon/ic-check-color.svg';
 import icDotBlue from '@/public/images/icon/ic-dot-blue.svg';
 import icDotGreen from '@/public/images/icon/ic-dot-green.svg';
@@ -6,9 +6,13 @@ import icDotOrange from '@/public/images/icon/ic-dot-orange.svg';
 import icDotPink from '@/public/images/icon/ic-dot-pink.svg';
 import icDotPurple from '@/public/images/icon/ic-dot-purple.svg';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 const DashboardNameEdit = () => {
+  const router = useRouter();
+  const { dashboardId } = router.query;
+
   const [title, setTitle] = useState('');
   const [color, setColor] = useState('');
   const [loading, setLoading] = useState(true);
@@ -17,8 +21,9 @@ const DashboardNameEdit = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!dashboardId) return;
       try {
-        const response = await privateApi.get(`dashboards/9765`);
+        const response = await axios.get(`dashboards/${dashboardId}`);
         setTitle(response.data.title);
         setColor(getColorName(response.data.color));
       } catch (error) {
@@ -48,7 +53,7 @@ const DashboardNameEdit = () => {
 
     const colorCode = getColorCode(color);
     try {
-      const response = await privateApi.put('dashboards/9765', {
+      const response = await axios.put(`dashboards/${dashboardId}`, {
         title: inputTitle,
         color: colorCode,
       });
@@ -163,7 +168,3 @@ const DashboardNameEdit = () => {
 };
 
 export default DashboardNameEdit;
-
-//////////////////////
-////////////////////
-//////////////////////
