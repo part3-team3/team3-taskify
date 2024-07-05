@@ -1,5 +1,4 @@
-import instance from '@/lib/axios';
-import clsx from 'clsx';
+import axios from '@/lib/axios';
 import { useEffect, useState } from 'react';
 
 const colors = [
@@ -17,52 +16,51 @@ interface Member {
   isOwner: boolean;
 }
 
+interface MembersImageProps {
+  dashboardId: number;
+}
+
 const MAX_DESKTOP_MEMBERS = 4;
 const MAX_MOBILE_MEMBERS = 2;
 
-const MembersImage = () => {
+const MembersImage = ({ dashboardId }: MembersImageProps) => {
   const [members, setMembers] = useState<Member[]>([]);
   const [extraCount, setExtraCount] = useState(0);
 
   useEffect(() => {
     const fetchMembers = async () => {
+      if (!dashboardId || isNaN(Number(dashboardId))) return;
       try {
-        const res = await instance.get('members');
+        const res = await axios.get(`/members`);
         console.log('API Response:', res.data);
         const filteredMembers = res.data.members.filter(
           (member: Member) => !member.isOwner,
         );
         console.log('Filtered Members:', filteredMembers);
 
-        if (filteredMembers.length > MAX_DESKTOP_MEMBERS) {
-          setExtraCount(filteredMembers.length - MAX_DESKTOP_MEMBERS);
-        }
-
         setMembers(filteredMembers);
+        setExtraCount(
+          filteredMembers.length > MAX_DESKTOP_MEMBERS
+            ? filteredMembers.length - MAX_DESKTOP_MEMBERS
+            : 0,
+        );
       } catch (error) {
         console.error('Error fetching data', error);
       }
     };
+
     fetchMembers();
-  }, []);
+  }, [dashboardId]);
 
   const renderMember = (member: Member, index: number) => {
     const firstLetter = member.nickname.charAt(0).toUpperCase();
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-    console.log('Rendering member:', member); // Add this line to log each member being rendered
+    console.log('Rendering member:', member);
 
     return (
       <div
         key={index}
-        className={clsx(
-          'flex items-center justify-center rounded-full text-sm text-white',
-          {
-            'sm:h-34 sm:w-34 md:h-38 md:w-38': true,
-            'h-34 w-34': true, // Add mobile size
-            '-ml-2': index !== 0,
-          },
-        )}
+        className={`flex h-34 w-34 items-center justify-center rounded-full text-sm text-white sm:h-34 sm:w-34 md:h-38 md:w-38 ${index !== 0 ? '-ml-2' : ''}`}
         style={{
           backgroundColor: member.profileImageUrl ? 'transparent' : randomColor,
         }}
@@ -91,14 +89,7 @@ const MembersImage = () => {
         {displayedMembers.map((member, index) => renderMember(member, index))}
         {extraCount > 0 && (
           <div
-            className={clsx(
-              'flex items-center justify-center rounded-full text-sm text-white',
-              {
-                'sm:h-34 sm:w-34 md:h-38 md:w-38': true,
-                'h-34 w-34': true, // Add mobile size
-                '-ml-2': true,
-              },
-            )}
+            className="-ml-2 flex h-34 w-34 items-center justify-center rounded-full text-sm text-white sm:h-34 sm:w-34 md:h-38 md:w-38"
             style={{
               backgroundColor:
                 colors[Math.floor(Math.random() * colors.length)],
@@ -120,8 +111,3 @@ const MembersImage = () => {
 };
 
 export default MembersImage;
-
-///
-///
-///
-///
