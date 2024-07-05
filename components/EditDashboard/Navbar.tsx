@@ -124,7 +124,7 @@ const NavBar = () => {
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
-      <div className="flex gap-[16px]">
+      <div className="flex gap-[16px] px-64">
         <button
           onClick={handleRefresh}
           className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600"
