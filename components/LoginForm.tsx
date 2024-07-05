@@ -1,20 +1,19 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import axios from '@/lib/axios';
 import invisible from '@/public/images/icon/ic-invisible.svg';
 import visible from '@/public/images/icon/ic-visible.svg';
-import axios from '@/lib/axios';
-import cookies from 'js-cookie';
-import { useRouter } from 'next/router';
 import { isAxiosError } from 'axios';
-import SimpleModal from './common/SimpleModal';
+import cookies from 'js-cookie';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 
+import SimpleModal from './common/SimpleModal';
 
 interface InputState {
   email: string;
   password: string;
 }
-
 
 const LoginForm = () => {
   const [emailError, setEmailError] = useState('');
@@ -44,13 +43,15 @@ const LoginForm = () => {
 
     if (name === 'email') {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setEmailError(!emailPattern.test(value) ? '이메일 형식으로 작성해 주세요.' : '');
+      setEmailError(
+        !emailPattern.test(value) ? '이메일 형식으로 작성해 주세요.' : '',
+      );
     }
 
     if (name === 'password') {
       setPasswordError(value.length < 8 ? '8자 이상 입력해 주세요.' : '');
     }
-  }
+  };
   const togglePasswordVisibility = (field: 'password' | 'confirmPassword') => {
     setPasswordVisibility((prev) => ({
       ...prev,
@@ -58,12 +59,16 @@ const LoginForm = () => {
     }));
   };
 
-  const isFormValid = !emailError && !passwordError && Boolean(input.email) && Boolean(input.password);
+  const isFormValid =
+    !emailError &&
+    !passwordError &&
+    Boolean(input.email) &&
+    Boolean(input.password);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = input;
-    
+
     try {
       const res = await axios.post('auth/login', { email, password });
       const { accessToken } = res.data;
@@ -74,14 +79,17 @@ const LoginForm = () => {
       // secure 보안 강화 코드 https 연결에서만 전송
       // sameSite 사이트 간 요청에 어떻게 처리할지 결정
       // Strict 동일한 사이트에서만 전송되도록 처리 CSRF공격 방지 유용
-      cookies.set('accessToken', accessToken
-        , { expires: 7, secure: true, sameSite: 'Strict' });
-      router.replace('mydashboard')
+      cookies.set('accessToken', accessToken, {
+        expires: 7,
+        secure: true,
+        sameSite: 'Strict',
+      });
+      router.replace('mydashboard');
       console.log('로그인 성공');
-    } catch(error) {
+    } catch (error) {
       if (isAxiosError(error)) {
         openModal();
-        setModalMessage(error.response?.data.message)
+        setModalMessage(error.response?.data.message);
         console.log(error);
       }
     }
@@ -91,12 +99,12 @@ const LoginForm = () => {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <form onSubmit={handleSubmit} className='w-full px-12 flex flex-col gap-20'>
-      <div className='flex flex-col gap-16'>
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-20 px-12">
+      <div className="flex flex-col gap-16">
         <div className="flex flex-col gap-8">
           <div>이메일</div>
           <input
-            name='email'
+            name="email"
             value={input.email}
             onBlur={onBlur}
             onChange={onChange}
@@ -111,7 +119,7 @@ const LoginForm = () => {
           <div>비밀번호</div>
           <input
             id="pw"
-            name='password'
+            name="password"
             value={input.password}
             onBlur={onBlur}
             onChange={onChange}
@@ -120,7 +128,9 @@ const LoginForm = () => {
             type={passwordVisibility.password ? 'text' : 'password'}
             autoComplete="password"
           />
-          {passwordError && <div className="text-14 text-red">{passwordError}</div>}
+          {passwordError && (
+            <div className="text-14 text-red">{passwordError}</div>
+          )}
           <div
             className="absolute right-15 top-45 cursor-pointer"
             onClick={() => togglePasswordVisibility('password')}
@@ -132,18 +142,38 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
-      <div className='flex-center flex-col gap-24'>
-        <button type="submit" className={isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'} disabled={!isFormValid}>로그인</button>
-        <div>회원이 아니신가요? <Link className='text-violet-20 underline' href='/signup'>회원가입하기</Link></div>
+      <div className="flex-col gap-24 flex-center">
+        <button
+          type="submit"
+          className={
+            isFormValid ? 'btn_login_large_active' : 'btn_login_large_disabled'
+          }
+          disabled={!isFormValid}
+        >
+          로그인
+        </button>
+        <div>
+          회원이 아니신가요?{' '}
+          <Link className="text-violet-20 underline" href="/signup">
+            회원가입하기
+          </Link>
+        </div>
       </div>
-      {modalMessage && (<SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      >
-        <div className="pb-44 sm:pb-24">{modalMessage}</div>
+      {modalMessage && (
+        <SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        >
+          <div className="pb-44 sm:pb-24">{modalMessage}</div>
 
-        <button onClick={closeModal} className="btn_modal_small_purple sm:btn_modal_large_purple absolute bottom-28 sm:right-28">확인</button>
-      </SimpleModal>)}
+          <button
+            onClick={closeModal}
+            className="absolute bottom-28 btn_modal_small_purple sm:right-28 sm:btn_modal_large_purple"
+          >
+            확인
+          </button>
+        </SimpleModal>
+      )}
     </form>
   );
 };

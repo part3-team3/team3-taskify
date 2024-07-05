@@ -132,10 +132,57 @@ module.exports = {
         '.input:focus': {
           border: '1px solid #5534DA',
         },
+        '.MyPageInput': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '6px',
+          width: '100%',
+          height: '42px',
+          outline: 'none',
+        },
+        '.MyPageErrorInput': {
+          border: '1px solid #D6173A',
+          borderRadius: '6px',
+          width: '100%',
+          height: '50px',
+          outline: 'none',
+        },
+        '.MyPageInput:focus': {
+          border: '1px solid #5534DA',
+        },
         // 공지
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
+        },
+        '.btn_myPage_disabled': {
+          width: '84px',
+          padding: '7px 29px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '4px',
+          outline: 'none',
+          cursor: 'default',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          whiteSpace: 'nowrap',
+        },
+        '.btn_myPage_active': {
+          width: '84px',
+          padding: '7px 29px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+          outline: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          whiteSpace: 'nowrap',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
         '.btn_login_large_disabled': {
@@ -147,7 +194,6 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#9FA6B2',
           borderRadius: '8px',
-          // 공지
           cursor: 'default',
           outline: 'none',
         },
