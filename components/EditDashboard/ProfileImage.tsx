@@ -1,4 +1,4 @@
-import { privateApi } from '@/lib/axios';
+import instance from '@/lib/axios';
 import { useEffect, useState } from 'react';
 
 const colors = [
@@ -18,7 +18,7 @@ const ProfileImage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await privateApi.get(`/users/me`);
+        const res = await instance.get(`/users/me`);
         setNickname(res.data.nickname);
         setProfileImageUrl(res.data.profileImageUrl);
         if (res.data.profileImageUrl === null) {

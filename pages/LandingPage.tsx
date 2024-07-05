@@ -11,7 +11,7 @@ import point1Logo from '@/public/images/logo/point1-logo.png';
 import point2Logo from '@/public/images/logo/point2-logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const LandingPage = () => {
   const [windowWidth, setWindowWidth] = useState(0);
