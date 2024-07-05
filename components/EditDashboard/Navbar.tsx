@@ -6,25 +6,9 @@ import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
-import { Dropdown, MenuProps } from 'antd';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: <a href="/">로그아웃</a>,
-  },
-  {
-    key: '2',
-    label: <a href="/mypage">내 정보</a>,
-  },
-  {
-    key: '3',
-    label: <a href="/mydashboard">내 대시보드</a>,
-  },
-];
 
 const NavBar = () => {
   const router = useRouter();
@@ -36,6 +20,7 @@ const NavBar = () => {
   const [createdByMe, setCreatedByMe] = useState(false);
   const [value, setValue] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
@@ -43,6 +28,11 @@ const NavBar = () => {
     setIsValidEmail(true);
     setIsModalOpen(false);
   };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (!dashboardId || isNaN(Number(dashboardId))) return;
@@ -152,16 +142,41 @@ const NavBar = () => {
           height={38}
           alt="구분선"
         />
-        <Dropdown menu={{ items }}>
-          <div className="flex">
+        <div className="relative">
+          <div
+            onClick={toggleDropdown}
+            className="flex cursor-pointer items-center"
+          >
             <div className="pr-0 sm:pr-12">
               <ProfileImage />
             </div>
-            <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
+            <div className="mr-0 flex hidden self-center font-medium sm:block">
               {nickname}
             </div>
           </div>
-        </Dropdown>
+          {isDropdownOpen && (
+            <div className="absolute right-0 z-10 mt-2 w-100 rounded-lg border border-gray-200 bg-white shadow-lg">
+              <a
+                href="/"
+                className="align-center block flex justify-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                로그아웃
+              </a>
+              <a
+                href="/mypage"
+                className="align-center block flex justify-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                내 정보
+              </a>
+              <a
+                href="/mydashboard"
+                className="align-center block flex justify-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                내 대시보드
+              </a>
+            </div>
+          )}
+        </div>
       </div>
       <Modal
         isOpen={isModalOpen}
