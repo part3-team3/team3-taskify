@@ -1,17 +1,20 @@
 import Modal from '@/components/common/Modal';
+import { editColumn } from '@/pages/api/column/editColumn';
 import { getColumn } from '@/pages/api/column/getColumn';
 import React, { useEffect, useState } from 'react';
 
 interface EditColumnModalProps {
   columnId: number;
   closeModal: () => void;
-  onEditColumn: () => void;
-  dashboardId: number;
+  onEditColumn: (newTitle: string) => void;
   handleDeleteColumn: (columnId: number) => Promise<void>;
+  dashboardId: number;
 }
+
 interface ColumnType {
   title: string;
 }
+
 const EditColumnModal: React.FC<EditColumnModalProps> = ({
   closeModal,
   onEditColumn,
@@ -22,12 +25,13 @@ const EditColumnModal: React.FC<EditColumnModalProps> = ({
   const [isVisible, setIsVisible] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
   useEffect(() => {
-    // inputValue로 중복체크
     const checkDuplicate = async () => {
       try {
         const columns = await DupliChecker(dashboardId);
@@ -58,10 +62,9 @@ const EditColumnModal: React.FC<EditColumnModalProps> = ({
   const handleEdit = async () => {
     if (!isDuplicate) {
       try {
-        // 현재 컬럼의 title 변경
-        await updateColumnTitle(columnId, inputValue);
+        await editColumn(columnId, inputValue);
         localStorage.setItem('newColumnTitle', inputValue);
-        onEditColumn();
+        onEditColumn(inputValue);
         closeModal();
       } catch (error) {
         console.error('Error updating column title', error);
@@ -69,63 +72,92 @@ const EditColumnModal: React.FC<EditColumnModalProps> = ({
     }
   };
 
-  const updateColumnTitle = async (columnId: number, newTitle: string) => {
+  const handleDelete = async () => {
     try {
-      // 서버에 컬럼 title 업데이트 요청
-      await fetch(`/api/column/${columnId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: newTitle }),
-      });
+      await handleDeleteColumn(columnId);
+      closeModal();
     } catch (error) {
-      console.error('Error updating column title', error);
-      throw error;
+      console.error('Error deleting column', error);
     }
   };
+
+  const openDeleteConfirmModal = () => {
+    setIsVisible(false);
+    setIsDeleteConfirmVisible(true);
+  };
+
   return (
     <div>
       {isVisible && (
-        <Modal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+        <Modal
           isOpen={true}
-          onClose={() => setIsVisible(false)}
+          onClose={() => {
+            setIsVisible(false);
+            closeModal();
+          }}
           width="540px"
           height="276px"
         >
           <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
           <p className="mb-10 h-21">이름</p>
           <input
-            className="mb-28 rounded border-1px-solid-gray-30"
+            className="mb-28 rounded border-1px-solid-gray-30 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px]"
             placeholder="컬럼 제목을 입력해주세요"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
+          {isDuplicate && <p className="text-red">중복된 칼럼 이름입니다.</p>}
           <div className="flex justify-between">
             <button
-              onClick={() => {
-                setIsVisible(false);
-                handleDeleteColumn(columnId);
-              }}
+              onClick={openDeleteConfirmModal}
               className="text-blue-600 hover:text-blue-800 visited:text-purple-600 underline"
             >
               삭제하기
             </button>
+            <div className="flex">
+              <button
+                className="mr-[13px] btn_modal_large_white"
+                onClick={() => {
+                  setIsVisible(false);
+                  closeModal();
+                }}
+              >
+                취소
+              </button>
+              <button
+                className="btn_modal_large_purple"
+                onClick={handleEdit}
+                disabled={isDuplicate}
+              >
+                변경
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {isDeleteConfirmVisible && (
+        <Modal
+          isOpen={true}
+          onClose={() => {
+            setIsDeleteConfirmVisible(false);
+            setIsVisible(true);
+          }}
+          width="400px"
+          height="200px"
+        >
+          <h2 className="mb-4 text-xl font-bold">정말 삭제하시겠습니까?</h2>
+          <div className="mt-8 flex justify-end">
             <button
-              className="btn_modal_large_white"
+              className="mr-4 btn_modal_large_white"
               onClick={() => {
-                setIsVisible(false);
-                window.location.reload();
+                setIsDeleteConfirmVisible(false);
+                setIsVisible(true);
               }}
             >
               취소
             </button>
-            <button
-              className="btn_modal_large_purple"
-              onClick={handleEdit}
-              disabled={isDuplicate}
-            >
-              변경
+            <button className="btn_modal_large_purple" onClick={handleDelete}>
+              확인
             </button>
           </div>
         </Modal>
