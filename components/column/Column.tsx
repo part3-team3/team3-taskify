@@ -136,7 +136,7 @@ const ColumnComponent = () => {
           disabled={columns.length >= 10}
           className="mb-4 ml-20 mt-68 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black border-1px-solid-gray-30 lg:w-[354px]"
         >
-          <div className="font-pretendard font-bold">새로운 컬럼 추가하기</div>
+          <div className="font-bold font-pretendard">새로운 컬럼 추가하기</div>
           <Image
             src="/images/icon/ic-color-add.svg"
             width={22}

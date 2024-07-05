@@ -67,8 +67,14 @@ const TodoFormModal = ({
     setIsModalOpen(false);
   };
 
+  // const isCreateModalButtonDisabled = ...
+
   const isEditModalButtonDisabled =
     (formData.title && formData.description).trim() === '' ? true : false;
+
+  // const isButtonDisabled = isInEdit
+  //   ? isEditModalButtonDisabled
+  //   : isCreateModalButtonDisabled;
 
   return (
     <div className="flex flex-col gap-24 md:gap-32">
