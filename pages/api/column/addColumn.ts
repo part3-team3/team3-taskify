@@ -1,15 +1,10 @@
 import axios from '@/lib/axios';
 
-export const addColumn = async (dashboardId: number) => {
-  const token = process.env.NEXT_PUBLIC_TOKEN;
+export const addColumn = async (dashboardId: number, columnTitle: string) => {
   const body = {
-    title: 'empty',
-    dashboardId: dashboardId, // dashboardId를 숫자형으로 변환해서 동적 연결
+    title: `${columnTitle}`,
+    dashboardId: dashboardId,
   };
-  const res = await axios.post('columns', body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await axios.post('columns', body, {});
   return res.data;
 };
