@@ -5,7 +5,6 @@ import { deleteColumn } from '@/pages/api/column/deleteColumn';
 import { getCardList } from '@/pages/api/column/getCardList';
 import { getColumn } from '@/pages/api/column/getColumn';
 import { Card } from '@/types/card';
-// import { Card } from '@/types/card';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -28,17 +27,7 @@ const ColumnComponent = () => {
   const [showEditColumnModal, setShowEditColumnModal] = useState<number | null>(
     null,
   );
-  // const [showAddColumnStates, setShowAddColumnStates] = useState<{
-  //   [key: number]: boolean;
-  // }>({});
   const [cards, setCards] = useState<Card[]>([]);
-
-  // const toggleShowAddColumn = (columnId: number) => {
-  //   setShowAddColumnStates((prevState) => ({
-  //     ...prevState,
-  //     [columnId]: !prevState[columnId],
-  //   }));
-  // };
 
   const handleDeleteColumn = async (columnId: number) => {
     await deleteColumn(columnId);
@@ -100,7 +89,7 @@ const ColumnComponent = () => {
 
   return (
     <>
-      <div className="flex flex-wrap bg-gray-10 xl:mx-[30px] xl:h-[1010px] xl:flex-nowrap xl:overflow-x-auto">
+      <div className="flex flex-wrap bg-gray-10 xl:h-[1010px] xl:flex-nowrap xl:overflow-x-auto">
         {columns.map((column) => (
           <ColumnBox
             key={column.id}
