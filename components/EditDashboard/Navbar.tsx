@@ -6,10 +6,25 @@ import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
+import { Dropdown, MenuProps } from 'antd';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    label: <a href="/">로그아웃</a>,
+  },
+  {
+    key: '2',
+    label: <a href="/mypage">내 정보</a>,
+  },
+  {
+    key: '3',
+    label: <a href="/mydashboard">내 대시보드</a>,
+  },
+];
 
 const NavBar = () => {
   const router = useRouter();
@@ -109,7 +124,7 @@ const NavBar = () => {
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
-      <div className="flex gap-[16px]">
+      <div className="flex gap-[16px] px-64">
         <button
           onClick={handleRefresh}
           className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600"
@@ -128,6 +143,7 @@ const NavBar = () => {
             초대하기
           </div>
         </button>
+        <MembersImage dashboardId={dashboardId} />
 
         <Image
           className="mr-8"
@@ -136,14 +152,16 @@ const NavBar = () => {
           height={38}
           alt="구분선"
         />
-        <Link href={'/mypage'} className="flex">
-          <div className="pr-0 sm:pr-12">
-            <ProfileImage />
+        <Dropdown menu={{ items }}>
+          <div className="flex">
+            <div className="pr-0 sm:pr-12">
+              <ProfileImage />
+            </div>
+            <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
+              {nickname}
+            </div>
           </div>
-          <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
-            {nickname}
-          </div>
-        </Link>
+        </Dropdown>
       </div>
       <Modal
         isOpen={isModalOpen}
