@@ -2,6 +2,7 @@ import getColumns from '@/pages/api/TodoModalForm/getColumns';
 import { TodoFormData } from '@/types/ModalFormData';
 import Column from '@/types/column';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const Option = ({
@@ -49,16 +50,20 @@ const StatusDropdown = ({
   setFormData,
 }: {
   label: string;
-  columnId: number;
+  columnId?: number;
   setFormData: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [columnsData, setColumnsData] = useState<Column[]>([]);
   const [selectedColumn, setSelectedColumn] = useState<Column>();
 
+  const router = useRouter();
+  const { query } = router;
+  const dashboardId = Number(query.dashboardId);
+
   useEffect(() => {
     const loadColumns = async () => {
-      const columns: Column[] = await getColumns();
+      const columns: Column[] = await getColumns(dashboardId);
       const currentColumn = columns.find((column) => column.id === columnId);
 
       setColumnsData(columns);
@@ -105,7 +110,7 @@ const StatusDropdown = ({
         </div>
       </div>
       {isDropdownOpen && (
-        <div className="absolute z-10 mt-2 flex h-max w-287 flex-col gap-13 rounded-6 bg-white px-8 py-13 border-1px-solid-gray-30 md:w-217">
+        <div className="absolute z-10 flex flex-col px-8 mt-2 bg-white h-max w-287 gap-13 rounded-6 py-13 border-1px-solid-gray-30 md:w-217">
           {columnsData?.map((column) => (
             <Option
               key={column.id}

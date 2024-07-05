@@ -1,5 +1,5 @@
 import NavBar from '@/components/EditDashboard/Navbar';
-import Column from '@/components/column/Column';
+import ColumnList from '@/components/column/ColumnList';
 import SideBar from '@/components/sidebar/SideBar';
 import React from 'react';
 
@@ -12,7 +12,7 @@ const Index = () => {
         </div>
         <div style={{ width: '1620px' }}>
           <NavBar />
-          <Column />
+          <ColumnList />
         </div>
       </div>
     </>

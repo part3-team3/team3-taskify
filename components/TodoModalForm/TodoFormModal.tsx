@@ -8,25 +8,38 @@ import postCreateCard from '@/pages/api/TodoModalForm/postCreateCard';
 import putTodoEditModal from '@/pages/api/TodoModalForm/putTodoEditModal';
 import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
+// import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import StatusDropdown from './StatusDropdown';
 import TagsInput from './TagsInput';
 
 const TodoFormModal = ({
+  dashboardId,
+  columnId,
   card,
+  isInEdit,
+  refetchColumn,
   setIsInEdit,
   setIsModalOpen,
 }: {
+  dashboardId?: number;
+  columnId?: number;
   card?: Card;
+  isInEdit?: boolean;
+  refetchColumn: () => void;
   setIsInEdit?: Dispatch<SetStateAction<boolean>>;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const isEditForm = Boolean(card); // true or false
 
+  // const router = useRouter();
+  // const { query } = router;
+  // const id = query.dashboardId;
+
   const {
     assignee = undefined,
-    columnId = 0,
+    columnId: cardColumnId,
     title = '',
     description = '',
     dueDate = '',
@@ -35,7 +48,7 @@ const TodoFormModal = ({
   } = card || {};
 
   const defaultData: TodoFormData = {
-    columnId,
+    columnId: cardColumnId || columnId || 0,
     assigneeUserId: assignee?.id || 0,
     title,
     description,
@@ -45,7 +58,7 @@ const TodoFormModal = ({
   };
 
   if (!isEditForm) {
-    defaultData.dashboardId = 0;
+    defaultData.dashboardId = dashboardId;
   }
 
   const [formData, setFormData] = useState<TodoFormData>(defaultData);
@@ -58,12 +71,24 @@ const TodoFormModal = ({
       setIsInEdit?.(false);
     } else {
       await postCreateCard(formData);
+      refetchColumn();
+      setIsModalOpen(false);
     }
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    setIsInEdit?.(false);
   };
+
+  // const isCreateModalButtonDisabled = ...
+
+  const isEditModalButtonDisabled =
+    (formData.title && formData.description).trim() === '' ? true : false;
+
+  // const isButtonDisabled = isInEdit
+  //   ? isEditModalButtonDisabled
+  //   : isCreateModalButtonDisabled;
 
   return (
     <div className="flex flex-col gap-24 md:gap-32">
@@ -110,7 +135,7 @@ const TodoFormModal = ({
         tags={tags}
         setFormData={setFormData}
       />
-      <FileInput setFormData={setFormData} />
+      <FileInput setFormData={setFormData} columnId={columnId} />
       <div className="flex gap-12 md:justify-end">
         <button
           onClick={handleModalClose}
@@ -120,7 +145,8 @@ const TodoFormModal = ({
         </button>
         <button
           onClick={onSubmit}
-          className="btn_modal_small_purple md:btn_modal_large_purple"
+          disabled={isInEdit && isEditModalButtonDisabled ? true : false}
+          className={`${isInEdit && isEditModalButtonDisabled ? 'btn_modal_small_gray md:btn_modal_large_gray' : 'btn_modal_small_purple md:btn_modal_large_purple'}`}
         >
           {isEditForm ? '수정' : '생성'}
         </button>

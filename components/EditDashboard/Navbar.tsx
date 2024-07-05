@@ -6,21 +6,46 @@ import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
+
+import { MenuProps } from 'antd';
+import dynamic from 'next/dynamic';
+
+
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+
+
+const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
+  ssr: false,
+});
+
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    label: <Link href="/">로그아웃</Link>,
+  },
+  {
+    key: '2',
+    label: <Link href="/mypage">내 정보</Link>,
+  },
+  {
+    key: '3',
+    label: <Link href="/mydashboard">내 대시보드</Link>,
+  },
+];
+
 
 const NavBar = () => {
   const router = useRouter();
   const dashboardId = Number(router.query.dashboardId);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
   const [createdByMe, setCreatedByMe] = useState(false);
   const [value, setValue] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
@@ -36,7 +61,6 @@ const NavBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!dashboardId || isNaN(Number(dashboardId))) return;
-
       try {
         const response = await axios.get(`dashboards/${dashboardId}`);
         setTitle(response.data.title);
@@ -45,10 +69,8 @@ const NavBar = () => {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
   }, [dashboardId]);
-
   //페이지 새로고침
   const handleRefresh = () => {
     if (router.pathname === `/dashboard/${dashboardId}/edit`) {
@@ -69,13 +91,11 @@ const NavBar = () => {
     };
     fetchNickname();
   }, []);
-
   // 초대 이메일 유효성 검사
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
-
   // 이메일로 초대하기 모달 로직
   const handleSubmit = async () => {
     if (!validateEmail(value)) {
@@ -92,7 +112,6 @@ const NavBar = () => {
       console.error('Error sending invitation:', error);
     }
   };
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
     setValue(email);
@@ -101,11 +120,8 @@ const NavBar = () => {
       alert('유효하지 않은 이메일입니다');
     }
   };
-
   const inputClassName = isValidEmail ? 'border-gray-300' : 'border-red-500';
-
   if (!dashboardId) return null;
-
   return (
     <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
       <div className="flex hidden gap-8 px-[40px] text-xl font-bold md:flex">
@@ -134,7 +150,6 @@ const NavBar = () => {
           </div>
         </button>
         <MembersImage dashboardId={dashboardId} />
-
         <Image
           className="mr-8"
           src={icLineVertical}
@@ -194,7 +209,6 @@ const NavBar = () => {
             onChange={handleChange}
             placeholder="이메일을 입력해주세요"
           />
-
           <div className="mt-[28px] flex justify-end gap-[12px]">
             <button className="btn_modal_large_white" onClick={closeModal}>
               취소
@@ -208,5 +222,4 @@ const NavBar = () => {
     </div>
   );
 };
-
 export default NavBar;
