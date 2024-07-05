@@ -86,8 +86,6 @@ const SideBarDashboard = () => {
         {allDashboardList &&
           allDashboardList.map((myDashboard) => {
             const isActive = myDashboard.id.toString() === activeDashboardId;
-            console.log(isActive);
-            console.log("isActive");
             return (
               <li
                 className="mb-38 h-fit w-fit md:mb-3 xl:mb-0"
