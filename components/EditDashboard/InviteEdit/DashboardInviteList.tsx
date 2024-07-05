@@ -15,7 +15,7 @@ type Invitation = {
 
 const DashboardInviteList = () => {
   const router = useRouter();
-  const { dashboardId } = router.query;
+  const dashboardId = Number(router.query.dashboardId);
 
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,6 +36,8 @@ const DashboardInviteList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!dashboardId || isNaN(Number(dashboardId))) return;
+
       try {
         const res = await axios.get(`dashboards/${dashboardId}/invitations`, {
           params: {
@@ -53,7 +55,7 @@ const DashboardInviteList = () => {
     };
 
     fetchData();
-  }, [page]);
+  }, [dashboardId, page]);
 
   const onCancelInvitation = async (id: number) => {
     try {
@@ -111,8 +113,8 @@ const DashboardInviteList = () => {
     <div className="px-20">
       <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
         <div className="flex items-center justify-between">
-          <div className="mb-27 text-xl font-bold">초대 목록</div>
-          <div className="flex">
+          <div className="mb-26 text-xl font-bold">초대 목록</div>
+          <div className="flex gap-16">
             <div className="mb-24 mt-8 flex items-center justify-center">
               <p className="mr-12 text-xs font-normal">
                 {totalPage} 페이지 중 {page}
@@ -124,7 +126,7 @@ const DashboardInviteList = () => {
               />
             </div>
             <button
-              className="mt-8 flex h-[32px] w-[105px] rounded-md bg-[#5534DA] px-2.5 py-4 text-sm text-gray-600"
+              className="mt-10 flex h-[32px] w-[105px] rounded-md bg-[#5534DA] px-2.5 py-4 text-sm text-gray-600"
               onClick={openModal}
             >
               <div className="flex gap-[8px] text-sm text-white">

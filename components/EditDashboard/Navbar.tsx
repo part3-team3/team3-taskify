@@ -13,7 +13,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 const NavBar = () => {
   const router = useRouter();
-  const { dashboardId } = router.query;
+  const dashboardId = Number(router.query.dashboardId);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -28,22 +28,21 @@ const NavBar = () => {
     setIsValidEmail(true);
     setIsModalOpen(false);
   };
-
   useEffect(() => {
     const fetchData = async () => {
+      if (!dashboardId || isNaN(Number(dashboardId))) return;
+
       try {
-        if (dashboardId) {
-          const response = await axios.get(`dashboards/${dashboardId}`);
-          setTitle(response.data.title);
-          setCreatedByMe(response.data.createdByMe);
-        }
+        const response = await axios.get(`dashboards/${dashboardId}`);
+        setTitle(response.data.title);
+        setCreatedByMe(response.data.createdByMe);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [dashboardId]);
 
   //페이지 새로고침
   const handleRefresh = () => {
@@ -94,10 +93,13 @@ const NavBar = () => {
     setValue(email);
     if (isValidEmail === false) {
       setIsValidEmail(true);
+      alert('유효하지 않은 이메일입니다');
     }
   };
 
   const inputClassName = isValidEmail ? 'border-gray-300' : 'border-red-500';
+
+  if (!dashboardId) return null;
 
   return (
     <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
@@ -159,11 +161,7 @@ const NavBar = () => {
             onChange={handleChange}
             placeholder="이메일을 입력해주세요"
           />
-          {!isValidEmail && (
-            <p className="absolute left-0 mt-2 text-sm text-red">
-              유효하지 않은 값입니다
-            </p>
-          )}
+
           <div className="mt-[28px] flex justify-end gap-[12px]">
             <button className="btn_modal_large_white" onClick={closeModal}>
               취소

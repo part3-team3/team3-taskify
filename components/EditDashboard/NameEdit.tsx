@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 
 const DashboardNameEdit = () => {
   const router = useRouter();
-  const { dashboardId } = router.query;
+  const dashboardId = Number(router.query.dashboardId);
 
   const [title, setTitle] = useState('');
   const [color, setColor] = useState('');
@@ -21,7 +21,7 @@ const DashboardNameEdit = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!dashboardId) return;
+      if (!dashboardId || isNaN(Number(dashboardId))) return;
       try {
         const response = await axios.get(`dashboards/${dashboardId}`);
         setTitle(response.data.title);
@@ -34,7 +34,7 @@ const DashboardNameEdit = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dashboardId]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTitle(e.target.value);
@@ -52,6 +52,7 @@ const DashboardNameEdit = () => {
     }
 
     const colorCode = getColorCode(color);
+    if (!dashboardId || isNaN(Number(dashboardId))) return;
     try {
       const response = await axios.put(`dashboards/${dashboardId}`, {
         title: inputTitle,
