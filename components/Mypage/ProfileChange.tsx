@@ -2,12 +2,17 @@ import PlusBtn from "@/public/images/icon/ic-plus-purple.svg";
 import instance from '@/lib/axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import SimpleModal from '../common/SimpleModal';
+import { isAxiosError } from 'axios';
 
 const ProfileChange = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -57,8 +62,21 @@ const ProfileChange = () => {
       console.log(payload)
       await instance.put('/users/me', payload);
       // 업데이트 성공 시 추가 로직 작성
+      setModalMessage('닉네임과 프로필사진이 성공적으로 저장되었습니다.');
+      openModal();
     } catch (error) {
-      console.error('Error updating profile:', error);
+      if (isAxiosError(error)) {
+        openModal();
+        setModalMessage(error.response?.data.message);
+        console.log(error);
+      }
+    }
+  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    if (modalMessage === '닉네임과 프로필사진이 성공적으로 저장되었습니다.') {
+      window.location.reload();
     }
   };
 
@@ -87,30 +105,46 @@ const ProfileChange = () => {
         <input className="hidden" id="file" type="file" onChange={handleImageChange} />
         <div className="flex w-full flex-col gap-16 pt-24 md:gap-20 md:pl-16 md:pt-0">
           <div className="flex flex-col gap-10">
-            <h2 className="text-18 leading-6">이메일</h2>
+            <h2 className="text-16 md:text-18 leading-6">이메일</h2>
             <input
-              className="h-42 w-full rounded-6 border border-gray-30 pl-16 text-14 outline-none md:h-48 md:text-16"
+              className="MyPageInput placeholder:text-14 md:placeholder:text-16 pl-16 text-14 md:h-48 md:text-16"
               type="text"
               placeholder={email}
               disabled={true}
             />
           </div>
           <div className="flex flex-col gap-10">
-            <h2 className="text-18 leading-6">닉네임</h2>
+            <h2 className="text-16 md:text-18 leading-6">닉네임</h2>
             <input
-              className="h-42 w-full rounded-6 border border-gray-30 pl-16 text-14 outline-none md:h-48 md:text-16"
+              className="MyPageInput placeholder:text-14 md:placeholder:text-16 pl-16 text-14 md:h-48 md:text-16"
               type="text"
               onChange={handleChange}
               value={nickname}
+              placeholder='닉네임을 입력해 주세요.'
             />
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="h-28 whitespace-nowrap text-12 btn_desktop_purple md:text-14">
+            <button type="submit" className="flex-center whitespace-nowrap text-12 btn_myPage_active md:text-14">
               저장
             </button>
           </div>
         </div>
       </div>
+      {modalMessage && (
+        <SimpleModal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        >
+          <div className="pb-44 sm:pb-24">{modalMessage}</div>
+
+          <button
+            onClick={closeModal}
+            className="absolute bottom-28 btn_modal_small_purple sm:right-28 sm:btn_modal_large_purple"
+          >
+            확인
+          </button>
+        </SimpleModal>
+      )}
     </form>
   );
 };
