@@ -25,16 +25,19 @@ const SearchBar: React.FC<SearchBarProps> = ({initialValue=""}) => {
     router.push(`/mydashboard?title=${value}`);
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="relative h-16 w-16">
-        <Image fill src="/images/icon/ic-search.svg" alt="검색 아이콘" />
+    <form onSubmit={handleSubmit} className="relative w-full mb-24">
+      <div className="relative w-full">
+        <input
+          name="title"
+          value={value}
+          placeholder="검색"
+          onChange={handleChange}
+          className="w-full pl-22 pr-4 py-2 border border-gray-30 rounded"
+        />
+        <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+          <Image src="/images/icon/ic-search.svg" alt="검색 아이콘" width={22} height={22} />
+        </div>
       </div>
-      <input
-        name="title"
-        value={value}
-        placeholder="검색할 상품을 입력해 주세요"
-        onChange={handleChange}
-      />
     </form>
   );
 };

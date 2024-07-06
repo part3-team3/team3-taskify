@@ -3,7 +3,7 @@ import axios from '@/lib/axios';
 interface PostComment {
   content: string;
   cardId: number;
-  columnId: number;
+  columnId?: number;
   dashboardId: number;
 }
 

@@ -62,7 +62,7 @@ const TodoModal = ({
         <div className="flex gap-24">
           <div>
             <Article card={card} columns={columns} />
-            <Comments card={card} />
+            <Comments card={card} columns={columns} />
           </div>
           <div>{(isTablet || isDesktop) && <Information card={card} />}</div>
         </div>

@@ -1,15 +1,28 @@
 import postComments from '@/pages/api/comments/postComments';
+import { Card } from '@/types/card';
+import Column from '@/types/column';
 import { Comment as CommentType } from '@/types/comments';
+import { useRouter } from 'next/router';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 
 const CommentForm = ({
+  card,
+  columns,
   addComment,
 }: {
+  card: Card;
+  columns: Column[];
   addComment: (newComment: CommentType) => void;
 }) => {
   const [content, setContent] = useState<string>('');
 
+  const router = useRouter();
+  const { query } = router;
+  const dashboardId = Number(query.dashboardId);
+
   const isButtonDisabled = content.trim() === '' ? true : false;
+
+  const column = columns.find((column: Column) => card.columnId === column.id);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -19,9 +32,9 @@ const CommentForm = ({
     e.preventDefault();
     const commentData = await postComments({
       content: content,
-      cardId: 8736,
-      columnId: 33798,
-      dashboardId: 10039,
+      cardId: card.id,
+      columnId: column?.id,
+      dashboardId: dashboardId,
     });
 
     if (commentData) {

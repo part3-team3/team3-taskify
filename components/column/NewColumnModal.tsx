@@ -1,63 +1,18 @@
 import Modal from '@/components/common/Modal';
-import { getColumn } from '@/pages/api/column/getColumn';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-interface NewColumnModalProps {
-  closeModal: () => void;
-  onAddColumn: () => void;
-  dashboardId: number;
-}
-
-interface ColumnType {
-  title: string;
-}
-
-const NewColumnModal: React.FC<NewColumnModalProps> = ({
+const NewColumnModal = ({
+  setModalInputValue,
+  handleAddColumn,
   closeModal,
-  onAddColumn,
-  dashboardId,
+}: {
+  setModalInputValue: Dispatch<SetStateAction<string>>;
+  handleAddColumn: () => Promise<void>;
+  closeModal: () => void;
 }) => {
-  const [inputValue, setInputValue] = useState('');
-  const [isDuplicate, setIsDuplicate] = useState(false);
-
-  useEffect(() => {
-    const checkDuplicate = async () => {
-      try {
-        const columns = await DupliChecker(dashboardId);
-        const isDuplicated = columns.some(
-          (column: ColumnType) => column.title === inputValue,
-        );
-        setIsDuplicate(isDuplicated);
-      } catch (error) {
-        console.error('Error checking for duplicate columns', error);
-      }
-    };
-
-    if (inputValue) {
-      checkDuplicate();
-    }
-  }, [inputValue, dashboardId]);
-
-  const DupliChecker = async (dashboardId: number) => {
-    try {
-      const response = await getColumn(dashboardId);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to fetch column list', error);
-      throw error;
-    }
-  };
-
-  const handleCreate = () => {
-    if (!isDuplicate) {
-      localStorage.setItem('newColumnTitle', inputValue);
-      onAddColumn();
-    }
-  };
-
   return (
     <Modal isOpen={true} onClose={closeModal} width="540px" height="276px">
-      <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
+      <h2 className="mb-32 text-2xl font-bold">새 컬럼 생성</h2>
       <p className="mb-10 h-21">이름</p>
       <div className="relative">
         <input

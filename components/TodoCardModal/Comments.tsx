@@ -2,17 +2,20 @@ import deleteComment from '@/pages/api/comments/deleteComments';
 import { getComments } from '@/pages/api/comments/getComments';
 import putComment from '@/pages/api/comments/putComments';
 import { Card } from '@/types/card';
+import Column from '@/types/column';
 import { CommentList, Comment as CommentType } from '@/types/comments';
 import { useEffect, useState } from 'react';
 
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 
-const Comments = ({ card }: { card: Card }) => {
+const Comments = ({ card, columns }: { card: Card; columns: Column[] }) => {
   const [comments, setComments] = useState<CommentType[]>([]);
   const [cursorId, setCursorId] = useState<number | null>(null); // API에서 받아온 커서 id
   const [cursor, setCursor] = useState<number | null | undefined>(); // 무한스크롤에 사용되는 커서
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  console.log(card.id);
 
   useEffect(() => {
     const getCommentsData = async (cursor?: number | null) => {
@@ -100,7 +103,7 @@ const Comments = ({ card }: { card: Card }) => {
 
   return (
     <>
-      <CommentForm addComment={addComment} />
+      <CommentForm card={card} columns={columns} addComment={addComment} />
       {comments.length > 0 && (
         <div className="h-125 w-287 overflow-scroll md:h-170 md:w-420 xl:h-110 xl:w-450">
           {comments.map((comment) => (
