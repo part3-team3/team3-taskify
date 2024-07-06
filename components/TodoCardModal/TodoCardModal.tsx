@@ -1,4 +1,5 @@
 import useMediaQuery from '@/hooks/useMediaQuery';
+import axios from '@/lib/axios';
 import { Card } from '@/types/card';
 import Column from '@/types/column';
 import Image from 'next/image';
@@ -14,11 +15,13 @@ const TodoCardModal = ({
   columns,
   closeModal,
   setIsInEdit,
+  refetchColumn,
 }: {
   card: Card;
   columns: Column[];
   closeModal: () => void;
   setIsInEdit: Dispatch<SetStateAction<boolean>>;
+  refetchColumn: () => void;
 }) => {
   const [kebabButtonVisible, setKebabButtonVisible] = useState<boolean>(false);
 
@@ -28,6 +31,12 @@ const TodoCardModal = ({
 
   const handleMenuOpen = () => {
     setKebabButtonVisible(!kebabButtonVisible);
+  };
+
+  const handleDeleteCard = async () => {
+    await axios.delete(`cards/${card.id}`);
+    closeModal();
+    refetchColumn();
   };
 
   return (
@@ -45,6 +54,7 @@ const TodoCardModal = ({
               />
               <Dropdown
                 setIsInEdit={setIsInEdit}
+                handleDeleteCard={handleDeleteCard}
                 kebabButtonVisible={kebabButtonVisible}
               />
             </div>

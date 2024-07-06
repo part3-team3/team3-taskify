@@ -57,7 +57,6 @@ const CardModal = ({
   };
 
   if (!card) return null;
-  if (!columns) return null;
 
   return (
     <Modal
@@ -83,6 +82,7 @@ const CardModal = ({
           columns={columns}
           closeModal={closeModal}
           setIsInEdit={setIsInEdit}
+          refetchColumn={refetchColumn}
         />
       )}
     </Modal>

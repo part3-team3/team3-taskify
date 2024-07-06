@@ -1,4 +1,3 @@
-import useMediaQuery from '@/hooks/useMediaQuery';
 import { Card } from '@/types/card';
 import Column from '@/types/column';
 import Image from 'next/image';
@@ -26,8 +25,6 @@ const ColumnCard = ({
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
 
   return (
     <>
