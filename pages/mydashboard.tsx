@@ -16,7 +16,7 @@ const Mydashboard: React.FC = () => {
       <main className="flex flex-1 flex-col">
         {/* <NavBar /> */}
         <DashboardList onDashboardCreated={handleDashboardCreated} dashboardCreated={dashboardCreated}/>
-        <InvitedDashboardSection />
+        <InvitedDashboardSection onDashboardCreated={handleDashboardCreated}/>
       </main>
     </div>
   );
