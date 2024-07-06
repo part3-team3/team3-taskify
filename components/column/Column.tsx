@@ -4,20 +4,27 @@ import { getCardList } from '@/pages/api/column/getCardList';
 import { Card } from '@/types/card';
 import ColumnType from '@/types/column';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import ColumnCard from './ColumnCard';
+import Column from '@/types/column';
 
 const Column = ({
   color,
+  columns,
   column,
+  onEdit,
   onDelete,
   dashboardId,
+  setModalInputValue,
 }: {
   color: string;
+  columns: Column[]
   column: ColumnType;
+  onEdit: (columnId: number) => Promise<void>;
   onDelete: (columnId: number) => Promise<void>;
   dashboardId: number;
+  setModalInputValue: Dispatch<SetStateAction<string>>;
 }) => {
   const [cards, setCards] = useState<Card[]>();
   const [cardTotalCount, setCardTotalCount] = useState();
@@ -50,10 +57,13 @@ const Column = ({
     };
     fetchCards();
   }, [refetch]);
+
   const handleSettingOpen = () => {
     setIsSettingOpen(true);
   };
+
   if (!cards) return null;
+
   return (
     <div
       key={column.id}
@@ -78,7 +88,9 @@ const Column = ({
         <EditColumnModal
           columnId={column.id}
           closeModal={closeModal}
+          onEdit={onEdit}
           onDelete={onDelete}
+          setModalInputValue={setModalInputValue}
         />
       )}
       <>
@@ -102,7 +114,16 @@ const Column = ({
           setIsModalOpen={setIsCreateModalOpen}
         />
         <div className="flex flex-col w-full gap-10 xl:gap-16">
-          {cards?.map((card) => <ColumnCard card={card} key={card.id} />)}
+          {cards?.map((card) => (
+            <ColumnCard
+              card={card}
+              columns={columns}
+              columnId={column.id}
+              dashboardId={dashboardId}
+              refetchColumn={refetchColumn}
+              key={card.id}
+            />
+          ))}
         </div>
       </>
     </div>

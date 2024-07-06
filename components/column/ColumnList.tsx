@@ -12,12 +12,12 @@ import { useEffect, useState } from 'react';
 import Column from './Column';
 import NewColumnModal from './NewColumnModal';
 
-const ColumnComponent = () => {
+const ColumnList = () => {
   const router = useRouter();
   const dashboardId = Number(router.query.dashboardId);
   const [columns, setColumns] = useState<ColumnType[]>();
   const [color, setColor] = useState('');
-  const [isColumnDelete, setIsColumnDelete] = useState(false);
+  const [isColumnChange, setIsColumnChange] = useState(false);
 
   const [modalInputValue, setModalInputValue] = useState('');
   const [openCreateColumnModal, setOpenCreateColumnModal] = useState(false);
@@ -25,6 +25,7 @@ const ColumnComponent = () => {
   const closeModal = () => setOpenCreateColumnModal(false);
 
   useEffect(() => {
+    // 보내줘야 할 목록 ->
     const fetchColumns = async () => {
       if (dashboardId) {
         const data = await getColumn(dashboardId);
@@ -32,13 +33,12 @@ const ColumnComponent = () => {
 
         setColumns(data.data);
         setColor(dashboardData.data.color);
-        console.log(color);
       } else {
         console.error('dashboardId is not a valid number');
       }
     };
     fetchColumns();
-  }, [dashboardId, isColumnDelete]);
+  }, [dashboardId, isColumnChange]);
 
   const openModalVisible = () => {
     setOpenCreateColumnModal(true);
@@ -55,9 +55,14 @@ const ColumnComponent = () => {
     }
   };
 
+  const handleColumnNameEdit = async (columnId: number) => {
+    await axios.put(`columns/${columnId}`, { title: modalInputValue });
+    setIsColumnChange(!isColumnChange);
+  };
+
   const handleDeleteColumn = async (columnId: number) => {
     await deleteColumn(columnId);
-    setIsColumnDelete(!isColumnDelete);
+    setIsColumnChange(!isColumnChange);
   };
 
   if (!columns) return null;
@@ -67,11 +72,14 @@ const ColumnComponent = () => {
       <div className="flex flex-wrap bg-gray-10 xl:h-[1010px] xl:flex-nowrap xl:overflow-x-auto xl:px-20">
         {columns.map((column) => (
           <Column
-            onDelete={handleDeleteColumn}
             color={color}
-            dashboardId={dashboardId}
+            columns={columns}
             column={column}
             key={column.id}
+            dashboardId={dashboardId}
+            onDelete={handleDeleteColumn}
+            onEdit={handleColumnNameEdit}
+            setModalInputValue={setModalInputValue}
           />
         ))}
         <button
@@ -99,4 +107,4 @@ const ColumnComponent = () => {
   );
 };
 
-export default ColumnComponent;
+export default ColumnList;

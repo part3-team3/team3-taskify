@@ -1,9 +1,30 @@
 import { Card } from '@/types/card';
+import Column from '@/types/column';
 import Image from 'next/image';
+import { useState } from 'react';
 
-const ColumnCard = ({ card }: { card: Card }) => {
+import CardModal from '../TodoCardModal/CardModal';
+
+const ColumnCard = ({
+  card,
+  columns,
+  columnId,
+  dashboardId,
+  refetchColumn,
+}: {
+  card: Card;
+  columns: Column[];
+  columnId: number;
+  dashboardId: number;
+  refetchColumn: () => void;
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { imageUrl, title, tags, dueDate } = card;
   const { profileImageUrl } = card.assignee;
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -63,7 +84,17 @@ const ColumnCard = ({ card }: { card: Card }) => {
           </div>
         </div>
       </div>
-    </div>
+      <CardModal
+        cardId={card.id}
+        columns={columns}
+        columnId={columnId}
+        dashboardId={dashboardId}
+        refetchColumn={refetchColumn}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        closeModal={closeModal}
+      />
+    </>
   );
 };
 
