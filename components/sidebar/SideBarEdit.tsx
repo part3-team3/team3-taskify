@@ -5,18 +5,28 @@ import { getDashboard } from '@/pages/api/mydashboard/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import SideBarItem from './SideBarItem';
 
-const SideBar = () => {
+
+import SideBarItemDashboard from './SideBarItemDashboard';
+
+
+const SideBarEdit = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
+  const [activeDashboardId, setActiveDashboardId] = useState<string | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const router = useRouter();
+
   const getDashboardData = async () => {
     try {
       const getDashboardRes: DashboardResponse = await getDashboard({
@@ -33,6 +43,15 @@ const SideBar = () => {
   useEffect(() => {
     getDashboardData();
   }, [page, size]);
+
+  useEffect(() => {
+    const path = router.asPath;
+    const pathParts = path.split('/');
+    const id = pathParts[2]; // Path에서 3번째 위치 가정
+    if (id) {
+      setActiveDashboardId(id);
+    }
+  }, [router.asPath]);
 
   const onPageChange = (pageNumber: number) => {
     setPage(pageNumber);
@@ -68,14 +87,16 @@ const SideBar = () => {
         </div>
         {allDashboardList &&
           allDashboardList.map((myDashboard) => {
+            const isActive = myDashboard.id.toString() === activeDashboardId;
             return (
               <li
                 className="mb-38 h-fit w-fit md:mb-3 xl:mb-0"
                 key={myDashboard.id}
               >
                 <Link href={`/dashboard/${myDashboard.id}`}>
-                  <SideBarItem
+                  <SideBarItemDashboard
                     myDashboard={myDashboard}
+                    isActive={isActive}
                   />
                 </Link>
               </li>
@@ -106,4 +127,4 @@ const SideBar = () => {
     </aside>
   );
 };
-export default SideBar;
+export default SideBarEdit;
