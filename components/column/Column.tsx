@@ -7,7 +7,6 @@ import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import ColumnCard from './ColumnCard';
-import Column from '@/types/column';
 
 const Column = ({
   color,
@@ -19,7 +18,7 @@ const Column = ({
   setModalInputValue,
 }: {
   color: string;
-  columns: Column[]
+  columns: ColumnType[];
   column: ColumnType;
   onEdit: (columnId: number) => Promise<void>;
   onDelete: (columnId: number) => Promise<void>;
@@ -62,6 +61,16 @@ const Column = ({
     setIsSettingOpen(true);
   };
 
+  const handleColumnEdit = () => {
+    onEdit(column.id);
+    closeModal();
+  };
+
+  const handleColumnDelete = () => {
+    onDelete(column.id);
+    closeModal();
+  };
+
   if (!cards) return null;
 
   return (
@@ -86,10 +95,9 @@ const Column = ({
       />
       {isSettingOpen && (
         <EditColumnModal
-          columnId={column.id}
           closeModal={closeModal}
-          onEdit={onEdit}
-          onDelete={onDelete}
+          onEdit={handleColumnEdit}
+          onDelete={handleColumnDelete}
           setModalInputValue={setModalInputValue}
         />
       )}

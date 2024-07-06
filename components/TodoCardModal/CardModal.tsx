@@ -30,6 +30,9 @@ const CardModal = ({
 }) => {
   const [isInEdit, setIsInEdit] = useState(false);
   const [card, setCard] = useState<Card>();
+  const [isCardChanged, setIsCardChanged] = useState(false);
+
+  const refetchCard = () => setIsCardChanged(!isCardChanged);
 
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
@@ -46,7 +49,12 @@ const CardModal = ({
       setCard(cardData);
     };
     getTodoCard();
-  }, []);
+  }, [isCardChanged]);
+
+  const handleCloseModal = () => {
+    setIsInEdit(false);
+    closeModal();
+  };
 
   if (!card) return null;
   if (!columns) return null;
@@ -56,7 +64,7 @@ const CardModal = ({
       width={modalWidth}
       height={'auto'}
       isOpen={isModalOpen}
-      onClose={closeModal}
+      onClose={handleCloseModal}
     >
       {isInEdit ? (
         <TodoFormModal
@@ -67,6 +75,7 @@ const CardModal = ({
           setIsInEdit={setIsInEdit}
           dashboardId={dashboardId}
           refetchColumn={refetchColumn}
+          refetchCard={refetchCard}
         />
       ) : (
         <TodoCardModal

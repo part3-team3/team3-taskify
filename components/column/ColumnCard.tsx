@@ -1,3 +1,4 @@
+import useMediaQuery from '@/hooks/useMediaQuery';
 import { Card } from '@/types/card';
 import Column from '@/types/column';
 import Image from 'next/image';
@@ -26,6 +27,8 @@ const ColumnCard = ({
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
+
   return (
     <>
       <div
@@ -47,7 +50,8 @@ const ColumnCard = ({
 
           <div className="flex items-end justify-between">
             <div className="w-full md:flex xl:flex-col">
-              <div className="flex gap-6 mt-6 overflow-hidden w-100">
+              {/* tags */}
+              <div className="flex gap-6 mt-6 overflow-hidden">
                 {tags.map((tag) => (
                   <div
                     key={tag}
@@ -57,7 +61,9 @@ const ColumnCard = ({
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between mt-6 md:ml-16 xl:ml-0 xl:mt-10">
+
+              {/* calendar + date */}
+              <div className="flex justify-between mt-6 md:ml-16 md:w-full xl:ml-0 xl:mt-10">
                 <div className="flex items-center gap-4">
                   <div className="relative h-14 w-14">
                     <Image
@@ -70,17 +76,18 @@ const ColumnCard = ({
                     {dueDate}
                   </div>
                 </div>
+
+                {/* profile image */}
+                <div className="relative h-22 w-22">
+                  <Image
+                    className="rounded-[70%]"
+                    src={profileImageUrl}
+                    alt="프로필 이미지"
+                    fill
+                  />
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="relative h-22 w-22">
-            <Image
-              className="rounded-[70%]"
-              src={profileImageUrl}
-              alt="프로필 이미지"
-              fill
-            />
           </div>
         </div>
       </div>

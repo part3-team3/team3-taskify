@@ -19,7 +19,9 @@ const TodoFormModal = ({
   closeModal,
   dashboardId,
   setIsInEdit,
+  refetchCard,
   refetchColumn,
+
   setIsModalOpen,
 }: {
   card?: Card;
@@ -27,6 +29,7 @@ const TodoFormModal = ({
   closeModal: () => void;
   dashboardId: number;
   setIsInEdit?: Dispatch<SetStateAction<boolean>>;
+  refetchCard: () => void;
   refetchColumn: () => void;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -64,6 +67,9 @@ const TodoFormModal = ({
     if (isEditForm) {
       await putTodoEditModal(formData, card?.id);
       setIsInEdit?.(false);
+      closeModal();
+      refetchCard();
+      refetchColumn();
     } else {
       await postCreateCard(formData);
       refetchColumn();
@@ -72,6 +78,7 @@ const TodoFormModal = ({
   };
 
   const handleModalClose = () => {
+    setIsInEdit?.(false);
     setIsModalOpen(false);
   };
 

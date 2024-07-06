@@ -2,16 +2,14 @@ import Modal from '@/components/common/Modal';
 import { Dispatch, SetStateAction } from 'react';
 
 const EditColumnModal = ({
-  columnId,
   closeModal,
   onEdit,
   onDelete,
   setModalInputValue,
 }: {
-  columnId: number;
   closeModal: () => void;
-  onEdit: (columnId: number) => Promise<void>;
-  onDelete: (columnId: number) => Promise<void>;
+  onEdit: () => void;
+  onDelete: () => void;
   setModalInputValue: Dispatch<SetStateAction<string>>;
 }) => {
   return (
@@ -30,7 +28,7 @@ const EditColumnModal = ({
       />
       <div className="flex">
         <button
-          onClick={() => onDelete(columnId)}
+          onClick={onDelete}
           className="flex items-end flex-grow underline text-gray-40 hover:text-violet-20"
         >
           삭제하기
@@ -39,7 +37,7 @@ const EditColumnModal = ({
           취소
         </button>
         <button
-          onClick={() => onEdit(columnId)}
+          onClick={onEdit}
           className="ml-11 btn_modal_large_purple xl:ml-12"
         >
           변경
