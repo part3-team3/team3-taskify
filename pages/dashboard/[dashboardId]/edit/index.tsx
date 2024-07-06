@@ -3,8 +3,8 @@ import DashboardMembersEdit from '@/components/EditDashboard/MembersEdit/Dashboa
 import DashboardNameEdit from '@/components/EditDashboard/NameEdit';
 import NavBar from '@/components/EditDashboard/Navbar';
 import SideBar from '@/components/sidebar/SideBar';
+import axios from '@/lib/axios';
 import icArrowForward from '@/public/images/icon/ic-arrow-forward.svg';
-import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -18,8 +18,9 @@ const HomePage = () => {
       await axios.delete(`/dashboards/${dashboardId}`, {
         params: { dashboardId },
       });
+
       alert('대시보드가 삭제되었습니다.');
-      router.push('/dashboards');
+      router.push('/mydashboard');
     } catch (error) {
       console.error('대시보드 삭제에 실패했습니다:', error);
       alert('대시보드 삭제에 실패했습니다');
