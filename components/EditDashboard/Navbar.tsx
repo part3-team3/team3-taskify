@@ -6,41 +6,41 @@ import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
 import icLineVertical from '@/public/images/icon/ic-line-vertical.svg';
 import icSetting from '@/public/images/icon/ic-setting.svg';
-
-import { MenuProps } from 'antd';
+import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
-
-
-
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-
 
 const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
   ssr: false,
 });
 
-
-
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: <a href="/">로그아웃</a>,
-  },
-  {
-    key: '2',
-    label: <a href="/mypage">내 정보</a>,
-  },
-  {
-    key: '3',
-    label: <a href="/mydashboard">내 대시보드</a>,
-  },
-];
-
 const NavBar = () => {
   const router = useRouter();
   const dashboardId = Number(router.query.dashboardId);
+
+  const handleLogout = () => {
+    Cookies.remove('accessToken'); // 쿠키에서 토큰 삭제
+    router.push('/'); // 루트 페이지로 리디렉션
+  };
+
+  const menuItems = [
+    {
+      key: '1',
+      label: '로그아웃',
+      onClick: handleLogout,
+    },
+    {
+      key: '2',
+      label: <Link href="/mypage">내 정보</Link>,
+    },
+    {
+      key: '3',
+      label: <Link href="/mydashboard">내 대시보드</Link>,
+    },
+  ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -129,8 +129,8 @@ const NavBar = () => {
   if (!dashboardId) return null;
 
   return (
-    <div className="flex h-60 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
-      <div className="flex hidden gap-8 px-[40px] text-xl font-bold md:flex">
+    <div className="flex h-60 flex-1 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
+      <div className="ml-40 flex gap-8 text-xl font-bold sm:hidden md:hidden xl:block xl:flex">
         {title}
         {createdByMe && (
           <Image src={icCrown} width={20} height={16} alt="왕관" />
@@ -164,12 +164,12 @@ const NavBar = () => {
           height={38}
           alt="구분선"
         />
-        <Dropdown menu={{ items }}>
+        <Dropdown menu={{ items: menuItems }}>
           <div className="flex">
             <div className="pr-0 sm:pr-12">
               <ProfileImage />
             </div>
-            <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
+            <div className="mr-0 flex hidden self-center font-medium sm:block sm:pr-12 md:pr-40 lg:pr-80">
               {nickname}
             </div>
           </div>

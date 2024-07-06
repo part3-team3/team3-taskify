@@ -111,7 +111,7 @@ const DashboardInviteList = () => {
 
   return (
     <div className="px-20">
-      <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
+      <div className="flex flex-col rounded-lg bg-white px-24 pt-25 sm:h-395 sm:w-284 md:h-477 md:w-544 xl:h-477 xl:w-620">
         <div className="flex items-center justify-between">
           <div className="mb-26 text-xl font-bold">초대 목록</div>
           <div className="flex gap-16">
@@ -159,11 +159,6 @@ const DashboardInviteList = () => {
           onChange={handleChange}
           placeholder="이메일을 입력해주세요"
         />
-        {!isValidEmail && (
-          <p className="absolute left-0 mt-2 text-sm text-red">
-            유효하지 않은 값입니다
-          </p>
-        )}
         <div className="mt-[28px] flex justify-end gap-[12px]">
           <button className="btn_modal_large_white" onClick={closeModal}>
             취소

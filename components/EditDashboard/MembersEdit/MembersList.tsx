@@ -1,8 +1,9 @@
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import React from 'react';
 
-const getInitials = (name) => {
+const getInitials = (name: string) => {
   return name ? name[0] : '';
 };
 
@@ -21,11 +22,12 @@ const colors = [
   '#9DD7ED',
   '#FFC85A',
   '#CBABDF',
+  '#B0D8A4',
 ];
 
 interface Member {
   nickname: string;
-  profileImage: string | null;
+  profileImage: string | null | StaticImport;
   id: number;
 }
 
@@ -33,7 +35,8 @@ interface MembersListProps {
   members: Member[];
   onDeleteMember: (id: number) => void;
 }
-const MembersList = (React.FC<MembersListProps> = ({
+
+const MembersList: React.FC<MembersListProps> = ({
   members,
   onDeleteMember,
 }) => {
@@ -49,7 +52,7 @@ const MembersList = (React.FC<MembersListProps> = ({
         const color = assignedColors[index % assignedColors.length];
         return (
           <div
-            key={index}
+            key={member.id}
             className="flex flex-row items-center gap-12 border-b border-gray-200 pb-16 pt-16"
           >
             {member.profileImage ? (
@@ -82,6 +85,6 @@ const MembersList = (React.FC<MembersListProps> = ({
       })}
     </div>
   );
-});
+};
 
 export default MembersList;
