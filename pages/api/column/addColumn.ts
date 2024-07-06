@@ -1,10 +1,12 @@
 import axios from '@/lib/axios';
 
-export const addColumn = async (dashboardId: number, columnTitle: string) => {
-  const body = {
-    title: `${columnTitle}`,
-    dashboardId: dashboardId,
-  };
-  const res = await axios.post('columns', body, {});
+export const addColumn = async ({
+  title,
+  dashboardId,
+}: {
+  title: string;
+  dashboardId: number;
+}) => {
+  const res = await axios.post('columns', { title, dashboardId });
   return res.data;
 };
