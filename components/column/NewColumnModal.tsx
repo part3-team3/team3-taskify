@@ -61,7 +61,9 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
       <p className="mb-10 h-21">이름</p>
       <div className="relative">
         <input
-          className="mb-28 rounded border-1px-solid-gray-30 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px]"
+          className={`mb-28 rounded border border-solid border-[#D9D9D9] sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px] ${
+            isDuplicate ? 'border-red' : ''
+          }`}
           placeholder="컬럼 제목을 입력해주세요"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
@@ -79,7 +81,7 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
         <button
           className="btn_modal_large_purple"
           onClick={handleCreate}
-          disabled={isDuplicate}
+          disabled={isDuplicate || !inputValue}
         >
           생성
         </button>
