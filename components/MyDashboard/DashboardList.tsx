@@ -5,11 +5,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+
+
 import CreateDashboardContent from './CreateDashboardContent';
 import MyDashboardItem from './MyDashboardItem';
 import PaginationBar from './PaginationBar';
 
-const DashboardList: React.FC = () => {
+
+interface DashboardListProps {
+  onDashboardCreated: () => void;
+  dashboardCreated: boolean;
+}
+const DashboardList: React.FC<DashboardListProps> = ({
+  onDashboardCreated,
+  dashboardCreated,
+}) => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
@@ -34,13 +44,14 @@ const DashboardList: React.FC = () => {
 
   useEffect(() => {
     getDashboardData();
-  }, [page, size]);
+  }, [page, size, dashboardCreated]);
 
   const onPageChange = (pageNumber: number) => {
     setPage(pageNumber);
   };
   const handleDashboardCreated = () => {
     getDashboardData();
+    onDashboardCreated();
   };
   return (
     <>
