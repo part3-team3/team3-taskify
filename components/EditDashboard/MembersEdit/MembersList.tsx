@@ -27,7 +27,7 @@ const colors = [
 
 interface Member {
   nickname: string;
-  profileImage: string | null | StaticImport;
+  profileImageUrl: string | null | StaticImport;
   id: number;
 }
 
@@ -44,7 +44,7 @@ const MembersList: React.FC<MembersListProps> = ({
 
   useEffect(() => {
     setAssignedColors(shuffleArray([...colors]));
-  }, [members]);
+  }, []);
 
   return (
     <div>
@@ -55,14 +55,16 @@ const MembersList: React.FC<MembersListProps> = ({
             key={member.id}
             className="flex flex-row items-center gap-12 border-b border-gray-200 pb-16 pt-16"
           >
-            {member.profileImage ? (
-              <Image
-                src={member.profileImage}
-                alt={`${member.nickname}'s profile image`}
-                width={50}
-                height={50}
-                className="rounded-full"
-              />
+            {member.profileImageUrl ? (
+              <div className="h-38 w-38 overflow-hidden rounded-full">
+                <Image
+                  src={member.profileImageUrl}
+                  alt={`${member.nickname}'s profile image`}
+                  width={38}
+                  height={38}
+                  className="object-cover"
+                />
+              </div>
             ) : (
               <div
                 className="flex h-38 w-38 items-center justify-center rounded-full"

@@ -129,8 +129,8 @@ const NavBar = () => {
   if (!dashboardId) return null;
 
   return (
-    <div className="flex h-60 flex-1 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
-      <div className="ml-40 flex gap-8 text-xl font-bold sm:hidden md:hidden xl:block xl:flex">
+    <div className="px-auto flex h-60 flex-1 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
+      <div className="ml-40 hidden gap-8 text-xl font-bold xl:flex">
         {title}
         {createdByMe && (
           <Image src={icCrown} width={20} height={16} alt="왕관" />
@@ -169,7 +169,7 @@ const NavBar = () => {
             <div className="pr-0 sm:pr-12">
               <ProfileImage />
             </div>
-            <div className="mr-0 flex hidden self-center font-medium sm:block sm:pr-12 md:pr-40 lg:pr-80">
+            <div className="mr-0 hidden self-center font-medium lg:pr-80">
               {nickname}
             </div>
           </div>

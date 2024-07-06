@@ -1,3 +1,4 @@
+import NavBar from '@/components/EditDashboard/Navbar';
 import DashboardList from '@/components/MyDashboard/DashboardList';
 import InvitedDashboardSection from '@/components/MyDashboard/InvitedDashboardSection';
 import SideBar from '@/components/sidebar/SideBar';

@@ -7,7 +7,7 @@ import MembersList from './MembersList';
 
 const DashboardMembersEdit = () => {
   const router = useRouter();
-  const { dashboardId } = router.query;
+  const dashboardId = Number(router.query.dashboardId);
 
   const [members, setMembers] = useState<
     { nickname: string; profileImage: string | null; id: number }[]
@@ -19,9 +19,9 @@ const DashboardMembersEdit = () => {
   const size = 4;
 
   useEffect(() => {
-    if (!dashboardId) return; // dashboardId가 존재하지 않을 경우 fetchData 호출하지 않음
-
     const fetchData = async () => {
+      if (!dashboardId || isNaN(Number(dashboardId))) return;
+
       try {
         const newSize = size + 1;
 
@@ -38,11 +38,11 @@ const DashboardMembersEdit = () => {
           .map(
             (member: {
               nickname: string;
-              profileImage: string | null;
+              profileImageUrl: string | null;
               id: number;
             }) => ({
               nickname: member.nickname,
-              profileImage: member.profileImage,
+              profileImageUrl: member.profileImageUrl,
               id: member.id,
             }),
           );
