@@ -19,7 +19,7 @@ const InviteList: React.FC<InviteListProps> = ({
       {invitations.map((invitation, index) => (
         <div
           key={invitation.id}
-          className={`mb-4 flex items-center ${index < invitations.length - (invitations.length % size) ? 'border-b border-gray-200' : ''}`}
+          className={`mb-4 flex items-center ${index < invitations.length - (invitations.length % size) ? '' : 'border-b border-gray-200'}`}
         >
           <p className="my-12 mr-4">{invitation.invitee.email}</p>
           <button

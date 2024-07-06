@@ -102,7 +102,7 @@ const NavBar = () => {
   const handleSubmit = async () => {
     if (!validateEmail(value)) {
       setIsValidEmail(false);
-      return;
+      alert('유효하지 않은 이메일입니다');
     }
     try {
       await axios.post(`dashboards/${dashboardId}/invitations`, {
@@ -120,7 +120,6 @@ const NavBar = () => {
     setValue(email);
     if (isValidEmail === false) {
       setIsValidEmail(true);
-      alert('유효하지 않은 이메일입니다');
     }
   };
 
@@ -129,7 +128,7 @@ const NavBar = () => {
   if (!dashboardId) return null;
 
   return (
-    <div className="px-auto flex h-60 flex-1 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
+    <div className="px-auto flex h-70 flex-1 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
       <div className="ml-40 hidden gap-8 text-xl font-bold xl:flex">
         {title}
         {createdByMe && (
@@ -169,7 +168,7 @@ const NavBar = () => {
             <div className="pr-0 sm:pr-12">
               <ProfileImage />
             </div>
-            <div className="mr-0 hidden self-center font-medium lg:pr-80">
+            <div className="mr-0 hidden self-center font-medium lg:flex lg:pr-40 xl:pr-80">
               {nickname}
             </div>
           </div>
@@ -185,7 +184,7 @@ const NavBar = () => {
         <p className="mt-[26px] text-18 text-gray-800">이메일</p>
         <div className="relative">
           <input
-            className={`mt-[10px] h-[48px] w-[484px] rounded-md border ${inputClassName}`}
+            className={`mt-[10px] h-[48px] w-[484px] rounded-md border px-10 ${inputClassName}`}
             type="text"
             value={value}
             onChange={handleChange}

@@ -149,7 +149,7 @@ const DashboardNameEdit = () => {
         </div>
         <p className="text-[1.125rem] font-medium">대시보드 이름</p>
         <input
-          className="mt-8 h-48 w-full rounded-md border border-gray-300"
+          className="mt-8 h-48 w-full rounded-md border border-gray-300 px-10"
           type="text"
           value={inputTitle}
           onChange={handleTitleChange}

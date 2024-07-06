@@ -83,7 +83,7 @@ const DashboardInviteList = () => {
   const handleSubmit = async () => {
     if (!validateEmail(value)) {
       setIsValidEmail(false);
-      return;
+      alert('유효하지 않은 이메일입니다');
     }
     try {
       await axios.post(`dashboards/${dashboardId}/invitations`, {
@@ -153,7 +153,7 @@ const DashboardInviteList = () => {
         <h2 className="text-2xl font-bold">초대하기</h2>
         <p className="mt-[26px] text-18 text-gray-800">이메일</p>
         <input
-          className={`mt-[10px] h-[48px] w-[484px] rounded-md border ${inputClassName}`}
+          className={`mt-[10px] h-[48px] w-[484px] rounded-md border px-10 ${inputClassName}`}
           type="text"
           value={value}
           onChange={handleChange}
