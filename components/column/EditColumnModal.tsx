@@ -1,5 +1,5 @@
 import Modal from '@/components/common/Modal';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 const EditColumnModal = ({
   closeModal,
@@ -12,7 +12,38 @@ const EditColumnModal = ({
   onDelete: () => void;
   setModalInputValue: Dispatch<SetStateAction<string>>;
 }) => {
-  return (
+  const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
+
+  const openDeleteConfirmModal = () => setIsDeleteConfirmVisible(true);
+
+  return isDeleteConfirmVisible ? (
+    <Modal
+      isOpen={true}
+      onClose={() => {
+        setIsDeleteConfirmVisible(false);
+      }}
+      width="540px"
+      height="250px"
+    >
+      <h2 className="font-pretendard flex h-full flex-col items-center justify-center text-center font-medium text-[18]">
+        칼럼의 모든 카드가 삭제됩니다.
+      </h2>
+      <div className="mt-[-35px] flex justify-end gap-[12px]">
+        <button
+          className="btn_modal_large_white"
+          onClick={() => {
+            setIsDeleteConfirmVisible(false);
+          }}
+        >
+          취소
+        </button>
+        <button className="btn_modal_large_purple" onClick={onDelete}>
+          삭제
+        </button>
+      </div>
+    </Modal>
+  ) : (
     <Modal // Modal 컴포넌트에 넘겨주고 싶은 값을 prop으로 설정하기
       isOpen={true}
       onClose={closeModal}
@@ -22,13 +53,20 @@ const EditColumnModal = ({
       <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
       <p className="mb-10 h-21">이름</p>
       <input
-        className="h-48 px-16 py-16 rounded mb-28 w-484 border-1px-solid-gray-30"
+        className={`mb-28 rounded border-1px-solid-gray-30 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px] ${
+          isDuplicate ? 'border-red' : ''
+        }`}
         placeholder="컬럼 제목을 입력해주세요"
         onChange={(e) => setModalInputValue(e.target.value)}
       />
+      {isDuplicate && (
+        <p className="absolute mt-[-20px] text-[14px] text-red">
+          중복된 칼럼 이름입니다.
+        </p>
+      )}
       <div className="flex">
         <button
-          onClick={onDelete}
+          onClick={openDeleteConfirmModal}
           className="flex items-end flex-grow underline text-gray-40 hover:text-violet-20"
         >
           삭제하기
