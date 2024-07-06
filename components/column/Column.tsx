@@ -4,7 +4,7 @@ import { getCardList } from '@/pages/api/column/getCardList';
 import { Card } from '@/types/card';
 import ColumnType from '@/types/column';
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ColumnCard from './ColumnCard';
 
@@ -15,15 +15,13 @@ const Column = ({
   onEdit,
   onDelete,
   dashboardId,
-  setModalInputValue,
 }: {
   color: string;
   columns: ColumnType[];
   column: ColumnType;
-  onEdit: (columnId: number) => Promise<void>;
+  onEdit: (columnId: number, title: string) => Promise<void>;
   onDelete: (columnId: number) => Promise<void>;
   dashboardId: number;
-  setModalInputValue: Dispatch<SetStateAction<string>>;
 }) => {
   const [cards, setCards] = useState<Card[]>();
   const [cardTotalCount, setCardTotalCount] = useState();
@@ -61,16 +59,6 @@ const Column = ({
     setIsSettingOpen(true);
   };
 
-  const handleColumnEdit = () => {
-    onEdit(column.id);
-    closeModal();
-  };
-
-  const handleColumnDelete = () => {
-    onDelete(column.id);
-    closeModal();
-  };
-
   if (!cards) return null;
 
   return (
@@ -95,10 +83,12 @@ const Column = ({
       />
       {isSettingOpen && (
         <EditColumnModal
+          columnTitle={column.title}
+          columnId={column.id}
           closeModal={closeModal}
-          onEdit={handleColumnEdit}
-          onDelete={handleColumnDelete}
-          setModalInputValue={setModalInputValue}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          dashboardId={dashboardId}
         />
       )}
       <>

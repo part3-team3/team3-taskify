@@ -15,8 +15,6 @@ const Comments = ({ card, columns }: { card: Card; columns: Column[] }) => {
   const [cursor, setCursor] = useState<number | null | undefined>(); // 무한스크롤에 사용되는 커서
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log(card.id);
-
   useEffect(() => {
     const getCommentsData = async (cursor?: number | null) => {
       if (null === cursor) return;
@@ -105,7 +103,7 @@ const Comments = ({ card, columns }: { card: Card; columns: Column[] }) => {
     <>
       <CommentForm card={card} columns={columns} addComment={addComment} />
       {comments.length > 0 && (
-        <div className="h-125 w-287 overflow-scroll md:h-170 md:w-420 xl:h-110 xl:w-450">
+        <div className="overflow-scroll h-125 w-287 md:h-170 md:w-420 xl:h-110 xl:w-450">
           {comments.map((comment) => (
             <Comment
               comment={comment}

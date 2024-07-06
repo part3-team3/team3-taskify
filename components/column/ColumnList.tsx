@@ -19,7 +19,6 @@ const ColumnList = () => {
   const [color, setColor] = useState('');
   const [isColumnChange, setIsColumnChange] = useState(false);
 
-  const [modalInputValue, setModalInputValue] = useState('');
   const [openCreateColumnModal, setOpenCreateColumnModal] = useState(false);
 
   const closeModal = () => setOpenCreateColumnModal(false);
@@ -44,10 +43,10 @@ const ColumnList = () => {
     setOpenCreateColumnModal(true);
   };
 
-  const handleAddColumn = async () => {
+  const handleAddColumn = async (title: string) => {
     if (columns !== undefined && columns.length <= 10) {
       const newColumn = await addColumn({
-        title: modalInputValue,
+        title,
         dashboardId,
       });
       setColumns([...columns, newColumn]);
@@ -55,8 +54,8 @@ const ColumnList = () => {
     }
   };
 
-  const handleColumnNameEdit = async (columnId: number) => {
-    await axios.put(`columns/${columnId}`, { title: modalInputValue });
+  const handleColumnNameEdit = async (columnId: number, newTitle: string) => {
+    await axios.put(`columns/${columnId}`, { title: newTitle });
     setIsColumnChange(!isColumnChange);
   };
 
@@ -79,7 +78,6 @@ const ColumnList = () => {
             dashboardId={dashboardId}
             onDelete={handleDeleteColumn}
             onEdit={handleColumnNameEdit}
-            setModalInputValue={setModalInputValue}
           />
         ))}
         <button
@@ -97,8 +95,8 @@ const ColumnList = () => {
         </button>
         {openCreateColumnModal && (
           <NewColumnModal
+            dashboardId={dashboardId}
             closeModal={closeModal}
-            setModalInputValue={setModalInputValue}
             handleAddColumn={handleAddColumn}
           />
         )}

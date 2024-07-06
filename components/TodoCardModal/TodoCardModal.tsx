@@ -48,6 +48,7 @@ const TodoCardModal = ({
             <div className="relative flex w-20 h-20 md:h-28 md:w-28">
               <Image
                 onClick={handleMenuOpen}
+                className="cursor-pointer"
                 src="/images/icon/ic-kebab.svg"
                 fill
                 alt="케밥아이콘"

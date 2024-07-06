@@ -1,22 +1,27 @@
 import Modal from '@/components/common/Modal';
-import React, { Dispatch, SetStateAction } from 'react';
+import useColumnTitleDuplicateChecker from '@/hooks/useColumnTitleDuplicateChecker';
+import { useState } from 'react';
 
 const NewColumnModal = ({
-  setModalInputValue,
   handleAddColumn,
   closeModal,
+  dashboardId,
 }: {
-  setModalInputValue: Dispatch<SetStateAction<string>>;
-  handleAddColumn: () => Promise<void>;
+  handleAddColumn: (title: string) => Promise<void>;
   closeModal: () => void;
+  dashboardId: number;
 }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const isDuplicate = useColumnTitleDuplicateChecker(dashboardId, inputValue);
+
   return (
     <Modal isOpen={true} onClose={closeModal} width="540px" height="276px">
       <h2 className="mb-32 text-2xl font-bold">새 컬럼 생성</h2>
       <p className="mb-10 h-21">이름</p>
       <div className="relative">
         <input
-          className={`mb-28 rounded border border-solid border-[#D9D9D9] sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px] ${
+          className={`mb-28 rounded border border-solid border-[#D9D9D9] p-16 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px] ${
             isDuplicate ? 'border-red' : ''
           }`}
           placeholder="컬럼 제목을 입력해주세요"
@@ -35,7 +40,7 @@ const NewColumnModal = ({
         </button>
         <button
           className="btn_modal_large_purple"
-          onClick={handleCreate}
+          onClick={() => handleAddColumn(inputValue)}
           disabled={isDuplicate || !inputValue}
         >
           생성
