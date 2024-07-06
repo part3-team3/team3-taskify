@@ -2,7 +2,6 @@ import { postDashboard } from '@/pages/api/mydashboard/postDashboard';
 import Image from 'next/image';
 import { useState } from 'react';
 
-
 interface CreateDashboardModalContentProps {
   closeModal: () => void;
   onDashboardCreated: () => void;
@@ -48,16 +47,18 @@ const CreateDashboardModalContent: React.FC<
 
   return (
     <>
-      <p className="text-2xl font-bold">새로운 대시보드</p>
-      <p className="mt-4">대시보드 이름</p>
+      <p className="text-xl font-bold md:text-2xl">새로운 대시보드</p>
+      <p className="mb-10 mt-24 text-base font-medium md:mt-32 md:text-lg">
+        대시보드 이름
+      </p>
       <input
         type="text"
         placeholder="대시보드 제목 입력"
         value={inputTitle}
         onChange={handleTitleInput}
-        className="mb-4 w-full p-2 border-1px-solid-gray-30"
+        className="mb-24 w-full p-2 border-1px-solid-gray-30 md:mb-28"
       />
-      <div className="mb-4 flex space-x-2">
+      <div className="mb-24 flex gap-10 space-x-2">
         {[
           { color: '#7AC555', bgColor: 'bg-green' },
           { color: '#760DDE', bgColor: 'bg-purple' },
@@ -67,7 +68,7 @@ const CreateDashboardModalContent: React.FC<
         ].map(({ color, bgColor }) => (
           <div
             key={color}
-            className={`h-30 w-30 cursor-pointer rounded-full ${bgColor} flex items-center justify-center`}
+            className={`h-28 w-28 cursor-pointer rounded-full ${bgColor} flex items-center justify-center md:h-30 md:w-30`}
             onClick={() => handleColorClick(color)}
           >
             {clickedColor === color && (
@@ -81,11 +82,11 @@ const CreateDashboardModalContent: React.FC<
           </div>
         ))}
       </div>
-      <div className="flex justify-end space-x-2">
-        <button className="btn_modal_large_white" onClick={closeModal}>
+      <div className="flex justify-between md:justify-end md:gap-12">
+        <button className="btn_modal_small_white md:btn_modal_large_white" onClick={closeModal}>
           취소
         </button>
-        <button className="btn_modal_large_purple" onClick={handleSubmit}>
+        <button className="btn_modal_small_purple md:btn_modal_large_purple" onClick={handleSubmit}>
           생성
         </button>
       </div>

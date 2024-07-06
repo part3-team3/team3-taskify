@@ -1,9 +1,10 @@
-import Modal from '@/components/common/Modal';
+import DashboardModal from '@/components/MyDashboard/DashboardModal';
 import { getDashboard } from '@/pages/api/mydashboard/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+
 import CreateDashboardContent from './CreateDashboardContent';
 import MyDashboardItem from './MyDashboardItem';
 import PaginationBar from './PaginationBar';
@@ -43,7 +44,7 @@ const DashboardList: React.FC = () => {
   };
   return (
     <>
-      <div className="mx-auto w-fit">
+      <div className="mx-auto mt-24 w-fit md:mt-40">
         <ul className="container grid h-388 w-260 grid-cols-1 grid-rows-6 gap-y-8 md:h-224 md:w-504 md:grid-cols-2 md:grid-rows-3 md:gap-x-8 xl:h-152 xl:w-1022 xl:grid-cols-3 xl:grid-rows-2 xl:gap-x-8">
           <div
             onClick={openModal}
@@ -84,17 +85,12 @@ const DashboardList: React.FC = () => {
           )}
         </div>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        width="327px"
-        height="293px"
-      >
+      <DashboardModal isOpen={isModalOpen} onClose={closeModal}>
         <CreateDashboardContent
           closeModal={closeModal}
           onDashboardCreated={handleDashboardCreated}
         />
-      </Modal>
+      </DashboardModal>
     </>
   );
 };
