@@ -63,7 +63,7 @@ const ColumnCard = ({ card }: { card: Card }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

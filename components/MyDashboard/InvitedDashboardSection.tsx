@@ -1,16 +1,21 @@
-import {
-  getInvitedDashboard,
-  getSearchDashboard,
-} from '@/pages/api/mydashboard/getInvitedDashboard';
+import { getInvitedDashboard, getSearchDashboard } from '@/pages/api/mydashboard/getInvitedDashboard';
 import { Invitation, InvitationResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+
+
 import InvitedDashboardItem from './InvitedDashboardItem';
 import SearchBar from './SearchBar';
 
-const InvitedDashboardSection: React.FC = () => {
+
+interface InvitedDashboardSectionProps {
+  onDashboardCreated: () => void;
+}
+const InvitedDashboardSection: React.FC<InvitedDashboardSectionProps> = ({
+  onDashboardCreated,
+}) => {
   const [allInvitedDashboardList, setAllInvitedDashboardList] = useState<
     Invitation[]
   >([]);
@@ -100,6 +105,10 @@ const InvitedDashboardSection: React.FC = () => {
     );
   };
 
+  const handleDashboardCreated = () => {
+    onDashboardCreated();
+  };
+
   return (
     <>
       <div className="mx-auto">
@@ -111,9 +120,9 @@ const InvitedDashboardSection: React.FC = () => {
               </p>
 
               <SearchBar initialValue={title as string} />
-              <div className='hidden md:flex md:mb-4 md:text-base md:text-normal md:text-gray-40'>
-                <p className='md:w-182 xl:w-348'>이름</p>
-                <p className=" md:w-112 xl:w-302">초대자</p>
+              <div className="md:text-normal hidden md:mb-4 md:flex md:text-base md:text-gray-40">
+                <p className="md:w-182 xl:w-348">이름</p>
+                <p className="md:w-112 xl:w-302">초대자</p>
                 <p className="md:w-154 xl:w-316">수락 여부</p>
               </div>
               {allInvitedDashboardList.map((invitedDashboard) => {
@@ -122,6 +131,7 @@ const InvitedDashboardSection: React.FC = () => {
                     <InvitedDashboardItem
                       invitedDashboard={invitedDashboard}
                       onAction={handleInvitationAction}
+                      onDashboardCreated={handleDashboardCreated}
                     />
                   </li>
                 );

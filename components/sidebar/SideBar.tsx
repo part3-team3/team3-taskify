@@ -7,9 +7,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+
+
 import SideBarItem from './SideBarItem';
 
-const SideBar = () => {
+
+interface SideBarProps {
+  onDashboardCreated: () => void;
+  dashboardCreated: boolean;
+}
+const SideBar: React.FC<SideBarProps> = ({
+  onDashboardCreated,
+  dashboardCreated,
+}) => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
@@ -32,7 +42,7 @@ const SideBar = () => {
 
   useEffect(() => {
     getDashboardData();
-  }, [page, size]);
+  }, [page, size, dashboardCreated]);
 
   const onPageChange = (pageNumber: number) => {
     setPage(pageNumber);
@@ -40,6 +50,7 @@ const SideBar = () => {
 
   const handleDashboardCreated = () => {
     getDashboardData();
+    onDashboardCreated();
   };
   return (
     <aside className="blcok flex h-screen w-67 flex-col items-center border-r border-solid border-gray-30 bg-white md:w-160 xl:w-300 xl:items-start xl:px-12">
@@ -74,9 +85,7 @@ const SideBar = () => {
                 key={myDashboard.id}
               >
                 <Link href={`/dashboard/${myDashboard.id}`}>
-                  <SideBarItem
-                    myDashboard={myDashboard}
-                  />
+                  <SideBarItem myDashboard={myDashboard} />
                 </Link>
               </li>
             );
