@@ -1,3 +1,4 @@
+import NavBar from '@/components/Navbarbasic';
 import DashboardList from '@/components/MyDashboard/DashboardList';
 import InvitedDashboardSection from '@/components/MyDashboard/InvitedDashboardSection';
 import SideBar from '@/components/sidebar/SideBar';
@@ -7,6 +8,7 @@ const Mydashboard: React.FC = () => {
     <div className="flex bg-gray-10">
       <SideBar />
       <main className="flex flex-1 flex-col">
+        <NavBar />
         <DashboardList />
         <InvitedDashboardSection />
       </main>
