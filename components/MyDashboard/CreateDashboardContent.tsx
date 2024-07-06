@@ -2,6 +2,7 @@ import { postDashboard } from '@/pages/api/mydashboard/postDashboard';
 import Image from 'next/image';
 import { useState } from 'react';
 
+
 interface CreateDashboardModalContentProps {
   closeModal: () => void;
   onDashboardCreated: () => void;
@@ -39,6 +40,7 @@ const CreateDashboardModalContent: React.FC<
       });
       onDashboardCreated();
       closeModal();
+      window.location.reload();
     } catch (error) {
       alert('대시보드 생성에 실패했습니다. 다시 시도해주세요.');
     }
