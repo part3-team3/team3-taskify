@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import Column from './Column';
+import NewColumnModal from './NewColumnModal';
 
 const ColumnComponent = () => {
   const router = useRouter();
@@ -17,6 +18,11 @@ const ColumnComponent = () => {
   const [columns, setColumns] = useState<ColumnType[]>();
   const [color, setColor] = useState('');
   const [isColumnDelete, setIsColumnDelete] = useState(false);
+
+  const [modalInputValue, setModalInputValue] = useState('');
+  const [openCreateColumnModal, setOpenCreateColumnModal] = useState(false);
+
+  const closeModal = () => setOpenCreateColumnModal(false);
 
   useEffect(() => {
     const fetchColumns = async () => {
@@ -34,17 +40,24 @@ const ColumnComponent = () => {
     fetchColumns();
   }, [dashboardId, isColumnDelete]);
 
+  const openModalVisible = () => {
+    setOpenCreateColumnModal(true);
+  };
+
   const handleAddColumn = async () => {
     if (columns !== undefined && columns.length <= 10) {
-      const newColumn = await addColumn(dashboardId);
+      const newColumn = await addColumn({
+        title: modalInputValue,
+        dashboardId,
+      });
       setColumns([...columns, newColumn]);
+      setOpenCreateColumnModal(false);
     }
   };
 
   const handleDeleteColumn = async (columnId: number) => {
     await deleteColumn(columnId);
     setIsColumnDelete(!isColumnDelete);
-    // setColumns(columns.filter((column) => column.id !== columnId));
   };
 
   if (!columns) return null;
@@ -62,7 +75,7 @@ const ColumnComponent = () => {
           />
         ))}
         <button
-          onClick={handleAddColumn}
+          onClick={openModalVisible}
           disabled={columns.length >= 10}
           className="mb-4 ml-20 mt-68 flex h-70 w-full min-w-[308px] items-center justify-center space-x-12 rounded-lg bg-white text-black border-1px-solid-gray-30 xl:w-[354px]"
         >
@@ -71,9 +84,16 @@ const ColumnComponent = () => {
             src="/images/icon/ic-color-add.svg"
             width={22}
             height={22}
-            alt="button to add a column"
+            alt="새로운 컬럼 생성 버튼"
           />
         </button>
+        {openCreateColumnModal && (
+          <NewColumnModal
+            closeModal={closeModal}
+            setModalInputValue={setModalInputValue}
+            handleAddColumn={handleAddColumn}
+          />
+        )}
       </div>
     </>
   );

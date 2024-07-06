@@ -64,9 +64,9 @@ const Column = ({
       className="mx-[30px] my-[22px] flex h-full w-full min-w-[314px] flex-wrap items-center bg-gray-10 xl:h-[40px] xl:w-[354px]"
     >
       <div
-        className={`${dashboardColor[color]} my-[22px] mr-15 h-8 w-8 rounded-full`}
+        className={`${dashboardColor[color]} my-22 mr-8 h-8 w-8 rounded-full`}
       />
-      <div className="my-[22px] mr-15 font-[700]"> {column.title}</div>
+      <div className="my-[22px] mr-15 font-[700]">{column.title}</div>
       <div className="my-[22px] mr-auto flex h-[20px] w-[20px] items-center justify-center rounded bg-[#EEEEEE] text-xs text-[#787496]">
         {cardTotalCount}
       </div>
@@ -106,7 +106,7 @@ const Column = ({
           closeModal={closeCreateModal}
           setIsModalOpen={setIsCreateModalOpen}
         />
-        <div className="flex flex-col xl:gap-16">
+        <div className="flex w-full flex-col gap-10 xl:gap-16">
           {cards?.map((card) => <ColumnCard card={card} key={card.id} />)}
         </div>
       </>
