@@ -13,12 +13,10 @@ const TodoModal = ({
   card,
   columns,
   setIsInEdit,
-  closeModal,
 }: {
   card: Card;
   columns: Column[];
   setIsInEdit: Dispatch<SetStateAction<boolean>>;
-  closeModal: () => void;
 }) => {
   const [kebabButtonVisible, setKebabButtonVisible] = useState<boolean>(false);
 
@@ -30,10 +28,6 @@ const TodoModal = ({
     setKebabButtonVisible(!kebabButtonVisible);
   };
 
-  const handleModalClose = () => {
-    closeModal();
-  };
-
   return (
     card && (
       <div>
@@ -42,23 +36,24 @@ const TodoModal = ({
           <div className="relative bottom-24 flex items-center gap-16 md:bottom-0 md:gap-24">
             <div className="relative flex h-20 w-20 md:h-28 md:w-28">
               <Image
-                className="cursor-pointer"
                 onClick={handleMenuOpen}
                 src="/images/icon/ic-kebab.svg"
                 fill
                 alt="케밥아이콘"
               />
               <Dropdown
-                card={card}
                 setIsInEdit={setIsInEdit}
-                closeModal={closeModal}
                 kebabButtonVisible={kebabButtonVisible}
               />
             </div>
+
             <div
               onClick={handleModalClose}
               className="relative flex h-24 w-24 cursor-pointer md:h-32 md:w-32"
             >
+
+           
+
               <Image src="/images/icon/ic-x.svg" fill alt="x아이콘" />
             </div>
           </div>

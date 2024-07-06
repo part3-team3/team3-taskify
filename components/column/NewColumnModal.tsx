@@ -1,4 +1,3 @@
-// NewColumnModal.tsx
 import Modal from '@/components/common/Modal';
 import React, { Dispatch, SetStateAction } from 'react';
 
@@ -17,7 +16,7 @@ const NewColumnModal = ({
       <p className="mb-10 h-21">이름</p>
       <input
         onChange={(e) => setModalInputValue(e.target.value)}
-        className="mb-28 h-48 w-484 rounded px-16 py-16 border-1px-solid-gray-30"
+        className="h-48 px-16 py-16 rounded mb-28 w-484 border-1px-solid-gray-30"
         placeholder="컬럼 제목을 입력해주세요"
       />
       <div className="flex justify-end">

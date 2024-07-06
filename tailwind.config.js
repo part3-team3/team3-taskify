@@ -132,10 +132,57 @@ module.exports = {
         '.input:focus': {
           border: '1px solid #5534DA',
         },
+        '.MyPageInput': {
+          border: '1px solid #D9D9D9',
+          borderRadius: '6px',
+          width: '100%',
+          height: '42px',
+          outline: 'none',
+        },
+        '.MyPageErrorInput': {
+          border: '1px solid #D6173A',
+          borderRadius: '6px',
+          width: '100%',
+          height: '50px',
+          outline: 'none',
+        },
+        '.MyPageInput:focus': {
+          border: '1px solid #5534DA',
+        },
         // 공지
         // 회색 테두리 스타일링
         '.border-1px-solid-gray-30': {
           border: '1px solid #D9D9D9',
+        },
+        '.btn_myPage_disabled': {
+          width: '84px',
+          padding: '7px 29px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#9FA6B2',
+          borderRadius: '4px',
+          outline: 'none',
+          cursor: 'default',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          whiteSpace: 'nowrap',
+        },
+        '.btn_myPage_active': {
+          width: '84px',
+          padding: '7px 29px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+          outline: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          whiteSpace: 'nowrap',
         },
         // 로그인, 회원가입 페이지 데스크탑, 테블릿 회색(비활성화) 버튼
         '.btn_login_large_disabled': {
@@ -147,7 +194,6 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#9FA6B2',
           borderRadius: '8px',
-          // 공지
           cursor: 'default',
           outline: 'none',
         },
@@ -222,19 +268,6 @@ module.exports = {
           border: '1px solid #D9D9D9',
           borderRadius: '8px',
         },
-        // 회색 버튼
-        // 할일 수정 모달(d, t), 할일 생성 모달(d, t)
-        '.btn_modal_large_gray': {
-          width: '120px',
-          height: '48px',
-          padding: '14px 46px',
-          fontSize: '16px',
-          fontWeight: '500',
-          lineHeight: '19px',
-          color: '#ffffff',
-          backgroundColor: '#9FA6B2',
-          borderRadius: '8px',
-        },
         // 보라색 버튼
         // 로그인 페이지 비밀번호 불일치 모달(m), 회원가입 페이지 가입 완료, 이미 사용중 이메일 모달(m), 마이페이지 비밀번호 틀렸습니다 모달(m)
         // 대시보드 생성 모달(m), 할일 수정 모달(m), 할일 생성 모달(m),
@@ -263,19 +296,6 @@ module.exports = {
           color: '#787486',
           backgroundColor: '#FFFFFF',
           border: '1px solid #D9D9D9',
-          borderRadius: '8px',
-        },
-        // 회색 버튼
-        // 할일 수정 모달(m), 할일 생성 모달(m)
-        '.btn_modal_small_gray': {
-          width: '138px',
-          height: '42px',
-          padding: '12px 56px',
-          fontSize: '14px',
-          fontWeight: '500',
-          lineHeight: '17px',
-          color: '#ffffff',
-          backgroundColor: '#9FA6B2',
           borderRadius: '8px',
         },
         // 보라색 버튼
@@ -340,7 +360,7 @@ module.exports = {
         '.btn_tablet_purple': {
           width: '72px',
           height: '30px',
-          padding: '6px 23px',
+          padding: '6px 20px',
           fontSize: '14px',
           fontWeight: '500',
           lineHeight: '17px',
@@ -353,7 +373,7 @@ module.exports = {
         '.btn_tablet_white': {
           width: '73px',
           height: '30px',
-          padding: '6px 23px',
+          padding: '6px 20px',
           fontSize: '14px',
           fontWeight: '500',
           lineHeight: '17px',
@@ -474,6 +494,33 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#9FA6B2',
           borderRadius: '8px',
+        },
+        // 보라색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 -> 수락 버튼(d)
+        '.btn_desktop_purple_acc': {
+          width: '84px',
+          height: '32px',
+          padding: '7px 25px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+        },
+        // 흰색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 -> 거절 버튼(d)
+        '.btn_desktop_white_rej': {
+          width: '85px',
+          height: '32px',
+          padding: '7px 25px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
         },
       });
     },

@@ -1,6 +1,6 @@
 import axios from '@/lib/axios';
 
-export const getCard = async (cardId: number) => {
-  const res = await axios.get(`cards/${cardId}`);
+export const getCard = async () => {
+  const res = await axios.get('cards/8736');
   return res.data;
 };

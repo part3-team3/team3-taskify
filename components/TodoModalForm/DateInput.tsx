@@ -47,8 +47,8 @@ const DateInput = ({
         <Image
           src={
             value
-              ? '/images/icon/ic-calendar.svg'
-              : '/images/icon/ic-calendar-gray.svg'
+              ? 'images/icon/ic-calendar.svg'
+              : 'images/icon/ic-calendar-gray.svg'
           }
           width={20}
           height={20}

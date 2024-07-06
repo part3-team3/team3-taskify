@@ -80,7 +80,7 @@ const DashboardMembersEdit = () => {
   if (error) return <div>{error}</div>;
   return (
     <div className="px-20">
-      <div className="flex h-[404px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
+      <div className="flex flex-col rounded-lg bg-white px-24 pt-25 sm:h-337 sm:w-284 md:h-404 md:w-544 xl:h-404 xl:w-620">
         <div className="flex items-center justify-between">
           <div className="mb-27 text-xl font-bold">구성원</div>
           <div className="mb-24 flex items-center justify-end">

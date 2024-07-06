@@ -48,16 +48,12 @@ const Column = ({
       setCards(cardList.cards);
       setCardTotalCount(cardList.totalCount);
     };
-
     fetchCards();
   }, [refetch]);
-
   const handleSettingOpen = () => {
     setIsSettingOpen(true);
   };
-
   if (!cards) return null;
-
   return (
     <div
       key={column.id}
@@ -85,7 +81,6 @@ const Column = ({
           onDelete={onDelete}
         />
       )}
-
       <>
         <button
           onClick={openCreateModal}
@@ -106,12 +101,11 @@ const Column = ({
           closeModal={closeCreateModal}
           setIsModalOpen={setIsCreateModalOpen}
         />
-        <div className="flex w-full flex-col gap-10 xl:gap-16">
+        <div className="flex flex-col w-full gap-10 xl:gap-16">
           {cards?.map((card) => <ColumnCard card={card} key={card.id} />)}
         </div>
       </>
     </div>
   );
 };
-
 export default Column;

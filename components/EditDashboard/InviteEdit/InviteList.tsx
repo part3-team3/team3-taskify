@@ -1,4 +1,3 @@
-// InviteList.tsx
 import React from 'react';
 
 type InviteListProps = {
@@ -13,12 +12,16 @@ const InviteList: React.FC<InviteListProps> = ({
   invitations,
   onCancelInvitation,
 }) => {
+  const size = 4;
+
   return (
     <div>
-      {invitations.map((invitation) => (
-        <div key={invitation.id} className="mb-4 flex items-center">
-          <p className="my-12 mr-4">{invitation.invitee.email}</p>{' '}
-          {/* invitee의 email 출력 */}
+      {invitations.map((invitation, index) => (
+        <div
+          key={invitation.id}
+          className={`mb-4 flex items-center ${index < invitations.length - (invitations.length % size) ? 'border-b border-gray-200' : ''}`}
+        >
+          <p className="my-12 mr-4">{invitation.invitee.email}</p>
           <button
             className="md: ml-auto font-medium btn_desktop_white"
             onClick={() => onCancelInvitation(invitation.id)}
