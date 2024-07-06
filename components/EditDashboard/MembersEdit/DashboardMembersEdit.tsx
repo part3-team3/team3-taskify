@@ -79,10 +79,12 @@ const DashboardMembersEdit = () => {
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>{error}</div>;
   return (
-    <div className="px-20">
-      <div className="flex flex-col rounded-lg bg-white px-24 pt-25 sm:h-337 sm:w-284 md:h-404 md:w-544 xl:h-404 xl:w-620">
-        <div className="flex items-center justify-between">
-          <div className="mb-27 text-xl font-bold">구성원</div>
+    <div className="px-12 md:px-20">
+      <div className="flex h-337 w-284 flex-col rounded-lg bg-white px-12 pt-25 sm:h-404 sm:w-544 md:px-20 xl:h-404 xl:w-620">
+        <div className="flex h-50 items-center justify-between pb-0 md:h-60">
+          <div className="mb-13 text-xl font-bold md:mb-27 md:text-24">
+            구성원
+          </div>
           <div className="mb-24 flex items-center justify-end">
             <p className="mr-12 text-xs font-normal">
               {totalPage}페이지 중 {page}
@@ -94,7 +96,7 @@ const DashboardMembersEdit = () => {
             />
           </div>
         </div>
-        <p className="font-sm mb-8 text-[1.125rem] text-[#9FA6B2]">이름</p>
+        <p className="mb-5 text-14 text-[#9FA6B2] md:mb-12 md:text-16">이름</p>
 
         <MembersList members={members} onDeleteMember={handleDeleteMember} />
       </div>

@@ -38,9 +38,13 @@ const HomePage = () => {
         <NavBar />
         <button
           onClick={handleBack}
-          className="mt-15 flex items-center px-24 py-4"
+          className="mt-15 flex items-center gap-4 px-24 py-4 hover:underline"
         >
-          <Image src={icArrowForward} width={20} height={20} alt="화살표" />
+          <Image
+            src={icArrowForward}
+            className="h-20 w-20 md:h-24 md:w-24"
+            alt="화살표"
+          />
           돌아가기
         </button>
         <div>
@@ -50,13 +54,13 @@ const HomePage = () => {
           <div className="mt-15">
             <DashboardMembersEdit />
           </div>
-          <div className="mb-40 mt-15">
+          <div className="mt-15">
             <DashboardInviteList />
           </div>
-          <div className="px-24">
+          <div className="mt-43 px-14 md:mt-48 md:px-24">
             <button
               onClick={handleDelete}
-              className="mb-56 gap-10 rounded-lg border-[1px] border-gray-300 text-lg font-medium sm:h-52 sm:w-284 sm:px-84 sm:py-16 xl:h-62 xl:w-320 xl:px-80 xl:py-19"
+              className="mb-56 h-52 w-284 gap-10 rounded-lg border-[1px] border-gray-300 text-16 font-medium md:h-62 md:w-320 md:text-18"
             >
               대시보드 삭제하기
             </button>

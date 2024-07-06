@@ -53,31 +53,31 @@ const MembersList: React.FC<MembersListProps> = ({
         return (
           <div
             key={member.id}
-            className="flex flex-row items-center gap-12 border-b border-gray-200 pb-16 pt-16"
+            className="flex flex-row items-center gap-12 border-b border-gray-200 py-12 md:py-16"
           >
             {member.profileImageUrl ? (
-              <div className="h-38 w-38 overflow-hidden rounded-full">
+              <div className="h-34 w-34 overflow-hidden rounded-full md:h-38 md:w-38">
                 <Image
                   src={member.profileImageUrl}
                   alt={`${member.nickname}'s profile image`}
                   width={38}
                   height={38}
-                  className="object-cover"
+                  className="h-full w-full rounded-full"
                 />
               </div>
             ) : (
               <div
-                className="flex h-38 w-38 items-center justify-center rounded-full"
+                className="flex h-34 w-34 items-center justify-center rounded-full md:h-38 md:w-38"
                 style={{ backgroundColor: color }}
               >
-                <span className="text-lg font-bold text-white">
+                <span className="text-14 font-bold text-white md:text-16">
                   {getInitials(member.nickname)}
                 </span>
               </div>
             )}
             <span className="ml-4">{member.nickname}</span>
             <button
-              className="md: ml-auto font-medium btn_desktop_white"
+              className="ml-auto font-medium btn_small_white md:btn_desktop_white"
               onClick={() => onDeleteMember(member.id)}
             >
               삭제
