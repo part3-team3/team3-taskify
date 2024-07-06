@@ -3,6 +3,7 @@ import {
   getSearchDashboard,
 } from '@/pages/api/mydashboard/getInvitedDashboard';
 import { Invitation, InvitationResponse } from '@/types/myDashboardTypes';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -101,24 +102,47 @@ const InvitedDashboardSection: React.FC = () => {
 
   return (
     <>
-      <div className="mx-auto w-fit">
-        <SearchBar initialValue={title as string} />
-
+      <div className="mx-auto">
         <ul className="">
-          {allInvitedDashboardList.length > 0 && (
-            <div>
-              {allInvitedDashboardList &&
-                allInvitedDashboardList.map((invitedDashboard) => {
-                  return (
-                    <li className="w-fit" key={invitedDashboard.id}>
-                      <InvitedDashboardItem
-                        invitedDashboard={invitedDashboard}
-                        onAction={handleInvitationAction}
-                      />
-                    </li>
-                  );
-                })}
+          {allInvitedDashboardList.length > 0 ? (
+            <div className="mt-24 min-h-screen w-260 rounded-lg bg-white px-16 py-24 md:w-504 md:px-28 md:py-32 xl:w-1022">
+              <p className="mb-20 text-xl font-bold md:text-2xl">
+                초대받은 대시보드
+              </p>
+
+              <SearchBar initialValue={title as string} />
+              <div className='hidden md:flex md:mb-4 md:text-base md:text-normal md:text-gray-40'>
+                <p className='md:w-182 xl:w-348'>이름</p>
+                <p className=" md:w-112 xl:w-302">초대자</p>
+                <p className="md:w-154 xl:w-316">수락 여부</p>
+              </div>
+              {allInvitedDashboardList.map((invitedDashboard) => {
+                return (
+                  <li className="w-full" key={invitedDashboard.id}>
+                    <InvitedDashboardItem
+                      invitedDashboard={invitedDashboard}
+                      onAction={handleInvitationAction}
+                    />
+                  </li>
+                );
+              })}
               <div id="observer" className="h-10"></div>
+            </div>
+          ) : (
+            <div className="mt-24 h-400 w-260 rounded-lg bg-white px-16 py-24 md:h-400 md:w-504 md:px-28 md:py-32 xl:h-400 xl:w-1022">
+              <p className="text-xl font-bold md:text-2xl">초대받은 대시보드</p>
+              <div className="mt-105 flex flex-col items-center justify-center md:mt-67 xl:mt-66">
+                <div className="relative h-60 w-60 md:h-100 md:w-100">
+                  <Image
+                    fill
+                    src="/images/icon/ic-no-dashboard.svg"
+                    alt="초대받은 대시보드 없음"
+                  />
+                </div>
+                <p className="w-fit text-sm font-normal text-gray-40 md:text-lg">
+                  아직 초대받은 대시보드가 없어요
+                </p>
+              </div>
             </div>
           )}
         </ul>

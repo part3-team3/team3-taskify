@@ -17,16 +17,10 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
   onAddColumn,
   dashboardId,
 }) => {
-  const [isVisible, setIsVisible] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  useEffect(() => {
-    // inputValue로 중복체크
     const checkDuplicate = async () => {
       try {
         const columns = await DupliChecker(dashboardId);
@@ -58,49 +52,39 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
     if (!isDuplicate) {
       localStorage.setItem('newColumnTitle', inputValue);
       onAddColumn();
-      closeModal();
     }
   };
 
   return (
-    <div>
-      {isVisible && (
-        <Modal
-          isOpen={true}
-          onClose={() => setIsVisible(false)}
-          width="540px"
-          height="276px"
+    <Modal isOpen={true} onClose={closeModal} width="540px" height="276px">
+      <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
+      <p className="mb-10 h-21">이름</p>
+      <div className="relative">
+        <input
+          className="mb-28 rounded border-1px-solid-gray-30 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px]"
+          placeholder="컬럼 제목을 입력해주세요"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        {isDuplicate && (
+          <p className="absolute mt-[-20px] text-[14px] text-red">
+            중복된 칼럼 이름입니다.
+          </p>
+        )}
+      </div>
+      <div className="flex justify-end gap-[12px]">
+        <button className="btn_modal_large_white" onClick={closeModal}>
+          취소
+        </button>
+        <button
+          className="btn_modal_large_purple"
+          onClick={handleCreate}
+          disabled={isDuplicate}
         >
-          <h2 className="mb-32 text-2xl font-bold">컬럼 관리</h2>
-          <p className="mb-10 h-21">이름</p>
-          <input
-            className="mb-28 rounded border-1px-solid-gray-30 sm:h-[42px] sm:w-[287px] md:h-[48px] md:w-[484px] lg:h-[48px] lg:w-[484px]"
-            placeholder="컬럼 제목을 입력해주세요"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          {isDuplicate && <p className="text-red">같은 이름이 존재합니다.</p>}
-          <div className="flex justify-between">
-            <button
-              className="btn_modal_large_white"
-              onClick={() => {
-                setIsVisible(false);
-                window.location.reload();
-              }}
-            >
-              취소
-            </button>
-            <button
-              className="btn_modal_large_purple"
-              onClick={handleCreate}
-              disabled={isDuplicate}
-            >
-              생성
-            </button>
-          </div>
-        </Modal>
-      )}
-    </div>
+          생성
+        </button>
+      </div>
+    </Modal>
   );
 };
 

@@ -360,7 +360,7 @@ module.exports = {
         '.btn_tablet_purple': {
           width: '72px',
           height: '30px',
-          padding: '6px 23px',
+          padding: '6px 20px',
           fontSize: '14px',
           fontWeight: '500',
           lineHeight: '17px',
@@ -373,7 +373,7 @@ module.exports = {
         '.btn_tablet_white': {
           width: '73px',
           height: '30px',
-          padding: '6px 23px',
+          padding: '6px 20px',
           fontSize: '14px',
           fontWeight: '500',
           lineHeight: '17px',
@@ -494,6 +494,33 @@ module.exports = {
           color: '#ffffff',
           backgroundColor: '#9FA6B2',
           borderRadius: '8px',
+        },
+        // 보라색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 -> 수락 버튼(d)
+        '.btn_desktop_purple_acc': {
+          width: '84px',
+          height: '32px',
+          padding: '7px 25px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#ffffff',
+          backgroundColor: '#5534DA',
+          borderRadius: '4px',
+        },
+        // 흰색 버튼
+        // 내 대시보드 -> 초대받은 대시보드 -> 거절 버튼(d)
+        '.btn_desktop_white_rej': {
+          width: '85px',
+          height: '32px',
+          padding: '7px 25px',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '17px',
+          color: '#5534DA',
+          backgroundColor: '#ffffff',
+          border: '1px solid #D9D9D9',
+          borderRadius: '4px',
         },
       });
     },

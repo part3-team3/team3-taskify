@@ -2,11 +2,13 @@ import DashboardInviteList from '@/components/EditDashboard/InviteEdit/Dashboard
 import DashboardMembersEdit from '@/components/EditDashboard/MembersEdit/DashboardMembersEdit';
 import DashboardNameEdit from '@/components/EditDashboard/NameEdit';
 import NavBar from '@/components/EditDashboard/Navbar';
-import SideBar from '@/components/sidebar/SideBar';
-import axios from '@/lib/axios';
+
+import SideBarEdit from '@/components/sidebar/SideBarEdit';
+
 import icArrowForward from '@/public/images/icon/ic-arrow-forward.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+
 
 const HomePage = () => {
   const router = useRouter();
@@ -32,11 +34,10 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex bg-gray-100">
-      <div>
-        <SideBar />
-      </div>
-      <div className="min-w-0 flex-1">
+    <div className=" flex min-h-screen bg-gray-100">
+      <SideBarEdit />
+      <main className="flex flex-1 flex-col">
+
         <NavBar />
         <button
           onClick={handleBack}
@@ -58,13 +59,15 @@ const HomePage = () => {
           <div className="px-24">
             <button
               onClick={handleDelete}
+
               className="mb-56 gap-10 rounded-lg border border-[1px] border-gray-300 text-lg font-medium sm:h-52 sm:w-284 sm:px-84 sm:py-16 xl:h-62 xl:w-320 xl:px-80 xl:py-19"
+
             >
               대시보드 삭제하기
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
