@@ -39,10 +39,8 @@ const ProfileChange = () => {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
       setImageFile(file);
-      console.log(imageUrl);
     }
   };
-  console.log(selectedImage);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,12 +53,10 @@ const ProfileChange = () => {
       }
 
       const res = await instance.post('/users/me/image', formData);
-      console.log(res.data);
       const payload = {
         nickname,
         profileImageUrl: res.data.profileImageUrl,
       };
-      console.log(payload);
       await instance.put('/users/me', payload);
       // 업데이트 성공 시 추가 로직 작성
       setModalMessage('닉네임과 프로필사진이 성공적으로 저장되었습니다.');

@@ -3,7 +3,9 @@ import ProfileChange from '@/components/Mypage/ProfileChange';
 import SideBar from '@/components/sidebar/SideBar';
 import instance from '@/lib/axios';
 import arrow from '@/public/images/icon/ic-on-arrow-left.svg';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -20,8 +22,16 @@ const MyPage = () => {
   const [nickname, setNickname] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [bgColor, setBgColor] = useState('');
-
   const router = useRouter();
+  const [dropdownVisible, setDropDownVisible] = useState(false);
+
+  const onDropDown = () => {
+    setDropDownVisible(prevState => !prevState);
+  }
+  const logout = () => {
+    Cookies.remove('accessToken'); // 쿠키에서 토큰 삭제
+    router.replace('/'); // 루트 페이지로 리디렉션
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -51,7 +61,7 @@ const MyPage = () => {
     <div className="relative text-black-20">
       <div className="flex h-60 w-full items-center justify-end border-b border-gray-30 pl-67 md:h-70 md:pl-160 md:pr-40 xl:justify-between xl:pl-300 xl:pr-80">
         <div className="hidden pl-40 text-20 font-bold xl:block">계정관리</div>
-        <div className="flex items-center gap-12 pr-13">
+        <div className="relative flex items-center gap-12 pr-13">
           <div className="h-34 w-34 rounded-50 sm:h-38 sm:w-38">
             <div
               className="flex h-34 w-34 shrink-0 justify-center rounded-full text-sm text-white sm:h-38 sm:w-38"
@@ -77,8 +87,17 @@ const MyPage = () => {
               )}
             </div>
           </div>
-
-          <div className="hidden sm:block">{nickname}</div>
+          <div onClick={onDropDown} className="hidden sm:block cursor-pointer hover:underline select-none">
+            {nickname}
+            {dropdownVisible && (
+              <div className="absolute border-1px-solid-gray-30 p-4 right-0 mt-18 w-98 mr-13 rounded-md shadow-lg">
+                <div className=''>
+                  <Link href={'/mydashboard'} className=" hover:bg-gray-100 cursor-pointer">내 대시보드</Link>
+                  <button onClick={logout} className=" hover:bg-gray-100 cursor-pointer">로그아웃</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="absolute left-0 top-0">
