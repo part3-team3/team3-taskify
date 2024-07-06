@@ -71,9 +71,7 @@ const ChangePassword = () => {
         password: currentPw,
         newPassword: newPw,
       });
-      const res = instance.get('users/me');
-      console.log(res);
-
+      
       console.log('비밀번호 변경 성공');
       setModalMessage('비밀번호가 성공적으로 변경되었습니다.');
       openModal();
