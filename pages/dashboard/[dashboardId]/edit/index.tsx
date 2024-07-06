@@ -58,7 +58,7 @@ const HomePage = () => {
           <div className="px-24">
             <button
               onClick={handleDelete}
-              className="mb-56 h-[62px] w-[320px] gap-10 rounded-lg border border-[1px] border-gray-300 text-lg font-medium"
+              className="mb-56 gap-10 rounded-lg border border-[1px] border-gray-300 text-lg font-medium sm:h-52 sm:w-284 sm:px-84 sm:py-16 xl:h-62 xl:w-320 xl:px-80 xl:py-19"
             >
               대시보드 삭제하기
             </button>

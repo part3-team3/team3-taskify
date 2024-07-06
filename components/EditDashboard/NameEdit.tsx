@@ -105,7 +105,7 @@ const DashboardNameEdit = () => {
   return (
     <div className="px-20">
       {/* <form onSubmit={handleSubmit}> */}
-      <div className="flex h-[256px] w-[620px] flex-col rounded-lg bg-white px-24 pt-25">
+      <div className="flex flex-col rounded-lg bg-white px-24 pt-25 sm:h-211 sm:w-284 md:h-256 md:w-544 xl:h-256 xl:w-620">
         <div className="mb-30 flex items-center justify-between">
           <div className="text-xl font-bold">{title}</div>
           <div className="flex gap-10">
