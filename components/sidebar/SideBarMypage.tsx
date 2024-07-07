@@ -8,14 +8,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-
-
 import SideBarItemDashboard from './SideBarItemDashboard';
-
 
 const SideBarDashboard = () => {
   const [page, setPage] = useState(1);
-  const size= 10;
+  const size = 10;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
   const [activeDashboardId, setActiveDashboardId] = useState<string | null>(
