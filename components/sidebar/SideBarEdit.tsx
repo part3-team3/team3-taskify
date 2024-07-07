@@ -90,7 +90,7 @@ const SideBarEdit = () => {
                 className="mb-38 h-fit w-fit md:mb-3 xl:mb-0"
                 key={myDashboard.id}
               >
-                <Link href={`/dashboard/${myDashboard.id}/edit`}>
+                <Link href={`/dashboard/${myDashboard.id}`}>
                   <SideBarItemDashboard
                     myDashboard={myDashboard}
                     isActive={isActive}

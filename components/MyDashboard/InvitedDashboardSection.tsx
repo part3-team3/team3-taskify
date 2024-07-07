@@ -15,7 +15,7 @@ interface InvitedDashboardSectionProps {
 }
 const InvitedDashboardSection: React.FC<InvitedDashboardSectionProps> = ({
   onDashboardCreated,
-}) => {
+}:InvitedDashboardSectionProps) => {
   const [allInvitedDashboardList, setAllInvitedDashboardList] = useState<
     Invitation[]
   >([]);

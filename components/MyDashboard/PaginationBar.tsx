@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+
 interface PaginationBarProps {
   totalPage: number;
   activePage: number;
@@ -9,7 +10,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
   totalPage,
   activePage,
   onPageChange,
-}) => {
+}: PaginationBarProps) => {
   return (
     <>
       <div className="flex">
