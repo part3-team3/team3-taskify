@@ -33,14 +33,20 @@ const Option = ({
       <div
         className={`flex h-max w-max items-center gap-6 rounded-11 py-4 text-12 leading-[14px] ${addLeftMargin ? 'ml-28' : ''}`}
       >
-        <div className="relative h-26 w-26">
-          <Image
-            className="rounded-[70%] object-cover"
-            fill
-            src={user.profileImageUrl}
-            alt="담당자 프로필 이미지"
-          />
-        </div>
+        {user.profileImageUrl ? (
+          <div className="relative h-26 w-26">
+            <Image
+              className="rounded-[70%] object-cover"
+              fill
+              src={user.profileImageUrl}
+              alt="담당자 프로필 이미지"
+            />
+          </div>
+        ) : (
+          <div className="h-26 w-26 rounded-full bg-violet-20 text-12 font-semibold leading-[15px] text-white flex-center">
+            {user.nickname.charAt(0).toUpperCase()}
+          </div>
+        )}
         <div className="text-14 leading-[17px] text-black-20">
           {user.nickname}
         </div>
@@ -52,10 +58,12 @@ const Option = ({
 const AssigneeDropdown = ({
   label,
   assignee,
+  dashboardId,
   setFormData,
 }: {
   label: string;
   assignee?: User;
+  dashboardId: number;
   setFormData?: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -64,7 +72,7 @@ const AssigneeDropdown = ({
 
   useEffect(() => {
     const loadMembers = async () => {
-      const members = await getMembers();
+      const members = await getMembers(dashboardId);
       const currentMember = members.find((member: Member) => {
         return member.userId === assignee?.id;
       });
