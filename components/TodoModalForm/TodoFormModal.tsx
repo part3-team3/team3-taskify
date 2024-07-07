@@ -29,7 +29,7 @@ const TodoFormModal = ({
   closeModal: () => void;
   dashboardId: number;
   setIsInEdit?: Dispatch<SetStateAction<boolean>>;
-  refetchCard: () => void;
+  refetchCard?: () => void;
   refetchColumn: () => void;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -68,7 +68,7 @@ const TodoFormModal = ({
       await putTodoEditModal(formData, card?.id);
       setIsInEdit?.(false);
       closeModal();
-      refetchCard();
+      refetchCard && refetchCard();
       refetchColumn();
     } else {
       await postCreateCard(formData);
@@ -99,6 +99,7 @@ const TodoFormModal = ({
         <AssigneeDropdown
           label="담당자"
           assignee={assignee}
+          dashboardId={dashboardId}
           setFormData={setFormData}
         />
       </div>
