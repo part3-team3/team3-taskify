@@ -1,6 +1,6 @@
-// import NavBar from '@/components/Navbarbasic';
 import DashboardList from '@/components/MyDashboard/DashboardList';
 import InvitedDashboardSection from '@/components/MyDashboard/InvitedDashboardSection';
+import NavBarbasic from '@/components/Navbarbasic';
 import SideBar from '@/components/sidebar/SideBar';
 import { useState } from 'react';
 
@@ -12,11 +12,17 @@ const Mydashboard: React.FC = () => {
   };
   return (
     <div className="flex bg-gray-10">
-      <SideBar onDashboardCreated={handleDashboardCreated} dashboardCreated={dashboardCreated}/>
+      <SideBar
+        onDashboardCreated={handleDashboardCreated}
+        dashboardCreated={dashboardCreated}
+      />
       <main className="flex flex-1 flex-col">
-        {/* <NavBar /> */}
-        <DashboardList onDashboardCreated={handleDashboardCreated} dashboardCreated={dashboardCreated}/>
-        <InvitedDashboardSection onDashboardCreated={handleDashboardCreated}/>
+        <NavBarbasic />
+        <DashboardList
+          onDashboardCreated={handleDashboardCreated}
+          dashboardCreated={dashboardCreated}
+        />
+        <InvitedDashboardSection onDashboardCreated={handleDashboardCreated} />
       </main>
     </div>
   );

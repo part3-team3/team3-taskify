@@ -51,7 +51,7 @@ const NavBar = () => {
         <Dropdown menu={{ items: menuItems }}>
           <Link href={'/mypage'} className="flex">
             <ProfileImage />
-            <div className="mr-0 flex hidden self-center font-medium sm:block md:pr-40 lg:pr-80">
+            <div className="mr-0 hidden self-center font-medium sm:block md:pr-40 md:marker:flex lg:pr-80">
               {nickname}
             </div>
           </Link>

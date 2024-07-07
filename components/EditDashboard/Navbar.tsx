@@ -1,6 +1,8 @@
+// import React, { ChangeEvent, useEffect, useState } from 'react';
 import MembersImage from '@/components/EditDashboard/MembersImage';
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
 import Modal from '@/components/common/Modal';
+import SimpleModal from '@/components/common/SimpleModal';
 import axios from '@/lib/axios';
 import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
@@ -11,7 +13,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
   ssr: false,
@@ -20,6 +22,20 @@ const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
 const NavBar = () => {
   const router = useRouter();
   const dashboardId = Number(router.query.dashboardId);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleLogout = () => {
     Cookies.remove('accessToken'); // 쿠키에서 토큰 삭제
@@ -55,6 +71,7 @@ const NavBar = () => {
     setIsValidEmail(true);
     setIsModalOpen(false);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       if (!dashboardId || isNaN(Number(dashboardId))) return;
@@ -71,7 +88,7 @@ const NavBar = () => {
     fetchData();
   }, [dashboardId]);
 
-  //페이지 새로고침
+  // 페이지 새로고침
   const handleRefresh = () => {
     if (router.pathname === `/dashboard/${dashboardId}/edit`) {
       window.location.reload();
@@ -79,6 +96,7 @@ const NavBar = () => {
       router.push(`/dashboard/${dashboardId}/edit`);
     }
   };
+
   // 사용자 이름 가져오기
   useEffect(() => {
     const fetchNickname = async () => {
@@ -102,6 +120,7 @@ const NavBar = () => {
   const handleSubmit = async () => {
     if (!validateEmail(value)) {
       setIsValidEmail(false);
+      alert('유효하지 않은 이메일입니다');
       return;
     }
     try {
@@ -120,7 +139,6 @@ const NavBar = () => {
     setValue(email);
     if (isValidEmail === false) {
       setIsValidEmail(true);
-      alert('유효하지 않은 이메일입니다');
     }
   };
 
@@ -129,29 +147,39 @@ const NavBar = () => {
   if (!dashboardId) return null;
 
   return (
-    <div className="flex h-60 flex-1 items-center justify-between gap-8 border-b border-gray-200 bg-white p-4">
-      <div className="ml-40 flex gap-8 text-xl font-bold sm:hidden md:hidden xl:block xl:flex">
+    <div className="flex h-70 flex-1 items-center justify-center gap-8 border-b border-gray-200 bg-white p-4 lg:justify-between">
+      <div className="ml-40 hidden gap-8 text-xl font-bold xl:flex">
         {title}
         {createdByMe && (
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
-      <div className="flex gap-[16px] px-64">
+      <div className="sm:px-auto flex gap-[16px]">
         <button
           onClick={handleRefresh}
-          className="h-[40px] w-[88px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600"
+          className="h-30 w-49 items-center rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:flex md:h-36 md:w-85 md:gap-[8px] md:text-sm xl:h-40 xl:text-base"
         >
-          <div className="flex gap-[8px] text-base">
-            <Image src={icSetting} width={20} height={20} alt="관리" />
-            관리
-          </div>
+          <Image
+            className="hidden md:flex"
+            src={icSetting}
+            width={20}
+            height={20}
+            alt="관리"
+          />
+          관리
         </button>
         <button
-          className="h-[40px] w-[116px] rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-sm text-gray-600"
+          className="h-30 w-73 rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:h-36 md:w-109 md:text-sm xl:h-40 xl:w-116 xl:text-base"
           onClick={openModal}
         >
-          <div className="flex gap-[8px] text-base">
-            <Image src={icAdd} width={20} height={20} alt="초대" />
+          <div className="flex gap-[8px]">
+            <Image
+              className="hidden md:flex"
+              src={icAdd}
+              width={20}
+              height={20}
+              alt="초대"
+            />
             초대하기
           </div>
         </button>
@@ -169,39 +197,62 @@ const NavBar = () => {
             <div className="pr-0 sm:pr-12">
               <ProfileImage />
             </div>
-            <div className="mr-0 flex hidden self-center font-medium sm:block sm:pr-12 md:pr-40 lg:pr-80">
+            <div className="mr-0 hidden self-center font-medium lg:flex lg:pr-40 xl:pr-80">
               {nickname}
             </div>
           </div>
         </Dropdown>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        width="540px"
-        height="276px"
-      >
-        <h2 className="text-2xl font-bold">초대하기</h2>
-        <p className="mt-[26px] text-18 text-gray-800">이메일</p>
-        <div className="relative">
-          <input
-            className={`mt-[10px] h-[48px] w-[484px] rounded-md border ${inputClassName}`}
-            type="text"
-            value={value}
-            onChange={handleChange}
-            placeholder="이메일을 입력해주세요"
-          />
-
-          <div className="mt-[28px] flex justify-end gap-[12px]">
-            <button className="btn_modal_large_white" onClick={closeModal}>
-              취소
-            </button>
-            <button className="btn_modal_large_purple" onClick={handleSubmit}>
-              초대
-            </button>
+      {isMobile ? (
+        <SimpleModal isOpen={isModalOpen} onClose={closeModal}>
+          <h2 className="text-xl font-bold">초대하기</h2>
+          <p className="mt-[15px] text-16 text-gray-800">이메일</p>
+          <div className="relative">
+            <input
+              className={`mt-[10px] h-42 w-287 rounded-md border px-10 ${inputClassName}`}
+              type="text"
+              value={value}
+              onChange={handleChange}
+              placeholder="이메일을 입력해주세요"
+            />
+            <div className="mt-[20px] flex justify-end gap-[12px]">
+              <button className="btn_modal_small_white" onClick={closeModal}>
+                취소
+              </button>
+              <button className="btn_modal_small_purple" onClick={handleSubmit}>
+                초대
+              </button>
+            </div>
           </div>
-        </div>
-      </Modal>
+        </SimpleModal>
+      ) : (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          width="540px"
+          height="276px"
+        >
+          <h2 className="text-2xl font-bold">초대하기</h2>
+          <p className="mt-[26px] text-18 text-gray-800">이메일</p>
+          <div className="relative">
+            <input
+              className={`mt-[10px] h-[48px] w-[484px] rounded-md border px-10 ${inputClassName}`}
+              type="text"
+              value={value}
+              onChange={handleChange}
+              placeholder="이메일을 입력해주세요"
+            />
+            <div className="mt-[28px] flex justify-end gap-[12px]">
+              <button className="btn_modal_large_white" onClick={closeModal}>
+                취소
+              </button>
+              <button className="btn_modal_large_purple" onClick={handleSubmit}>
+                초대
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

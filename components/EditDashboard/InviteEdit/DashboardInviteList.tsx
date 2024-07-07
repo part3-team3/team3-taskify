@@ -1,5 +1,6 @@
 import PaginationBar from '@/components/MyDashboard/PaginationBar';
 import Modal from '@/components/common/Modal';
+import SimpleModal from '@/components/common/SimpleModal';
 import axios from '@/lib/axios';
 import IcAddWhite from '@/public/images/icon/ic-add-white.svg';
 import Image from 'next/image';
@@ -25,14 +26,33 @@ const DashboardInviteList = () => {
   const [totalPage, setTotalPage] = useState(1);
   const [value, setValue] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const size = 5;
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = () => {
+    console.log('openModal called');
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
+    console.log('closeModal called');
     setValue('');
     setIsValidEmail(true);
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,6 +103,7 @@ const DashboardInviteList = () => {
   const handleSubmit = async () => {
     if (!validateEmail(value)) {
       setIsValidEmail(false);
+      alert('유효하지 않은 이메일입니다');
       return;
     }
     try {
@@ -110,12 +131,14 @@ const DashboardInviteList = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="px-20">
-      <div className="flex flex-col rounded-lg bg-white px-24 pt-25 sm:h-395 sm:w-284 md:h-477 md:w-544 xl:h-477 xl:w-620">
-        <div className="flex items-center justify-between">
-          <div className="mb-26 text-xl font-bold">초대 목록</div>
-          <div className="flex gap-16">
-            <div className="mb-24 mt-8 flex items-center justify-center">
+    <div className="px-12 md:px-20">
+      <div className="flex h-395 w-284 flex-col rounded-lg bg-white px-12 pt-25 sm:h-477 sm:w-544 md:px-20 xl:h-477 xl:w-620">
+        <div className="flex justify-between">
+          <div className="mb-13 text-xl font-bold md:mb-27 md:text-24">
+            초대 내역
+          </div>
+          <div className="block md:flex">
+            <div className="mb-24 flex items-center justify-center">
               <p className="mr-12 text-xs font-normal">
                 {totalPage} 페이지 중 {page}
               </p>
@@ -125,18 +148,22 @@ const DashboardInviteList = () => {
                 onPageChange={onPageChange}
               />
             </div>
-            <button
-              className="mt-10 flex h-[32px] w-[105px] rounded-md bg-[#5534DA] px-2.5 py-4 text-sm text-gray-600"
-              onClick={openModal}
-            >
-              <div className="flex gap-[8px] text-sm text-white">
-                <Image src={IcAddWhite} width={16} height={16} alt="초대" />
-                초대하기
-              </div>
-            </button>
+            <div className="flex w-full justify-end">
+              <button
+                className="flex h-[32px] w-[105px] rounded-md bg-[#5534DA] px-2.5 py-4 text-sm text-gray-600"
+                onClick={openModal}
+              >
+                <div className="flex gap-8 text-sm text-white">
+                  <Image src={IcAddWhite} width={16} height={16} alt="초대" />
+                  초대하기
+                </div>
+              </button>
+            </div>
           </div>
         </div>
-        <p className="font-sm mb-8 text-[1.125rem] text-[#9FA6B2]">이메일</p>
+        <p className="-mt-25 mb-12 text-14 text-[#9FA6B2] md:mb-12 md:text-16">
+          이메일
+        </p>
 
         <InviteList
           invitations={invitations}
@@ -144,30 +171,56 @@ const DashboardInviteList = () => {
         />
       </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        width="540px"
-        height="276px"
-      >
-        <h2 className="text-2xl font-bold">초대하기</h2>
-        <p className="mt-[26px] text-18 text-gray-800">이메일</p>
-        <input
-          className={`mt-[10px] h-[48px] w-[484px] rounded-md border ${inputClassName}`}
-          type="text"
-          value={value}
-          onChange={handleChange}
-          placeholder="이메일을 입력해주세요"
-        />
-        <div className="mt-[28px] flex justify-end gap-[12px]">
-          <button className="btn_modal_large_white" onClick={closeModal}>
-            취소
-          </button>
-          <button className="btn_modal_large_purple" onClick={handleSubmit}>
-            초대
-          </button>
-        </div>
-      </Modal>
+      {isMobile ? (
+        <SimpleModal isOpen={isModalOpen} onClose={closeModal}>
+          <h2 className="text-xl font-bold">초대하기</h2>
+          <p className="mt-[15px] text-16 text-gray-800">이메일</p>
+          <div className="relative">
+            <input
+              className={`mt-[10px] h-42 w-287 rounded-md border px-10 ${inputClassName}`}
+              type="text"
+              value={value}
+              onChange={handleChange}
+              placeholder="이메일을 입력해주세요"
+            />
+            <div className="mt-[20px] flex justify-end gap-[12px]">
+              <button className="btn_modal_small_white" onClick={closeModal}>
+                취소
+              </button>
+              <button className="btn_modal_small_purple" onClick={handleSubmit}>
+                초대
+              </button>
+            </div>
+          </div>
+        </SimpleModal>
+      ) : (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          width="540px"
+          height="276px"
+        >
+          <h2 className="text-2xl font-bold">초대하기</h2>
+          <p className="mt-[26px] text-18 text-gray-800">이메일</p>
+          <div className="relative">
+            <input
+              className={`mt-[10px] h-[48px] w-[484px] rounded-md border px-10 ${inputClassName}`}
+              type="text"
+              value={value}
+              onChange={handleChange}
+              placeholder="이메일을 입력해주세요"
+            />
+            <div className="mt-[28px] flex justify-end gap-[12px]">
+              <button className="btn_modal_large_white" onClick={closeModal}>
+                취소
+              </button>
+              <button className="btn_modal_large_purple" onClick={handleSubmit}>
+                초대
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
