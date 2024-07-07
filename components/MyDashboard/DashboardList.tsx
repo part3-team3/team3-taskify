@@ -5,12 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-
-
 import CreateDashboardContent from './CreateDashboardContent';
 import MyDashboardItem from './MyDashboardItem';
 import PaginationBar from './PaginationBar';
-
 
 interface DashboardListProps {
   onDashboardCreated: () => void;
@@ -21,7 +18,7 @@ const DashboardList: React.FC<DashboardListProps> = ({
   dashboardCreated,
 }) => {
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(5);
+  const size=5;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
 

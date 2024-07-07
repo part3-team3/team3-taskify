@@ -33,7 +33,7 @@ const CreateDashboardModalContent: React.FC<
     }
 
     try {
-      const response = await postDashboard({
+      await postDashboard({
         title: inputTitle,
         color: clickedColor,
       });

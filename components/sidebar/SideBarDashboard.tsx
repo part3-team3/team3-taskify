@@ -8,17 +8,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-
-
 import SideBarItemDashboard from './SideBarItemDashboard';
-
 
 const SideBarDashboard = () => {
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const size = 10;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
-  const [activeDashboardId, setActiveDashboardId] = useState<string | null>(null);
+  const [activeDashboardId, setActiveDashboardId] = useState<string | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -92,7 +91,10 @@ const SideBarDashboard = () => {
                 key={myDashboard.id}
               >
                 <Link href={`/dashboard/${myDashboard.id}`}>
-                  <SideBarItemDashboard myDashboard={myDashboard} isActive={isActive} />
+                  <SideBarItemDashboard
+                    myDashboard={myDashboard}
+                    isActive={isActive}
+                  />
                 </Link>
               </li>
             );

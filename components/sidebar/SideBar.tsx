@@ -7,10 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-
-
 import SideBarItem from './SideBarItem';
-
 
 interface SideBarProps {
   onDashboardCreated: () => void;
@@ -21,7 +18,7 @@ const SideBar: React.FC<SideBarProps> = ({
   dashboardCreated,
 }) => {
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const size = 10;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
