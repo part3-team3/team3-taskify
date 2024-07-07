@@ -18,7 +18,7 @@ const DashboardList: React.FC<DashboardListProps> = ({
   dashboardCreated,
 }) => {
   const [page, setPage] = useState(1);
-  const size=5;
+  const size = 5;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
   const [totalPage, setTotalPage] = useState(1);
 

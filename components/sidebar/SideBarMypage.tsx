@@ -1,6 +1,6 @@
 import CreateDashboardContent from '@/components/MyDashboard/CreateDashboardContent';
+import DashboardModal from '@/components/MyDashboard/DashboardModal';
 import PaginationBar from '@/components/MyDashboard/PaginationBar';
-import Modal from '@/components/common/Modal';
 import { getDashboard } from '@/pages/api/mydashboard/getDashboard';
 import { Dashboard, DashboardResponse } from '@/types/myDashboardTypes';
 import Image from 'next/image';
@@ -8,7 +8,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+
+
 import SideBarItemDashboard from './SideBarItemDashboard';
+
 
 const SideBarDashboard = () => {
   const [page, setPage] = useState(1);
@@ -110,17 +113,12 @@ const SideBarDashboard = () => {
           />
         )}
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        width="327px"
-        height="293px"
-      >
+      <DashboardModal isOpen={isModalOpen} onClose={closeModal}>
         <CreateDashboardContent
           closeModal={closeModal}
           onDashboardCreated={handleDashboardCreated}
         />
-      </Modal>
+      </DashboardModal>
     </aside>
   );
 };
