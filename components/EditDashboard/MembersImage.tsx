@@ -36,9 +36,8 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
             dashboardId,
           },
         });
-        console.log('API Response:', res.data);
+
         const filteredMembers = res.data.members; // 필터링 조건 제거
-        console.log('Filtered Members:', filteredMembers);
 
         setMembers(filteredMembers);
         setExtraCount(
