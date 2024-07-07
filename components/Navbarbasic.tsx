@@ -1,10 +1,14 @@
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
 import instance from '@/lib/axios';
-import { Dropdown } from 'antd';
 import Cookies from 'js-cookie';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
+
+const Dropdown = dynamic(() => import('antd').then((mod) => mod.Dropdown), {
+  ssr: false,
+});
 
 const NavBar = () => {
   const [nickname, setNickname] = useState('');

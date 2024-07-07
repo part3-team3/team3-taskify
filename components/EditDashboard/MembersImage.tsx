@@ -37,9 +37,7 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
           },
         });
         console.log('API Response:', res.data);
-        const filteredMembers = res.data.members.filter(
-          (member: Member) => !member.isOwner,
-        );
+        const filteredMembers = res.data.members; // 필터링 조건 제거
         console.log('Filtered Members:', filteredMembers);
 
         setMembers(filteredMembers);
@@ -59,7 +57,6 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
   const renderMember = (member: Member, index: number) => {
     const firstLetter = member.nickname.charAt(0).toUpperCase();
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    console.log('Rendering member:', member);
 
     return (
       <div

@@ -154,19 +154,21 @@ const NavBar = () => {
         )}
       </div>
       <div className="sm:px-auto flex gap-10 md:gap-16">
-        <button
-          onClick={handleRefresh}
-          className="h-30 w-49 items-center rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:flex md:h-36 md:w-85 md:gap-[8px] md:text-sm xl:h-40 xl:text-base"
-        >
-          <Image
-            className="hidden md:flex"
-            src={icSetting}
-            width={20}
-            height={20}
-            alt="관리"
-          />
-          관리
-        </button>
+        {createdByMe && (
+          <button
+            onClick={handleRefresh}
+            className="h-30 w-49 items-center rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:flex md:h-36 md:w-85 md:gap-[8px] md:text-sm xl:h-40 xl:text-base"
+          >
+            <Image
+              className="hidden md:flex"
+              src={icSetting}
+              width={20}
+              height={20}
+              alt="관리"
+            />
+            관리
+          </button>
+        )}
         <button
           className="h-30 w-73 rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:h-36 md:w-109 md:text-sm xl:h-40 xl:w-116 xl:text-base"
           onClick={openModal}
