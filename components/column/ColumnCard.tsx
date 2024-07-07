@@ -1,9 +1,30 @@
 import { Card } from '@/types/card';
+import Column from '@/types/column';
 import Image from 'next/image';
+import { useState } from 'react';
 
-const ColumnCard = ({ card }: { card: Card }) => {
+import CardModal from '../TodoCardModal/CardModal';
+
+const ColumnCard = ({
+  card,
+  columns,
+  columnId,
+  dashboardId,
+  refetchColumn,
+}: {
+  card: Card;
+  columns: Column[];
+  columnId: number;
+  dashboardId: number;
+  refetchColumn: () => void;
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { imageUrl, title, tags, dueDate } = card;
   const { profileImageUrl } = card.assignee;
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -26,7 +47,8 @@ const ColumnCard = ({ card }: { card: Card }) => {
 
           <div className="flex items-end justify-between">
             <div className="w-full md:flex xl:flex-col">
-              <div className="flex gap-6 mt-6 overflow-hidden w-100">
+              {/* tags */}
+              <div className="flex gap-6 mt-6 overflow-hidden">
                 {tags.map((tag) => (
                   <div
                     key={tag}
@@ -36,7 +58,9 @@ const ColumnCard = ({ card }: { card: Card }) => {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between mt-6 md:ml-16 xl:ml-0 xl:mt-10">
+
+              {/* calendar + date */}
+              <div className="flex justify-between mt-6 md:ml-16 md:w-full xl:ml-0 xl:mt-10">
                 <div className="flex items-center gap-4">
                   <div className="relative h-14 w-14">
                     <Image
@@ -49,20 +73,31 @@ const ColumnCard = ({ card }: { card: Card }) => {
                     {dueDate}
                   </div>
                 </div>
+
+                {/* profile image */}
+                <div className="relative h-22 w-22">
+                  <Image
+                    className="rounded-[70%]"
+                    src={profileImageUrl}
+                    alt="프로필 이미지"
+                    fill
+                  />
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="relative h-22 w-22">
-            <Image
-              className="rounded-[70%]"
-              src={profileImageUrl}
-              alt="프로필 이미지"
-              fill
-            />
-          </div>
         </div>
       </div>
+      <CardModal
+        cardId={card.id}
+        columns={columns}
+        columnId={columnId}
+        dashboardId={dashboardId}
+        refetchColumn={refetchColumn}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        closeModal={closeModal}
+      />
     </>
   );
 };

@@ -15,18 +15,29 @@ import TagsInput from './TagsInput';
 
 const TodoFormModal = ({
   card,
+  columnId,
+  closeModal,
+  dashboardId,
   setIsInEdit,
+  refetchCard,
+  refetchColumn,
+
   setIsModalOpen,
 }: {
   card?: Card;
+  columnId: number;
+  closeModal: () => void;
+  dashboardId: number;
   setIsInEdit?: Dispatch<SetStateAction<boolean>>;
+  refetchCard: () => void;
+  refetchColumn: () => void;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const isEditForm = Boolean(card); // true or false
 
   const {
     assignee = undefined,
-    columnId = 0,
+    columnId: cardColumnId = 0,
     title = '',
     description = '',
     dueDate = '',
@@ -35,7 +46,7 @@ const TodoFormModal = ({
   } = card || {};
 
   const defaultData: TodoFormData = {
-    columnId,
+    columnId: columnId || cardColumnId,
     assigneeUserId: assignee?.id || 0,
     title,
     description,
@@ -45,7 +56,7 @@ const TodoFormModal = ({
   };
 
   if (!isEditForm) {
-    defaultData.dashboardId = 0;
+    defaultData.dashboardId = dashboardId;
   }
 
   const [formData, setFormData] = useState<TodoFormData>(defaultData);
@@ -54,14 +65,20 @@ const TodoFormModal = ({
 
   const onSubmit = async () => {
     if (isEditForm) {
-      await putTodoEditModal(formData);
+      await putTodoEditModal(formData, card?.id);
       setIsInEdit?.(false);
+      closeModal();
+      refetchCard();
+      refetchColumn();
     } else {
       await postCreateCard(formData);
+      refetchColumn();
+      closeModal();
     }
   };
 
   const handleModalClose = () => {
+    setIsInEdit?.(false);
     setIsModalOpen(false);
   };
 
@@ -75,6 +92,7 @@ const TodoFormModal = ({
           <StatusDropdown
             label="상태"
             columnId={columnId}
+            dashboardId={dashboardId}
             setFormData={setFormData}
           />
         )}

@@ -1,8 +1,7 @@
 import NavBar from '@/components/EditDashboard/Navbar';
-import Column from '@/components/column/Column';
+import ColumnList from '@/components/column/ColumnList';
 import SideBarDashboard from '@/components/sidebar/SideBarDashboard';
 import React from 'react';
-
 
 const Index = () => {
   return (
@@ -11,9 +10,9 @@ const Index = () => {
         <div className="w-[300px]">
           <SideBarDashboard />
         </div>
-        <div className="min-w-0 flex-1">
+        <div className="flex-1 min-w-0">
           <NavBar />
-          <Column />
+          <ColumnList />
         </div>
       </div>
     </>

@@ -46,10 +46,12 @@ const Option = ({
 const StatusDropdown = ({
   label,
   columnId,
+  dashboardId,
   setFormData,
 }: {
   label: string;
   columnId: number;
+  dashboardId: number;
   setFormData: Dispatch<SetStateAction<TodoFormData>>;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -58,7 +60,7 @@ const StatusDropdown = ({
 
   useEffect(() => {
     const loadColumns = async () => {
-      const columns: Column[] = await getColumns();
+      const columns: Column[] = await getColumns(dashboardId);
       const currentColumn = columns.find((column) => column.id === columnId);
 
       setColumnsData(columns);
@@ -105,7 +107,7 @@ const StatusDropdown = ({
         </div>
       </div>
       {isDropdownOpen && (
-        <div className="absolute z-10 mt-2 flex h-max w-287 flex-col gap-13 rounded-6 bg-white px-8 py-13 border-1px-solid-gray-30 md:w-217">
+        <div className="absolute z-10 flex flex-col px-8 mt-2 bg-white h-max w-287 gap-13 rounded-6 py-13 border-1px-solid-gray-30 md:w-217">
           {columnsData?.map((column) => (
             <Option
               key={column.id}

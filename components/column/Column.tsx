@@ -10,12 +10,16 @@ import ColumnCard from './ColumnCard';
 
 const Column = ({
   color,
+  columns,
   column,
+  onEdit,
   onDelete,
   dashboardId,
 }: {
   color: string;
+  columns: ColumnType[];
   column: ColumnType;
+  onEdit: (columnId: number, title: string) => Promise<void>;
   onDelete: (columnId: number) => Promise<void>;
   dashboardId: number;
 }) => {
@@ -50,10 +54,13 @@ const Column = ({
     };
     fetchCards();
   }, [refetch]);
+
   const handleSettingOpen = () => {
     setIsSettingOpen(true);
   };
+
   if (!cards) return null;
+
   return (
     <div
       key={column.id}
@@ -76,9 +83,12 @@ const Column = ({
       />
       {isSettingOpen && (
         <EditColumnModal
+          columnTitle={column.title}
           columnId={column.id}
           closeModal={closeModal}
+          onEdit={onEdit}
           onDelete={onDelete}
+          dashboardId={dashboardId}
         />
       )}
       <>
@@ -102,7 +112,16 @@ const Column = ({
           setIsModalOpen={setIsCreateModalOpen}
         />
         <div className="flex flex-col w-full gap-10 xl:gap-16">
-          {cards?.map((card) => <ColumnCard card={card} key={card.id} />)}
+          {cards?.map((card) => (
+            <ColumnCard
+              card={card}
+              columns={columns}
+              columnId={column.id}
+              dashboardId={dashboardId}
+              refetchColumn={refetchColumn}
+              key={card.id}
+            />
+          ))}
         </div>
       </>
     </div>
