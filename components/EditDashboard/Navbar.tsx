@@ -147,7 +147,7 @@ const NavBar = () => {
 
   return (
     <div className="flex h-70 flex-1 items-center justify-center gap-8 border-b border-gray-200 bg-white p-4 lg:justify-between">
-      <div className="ml-40 hidden gap-8 text-xl font-bold xl:flex">
+      <div className="ml-40 hidden gap-8 text-xl font-bold lg:flex">
         {title}
         {createdByMe && (
           <Image src={icCrown} width={20} height={16} alt="왕관" />
@@ -198,7 +198,7 @@ const NavBar = () => {
             <div>
               <ProfileImage />
             </div>
-            <div className="mr-0 hidden self-center font-medium lg:flex lg:pr-40 xl:pr-80">
+            <div className="mr-0 hidden self-center font-medium md:flex lg:pr-40 xl:pr-80">
               {nickname}
             </div>
           </div>
