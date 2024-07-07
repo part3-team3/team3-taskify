@@ -37,9 +37,7 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
           },
         });
         console.log('API Response:', res.data);
-        const filteredMembers = res.data.members.filter(
-          (member: Member) => !member.isOwner,
-        );
+        const filteredMembers = res.data.members; // 필터링 조건 제거
         console.log('Filtered Members:', filteredMembers);
 
         setMembers(filteredMembers);
