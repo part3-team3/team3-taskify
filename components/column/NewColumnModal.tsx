@@ -15,6 +15,8 @@ const NewColumnModal = ({
 
   const isDuplicate = useColumnTitleDuplicateChecker(dashboardId, inputValue);
 
+  const isCreateColumnModalDisabled = inputValue.trim() === '' ? true : false;
+
   return (
     <Modal isOpen={true} onClose={closeModal} width="540px" height="276px">
       <h2 className="mb-32 text-2xl font-bold">새 컬럼 생성</h2>
@@ -39,7 +41,7 @@ const NewColumnModal = ({
           취소
         </button>
         <button
-          className="btn_modal_large_purple"
+          className={`${isCreateColumnModalDisabled ? 'btn_modal_large_gray' : 'btn_modal_large_purple'} `}
           onClick={() => handleAddColumn(inputValue)}
           disabled={isDuplicate || !inputValue}
         >
