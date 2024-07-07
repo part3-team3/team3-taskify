@@ -138,7 +138,7 @@ const DashboardInviteList = () => {
             초대 내역
           </div>
           <div className="block md:flex">
-            <div className="mb-24 flex items-center justify-center">
+            <div className="mb-24 flex">
               <p className="mr-12 text-xs font-normal">
                 {totalPage} 페이지 중 {page}
               </p>
