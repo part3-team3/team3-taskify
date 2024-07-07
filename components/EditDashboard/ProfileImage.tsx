@@ -9,6 +9,7 @@ const colors = [
   '#9DD7ED',
   '#FFC85A',
   '#CBABDF',
+  '#85CDE5',
 ];
 
 const ProfileImage = () => {
@@ -55,7 +56,7 @@ const ProfileImage = () => {
             height={34}
             src={profileImageUrl}
             alt={nickname}
-            className="flex w-34 h-34 justify-center rounded-full object-cover md:h-38 md:w-38"
+            className="flex h-34 w-34 justify-center rounded-full object-cover md:h-38 md:w-38"
           />
         )}
       </div>

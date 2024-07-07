@@ -30,12 +30,10 @@ const DashboardInviteList = () => {
   const size = 5;
 
   const openModal = () => {
-    console.log('openModal called');
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    console.log('closeModal called');
     setValue('');
     setIsValidEmail(true);
     setIsModalOpen(false);

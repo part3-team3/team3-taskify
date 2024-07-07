@@ -36,7 +36,7 @@ const DashboardMembersEdit = () => {
         });
 
         const membersData = res.data.members
-          .filter((member: { isOwner: any }) => !member.isOwner)
+          .filter((member: { isOwner: boolean }) => !member.isOwner)
           .map(
             (member: {
               nickname: string;
