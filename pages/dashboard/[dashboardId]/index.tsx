@@ -7,10 +7,10 @@ const Index = () => {
   return (
     <>
       <div className="flex">
-        <div className="w-[300px]">
+        <div className="">
           <SideBarDashboard />
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <NavBar />
           <ColumnList />
         </div>
