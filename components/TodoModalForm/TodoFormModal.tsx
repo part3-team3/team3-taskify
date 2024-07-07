@@ -82,6 +82,9 @@ const TodoFormModal = ({
     setIsModalOpen(false);
   };
 
+  const isEditModalButtonDisabled =
+    (formData.title && formData.description).trim() === '' ? true : false;
+
   return (
     <div className="flex flex-col gap-24 md:gap-32">
       <div className="text-20 font-bold leading-[24px]">
@@ -138,8 +141,9 @@ const TodoFormModal = ({
           취소
         </button>
         <button
+          disabled={isEditModalButtonDisabled}
           onClick={onSubmit}
-          className="btn_modal_small_purple md:btn_modal_large_purple"
+          className={`${isEditModalButtonDisabled ? 'btn_modal_small_gray md:btn_modal_large_gray' : 'btn_modal_small_purple md:btn_modal_large_purple'}`}
         >
           {isEditForm ? '수정' : '생성'}
         </button>
