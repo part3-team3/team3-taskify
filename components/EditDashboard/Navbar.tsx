@@ -193,7 +193,7 @@ const NavBar = () => {
         />
         <Dropdown menu={{ items: menuItems }}>
           <div className="flex">
-            <div className="pr-0 sm:pr-12">
+            <div>
               <ProfileImage />
             </div>
             <div className="mr-0 hidden self-center font-medium lg:flex lg:pr-40 xl:pr-80">

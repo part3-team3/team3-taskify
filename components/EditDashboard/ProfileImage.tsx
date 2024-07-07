@@ -1,4 +1,5 @@
 import instance from '@/lib/axios';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const colors = [
@@ -49,10 +50,12 @@ const ProfileImage = () => {
             {firstLetter}
           </span>
         ) : (
-          <img
+          <Image
+            width={34}
+            height={34}
             src={profileImageUrl}
             alt={nickname}
-            className="flex h-38 w-38 justify-center rounded-full"
+            className="flex w-34 h-34 justify-center rounded-full object-cover md:h-38 md:w-38"
           />
         )}
       </div>

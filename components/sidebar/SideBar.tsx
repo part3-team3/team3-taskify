@@ -16,7 +16,7 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({
   onDashboardCreated,
   dashboardCreated,
-}) => {
+}:SideBarProps) => {
   const [page, setPage] = useState(1);
   const size = 10;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);

@@ -9,7 +9,7 @@ interface CreateDashboardModalContentProps {
 
 const CreateDashboardModalContent: React.FC<
   CreateDashboardModalContentProps
-> = ({ closeModal, onDashboardCreated }) => {
+> = ({ closeModal, onDashboardCreated }:CreateDashboardModalContentProps) => {
   const [inputTitle, setInputTitle] = useState('');
   const [clickedColor, setClickedColor] = useState<string | null>(null);
 
