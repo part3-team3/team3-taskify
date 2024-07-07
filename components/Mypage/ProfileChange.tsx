@@ -21,6 +21,7 @@ const ProfileChange = () => {
         const res = await instance.get('/users/me');
         setEmail(res.data.email);
         setNickname(res.data.nickname);
+        setOriginalNickname(res.data.nickname);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -28,20 +29,7 @@ const ProfileChange = () => {
 
     fetchUserData();
   }, []);
-  useEffect(() => {
-    // 초기 닉네임을 가져와서 originalNickname에 저장합니다.
-    const fetchUserData = async () => {
-      try {
-        const res = await instance.get('/users/me');
-        setNickname(res.data.nickname);
-        setOriginalNickname(res.data.nickname);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -77,7 +65,7 @@ const ProfileChange = () => {
       await instance.put('/users/me', payload);
 
       if (imageFile && nickname !== originalNickname) {
-        setModalMessage('닉네임과 프로필사진이 성공적으로 저장되었습니다.');
+        setModalMessage('닉네임과 프로필사진이 저장되었습니다.');
       } else if (imageFile) {
         setModalMessage('프로필 사진이 저장되었습니다.');
       } else if (nickname !== originalNickname) {
