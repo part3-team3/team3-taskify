@@ -59,7 +59,6 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
   const renderMember = (member: Member, index: number) => {
     const firstLetter = member.nickname.charAt(0).toUpperCase();
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    console.log('Rendering member:', member);
 
     return (
       <div
