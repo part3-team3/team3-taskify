@@ -11,7 +11,7 @@ const ProfileChange = () => {
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
-
+  const [originalNickname, setOriginalNickname] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
@@ -23,6 +23,20 @@ const ProfileChange = () => {
         setNickname(res.data.nickname);
       } catch (error) {
         console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+  useEffect(() => {
+    // 초기 닉네임을 가져와서 originalNickname에 저장합니다.
+    const fetchUserData = async () => {
+      try {
+        const res = await instance.get('/users/me');
+        setNickname(res.data.nickname);
+        setOriginalNickname(res.data.nickname);
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -47,32 +61,49 @@ const ProfileChange = () => {
 
     try {
       const formData = new FormData();
+      let profileImageUrl = '';
 
       if (imageFile) {
         formData.append('image', imageFile);
+        const res = await instance.post('/users/me/image', formData);
+        profileImageUrl = res.data.profileImageUrl;
       }
 
-      const res = await instance.post('/users/me/image', formData);
       const payload = {
         nickname,
-        profileImageUrl: res.data.profileImageUrl,
+        ...(profileImageUrl && { profileImageUrl }),
       };
+
       await instance.put('/users/me', payload);
-      // 업데이트 성공 시 추가 로직 작성
-      setModalMessage('닉네임과 프로필사진이 성공적으로 저장되었습니다.');
+
+      if (imageFile && nickname !== originalNickname) {
+        setModalMessage('닉네임과 프로필사진이 성공적으로 저장되었습니다.');
+      } else if (imageFile) {
+        setModalMessage('프로필 사진이 저장되었습니다.');
+      } else if (nickname !== originalNickname) {
+        setModalMessage('닉네임이 저장되었습니다.');
+      } else {
+        setModalMessage('변경사항이 없습니다.');
+      }
+
       openModal();
     } catch (error) {
       if (isAxiosError(error)) {
-        openModal();
         setModalMessage(error.response?.data.message);
+        openModal();
         console.log(error);
       }
     }
   };
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
-    if (modalMessage === '닉네임과 프로필사진이 성공적으로 저장되었습니다.') {
+    if (
+      modalMessage === '닉네임과 프로필사진이 성공적으로 저장되었습니다.' ||
+      modalMessage === '프로필 사진이 저장되었습니다.' ||
+      modalMessage === '닉네임이 저장되었습니다.'
+    ) {
       window.location.reload();
     }
   };

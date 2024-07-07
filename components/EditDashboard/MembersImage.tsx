@@ -73,7 +73,7 @@ const MembersImage = ({ dashboardId }: MembersImageProps) => {
           <img
             src={member.profileImageUrl}
             alt={member.nickname}
-            className="h-full w-full rounded-full"
+            className="h-full w-full rounded-full object-cover"
           />
         ) : (
           <span className="flex items-center justify-center">

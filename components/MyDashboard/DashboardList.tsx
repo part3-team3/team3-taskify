@@ -16,7 +16,7 @@ interface DashboardListProps {
 const DashboardList: React.FC<DashboardListProps> = ({
   onDashboardCreated,
   dashboardCreated,
-}) => {
+}:DashboardListProps) => {
   const [page, setPage] = useState(1);
   const size = 5;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
