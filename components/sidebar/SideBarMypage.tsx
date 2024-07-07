@@ -8,12 +8,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-
-
 import SideBarItemDashboard from './SideBarItemDashboard';
 
-
-const SideBarEdit = () => {
+const SideBarDashboard = () => {
   const [page, setPage] = useState(1);
   const size= 10;
   const [allDashboardList, setAllDashboardList] = useState<Dashboard[]>([]);
@@ -47,7 +44,7 @@ const SideBarEdit = () => {
   useEffect(() => {
     const path = router.asPath;
     const pathParts = path.split('/');
-    const id = pathParts[2]; // Path에서 3번째 위치 가정
+    const id = pathParts[pathParts.length - 1];
     if (id) {
       setActiveDashboardId(id);
     }
@@ -93,7 +90,7 @@ const SideBarEdit = () => {
                 className="mb-38 h-fit w-fit md:mb-3 xl:mb-0"
                 key={myDashboard.id}
               >
-                <Link href={`/dashboard/${myDashboard.id}/edit`}>
+                <Link href={`/dashboard/${myDashboard.id}`}>
                   <SideBarItemDashboard
                     myDashboard={myDashboard}
                     isActive={isActive}
@@ -127,4 +124,4 @@ const SideBarEdit = () => {
     </aside>
   );
 };
-export default SideBarEdit;
+export default SideBarDashboard;

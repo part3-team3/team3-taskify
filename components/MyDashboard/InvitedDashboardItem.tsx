@@ -18,7 +18,7 @@ const InvitedDashboardItem = ({
 }: InvitedDashboardItemProps) => {
   const handleAccept = async () => {
     try {
-      const response = await putAcceptInvited(invitedDashboard.id);
+      await putAcceptInvited(invitedDashboard.id);
       onAction(invitedDashboard.id);
       onDashboardCreated();
     } catch (error) {
@@ -28,7 +28,7 @@ const InvitedDashboardItem = ({
 
   const handleReject = async () => {
     try {
-      const response = await putRejectInvited(invitedDashboard.id);
+      await putRejectInvited(invitedDashboard.id);
       onAction(invitedDashboard.id);
     } catch (error) {
       alert('초대 거절에 실패했습니다. 다시 시도해주세요.');
