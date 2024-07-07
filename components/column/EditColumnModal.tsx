@@ -23,6 +23,8 @@ const EditColumnModal = ({
   const isTitleUpdated = columnTitle !== inputValue;
   const isDuplicate = useColumnTitleDuplicateChecker(dashboardId, inputValue);
 
+  const isCreateColumnModalDisabled = inputValue.trim() === '' ? true : false;
+
   const openDeleteConfirmModal = () => setIsDeleteConfirmVisible(true);
 
   const handleEditClick = () => {
@@ -94,8 +96,9 @@ const EditColumnModal = ({
           취소
         </button>
         <button
+          disabled={isCreateColumnModalDisabled}
           onClick={handleEditClick}
-          className="ml-11 btn_modal_large_purple xl:ml-12"
+          className={`ml-11 xl:ml-12 ${isCreateColumnModalDisabled ? 'btn_modal_large_gray' : 'btn_modal_large_purple'} `}
         >
           변경
         </button>
