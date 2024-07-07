@@ -8,7 +8,7 @@ import postCreateCard from '@/pages/api/TodoModalForm/postCreateCard';
 import putTodoEditModal from '@/pages/api/TodoModalForm/putTodoEditModal';
 import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import StatusDropdown from './StatusDropdown';
 import TagsInput from './TagsInput';
@@ -61,6 +61,20 @@ const TodoFormModal = ({
 
   const [formData, setFormData] = useState<TodoFormData>(defaultData);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    const isCreateFormValid =
+      formData.assigneeUserId !== 0 &&
+      formData.title.trim() !== '' &&
+      formData.description.trim() !== '' &&
+      formData.dueDate.trim() !== '' &&
+      formData.tags.length > 0 &&
+      formData.imageUrl.trim() !== '';
+
+    setIsButtonDisabled(!isCreateFormValid);
+  }, [formData]);
+
   const isMobile = useMediaQuery('(max-width: 767px)');
 
   const onSubmit = async () => {
@@ -81,6 +95,9 @@ const TodoFormModal = ({
     setIsInEdit?.(false);
     setIsModalOpen(false);
   };
+
+  const isEditModalButtonDisabled =
+    (formData.title && formData.description).trim() === '' ? true : false;
 
   return (
     <div className="flex flex-col gap-24 md:gap-32">
@@ -138,8 +155,9 @@ const TodoFormModal = ({
           취소
         </button>
         <button
+          disabled={isEditForm ? isEditModalButtonDisabled : isButtonDisabled}
           onClick={onSubmit}
-          className="btn_modal_small_purple md:btn_modal_large_purple"
+          className={`${isButtonDisabled ? 'btn_modal_small_gray md:btn_modal_large_gray' : 'btn_modal_small_purple md:btn_modal_large_purple'}`}
         >
           {isEditForm ? '수정' : '생성'}
         </button>
