@@ -1,6 +1,6 @@
 import PaginationBar from '@/components/MyDashboard/PaginationBar';
+import MobileModal from '@/components/common/MobileModal';
 import Modal from '@/components/common/Modal';
-import SimpleModal from '@/components/common/SimpleModal';
 import axios from '@/lib/axios';
 import IcAddWhite from '@/public/images/icon/ic-add-white.svg';
 import Image from 'next/image';
@@ -172,7 +172,7 @@ const DashboardInviteList = () => {
       </div>
 
       {isMobile ? (
-        <SimpleModal isOpen={isModalOpen} onClose={closeModal}>
+        <MobileModal isOpen={isModalOpen} onClose={closeModal}>
           <h2 className="text-xl font-bold">초대하기</h2>
           <p className="mt-[15px] text-16 text-gray-800">이메일</p>
           <div className="relative">
@@ -192,7 +192,7 @@ const DashboardInviteList = () => {
               </button>
             </div>
           </div>
-        </SimpleModal>
+        </MobileModal>
       ) : (
         <Modal
           isOpen={isModalOpen}

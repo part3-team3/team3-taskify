@@ -1,8 +1,7 @@
-// import React, { ChangeEvent, useEffect, useState } from 'react';
 import MembersImage from '@/components/EditDashboard/MembersImage';
 import ProfileImage from '@/components/EditDashboard/ProfileImage';
+import MobileModal from '@/components/common/MobileModal';
 import Modal from '@/components/common/Modal';
-import SimpleModal from '@/components/common/SimpleModal';
 import axios from '@/lib/axios';
 import icAdd from '@/public/images/icon/ic-add.svg';
 import icCrown from '@/public/images/icon/ic-crown.svg';
@@ -154,7 +153,7 @@ const NavBar = () => {
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
-      <div className="sm:px-auto flex gap-[16px]">
+      <div className="sm:px-auto flex gap-10 md:gap-16">
         <button
           onClick={handleRefresh}
           className="h-30 w-49 items-center rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:flex md:h-36 md:w-85 md:gap-[8px] md:text-sm xl:h-40 xl:text-base"
@@ -204,27 +203,32 @@ const NavBar = () => {
         </Dropdown>
       </div>
       {isMobile ? (
-        <SimpleModal isOpen={isModalOpen} onClose={closeModal}>
-          <h2 className="text-xl font-bold">초대하기</h2>
-          <p className="mt-[15px] text-16 text-gray-800">이메일</p>
-          <div className="relative">
-            <input
-              className={`mt-[10px] h-42 w-287 rounded-md border px-10 ${inputClassName}`}
-              type="text"
-              value={value}
-              onChange={handleChange}
-              placeholder="이메일을 입력해주세요"
-            />
-            <div className="mt-[20px] flex justify-end gap-[12px]">
-              <button className="btn_modal_small_white" onClick={closeModal}>
-                취소
-              </button>
-              <button className="btn_modal_small_purple" onClick={handleSubmit}>
-                초대
-              </button>
+        <div className="override-flex-center">
+          <MobileModal isOpen={isModalOpen} onClose={closeModal}>
+            <h2 className="text-xl font-bold">초대하기</h2>
+            <p className="mt-[15px] text-16 text-gray-800">이메일</p>
+            <div className="relative">
+              <input
+                className={`mt-[10px] h-42 w-287 rounded-md border px-10 ${inputClassName}`}
+                type="text"
+                value={value}
+                onChange={handleChange}
+                placeholder="이메일을 입력해주세요"
+              />
+              <div className="mt-[20px] flex justify-end gap-[12px]">
+                <button className="btn_modal_small_white" onClick={closeModal}>
+                  취소
+                </button>
+                <button
+                  className="btn_modal_small_purple"
+                  onClick={handleSubmit}
+                >
+                  초대
+                </button>
+              </div>
             </div>
-          </div>
-        </SimpleModal>
+          </MobileModal>
+        </div>
       ) : (
         <Modal
           isOpen={isModalOpen}

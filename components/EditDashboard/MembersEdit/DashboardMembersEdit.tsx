@@ -10,7 +10,7 @@ const DashboardMembersEdit = () => {
   const dashboardId = Number(router.query.dashboardId);
 
   const [members, setMembers] = useState<
-    { nickname: string; profileImage: string | null; id: number }[]
+    { nickname: string; profileImageUrl: string | null; id: number }[]
   >([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
