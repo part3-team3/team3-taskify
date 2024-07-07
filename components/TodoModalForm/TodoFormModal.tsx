@@ -8,7 +8,7 @@ import postCreateCard from '@/pages/api/TodoModalForm/postCreateCard';
 import putTodoEditModal from '@/pages/api/TodoModalForm/putTodoEditModal';
 import { TodoFormData } from '@/types/ModalFormData';
 import { Card } from '@/types/card';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import StatusDropdown from './StatusDropdown';
 import TagsInput from './TagsInput';
@@ -60,6 +60,20 @@ const TodoFormModal = ({
   }
 
   const [formData, setFormData] = useState<TodoFormData>(defaultData);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    const isCreateFormValid =
+      formData.assigneeUserId !== 0 &&
+      formData.title.trim() !== '' &&
+      formData.description.trim() !== '' &&
+      formData.dueDate.trim() !== '' &&
+      formData.tags.length > 0 &&
+      formData.imageUrl.trim() !== '';
+
+    setIsButtonDisabled(!isCreateFormValid);
+  }, [formData]);
 
   const isMobile = useMediaQuery('(max-width: 767px)');
 
@@ -141,9 +155,9 @@ const TodoFormModal = ({
           취소
         </button>
         <button
-          disabled={isEditModalButtonDisabled}
+          disabled={isEditForm ? isEditModalButtonDisabled : isButtonDisabled}
           onClick={onSubmit}
-          className={`${isEditModalButtonDisabled ? 'btn_modal_small_gray md:btn_modal_large_gray' : 'btn_modal_small_purple md:btn_modal_large_purple'}`}
+          className={`${isButtonDisabled ? 'btn_modal_small_gray md:btn_modal_large_gray' : 'btn_modal_small_purple md:btn_modal_large_purple'}`}
         >
           {isEditForm ? '수정' : '생성'}
         </button>
