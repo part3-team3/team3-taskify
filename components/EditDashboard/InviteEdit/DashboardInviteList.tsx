@@ -132,14 +132,14 @@ const DashboardInviteList = () => {
 
   return (
     <div className="px-12 md:px-20">
-      <div className="flex h-395 w-284 flex-col rounded-lg bg-white px-12 pt-25 sm:h-477 sm:w-544 md:px-20 xl:h-477 xl:w-620">
+      <div className="flex h-395 w-284 flex-col rounded-lg bg-white px-12 pt-25 sm:h-477 sm:w-544 md:px-20 lg:h-477 xl:w-620">
         <div className="flex justify-between">
           <div className="mb-13 text-xl font-bold md:mb-27 md:text-24">
             초대 내역
           </div>
           <div className="block md:flex">
-            <div className="mb-24 flex">
-              <p className="mr-12 text-xs font-normal">
+            <div className="mb-24 flex items-center justify-center md:mr-12">
+              <p className="mr:12 mr-12 text-xs font-normal md:w-70">
                 {totalPage} 페이지 중 {page}
               </p>
               <PaginationBar
@@ -148,20 +148,19 @@ const DashboardInviteList = () => {
                 onPageChange={onPageChange}
               />
             </div>
-            <div className="flex w-full justify-end">
-              <button
-                className="flex h-[32px] w-[105px] rounded-md bg-[#5534DA] px-2.5 py-4 text-sm text-gray-600"
-                onClick={openModal}
-              >
-                <div className="flex gap-8 text-sm text-white">
-                  <Image src={IcAddWhite} width={16} height={16} alt="초대" />
-                  초대하기
-                </div>
-              </button>
-            </div>
+
+            <button
+              className="ml-auto mt-2 flex h-[32px] w-[105px] items-center justify-center rounded-md bg-[#5534DA] px-2.5 py-4 text-sm text-gray-600 md:ml-0"
+              onClick={openModal}
+            >
+              <div className="flex gap-8 text-sm text-white">
+                <Image src={IcAddWhite} width={16} height={16} alt="초대" />
+                초대하기
+              </div>
+            </button>
           </div>
         </div>
-        <p className="-mt-25 mb-12 text-14 text-[#9FA6B2] md:mb-12 md:text-16">
+        <p className="-mt-25 mb-12 text-14 text-[#9FA6B2] md:mb-12 md:mt-0 md:text-16">
           이메일
         </p>
 
