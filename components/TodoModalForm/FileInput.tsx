@@ -5,8 +5,10 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const FileInput = ({
   setFormData,
+  columnId,
 }: {
   setFormData?: Dispatch<SetStateAction<TodoFormData>>;
+  columnId: number;
 }) => {
   const [fileValue, setFileValue] = useState<string>('');
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
@@ -23,7 +25,7 @@ const FileInput = ({
     const formData = new FormData();
     formData.append('image', selectedFile);
 
-    const image = await postCardImage(formData);
+    const image = await postCardImage(formData, columnId);
 
     setFormData?.((prevForm: TodoFormData) => {
       return {
@@ -45,7 +47,7 @@ const FileInput = ({
             <div className="relative h-58 w-58 md:h-76 md:w-76">
               <Image
                 src={preview as string}
-                className="rounded-6 object-cover"
+                className="object-cover rounded-6"
                 alt="미리보기"
                 fill
               />

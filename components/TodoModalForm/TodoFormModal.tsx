@@ -146,7 +146,7 @@ const TodoFormModal = ({
         tags={tags}
         setFormData={setFormData}
       />
-      <FileInput setFormData={setFormData} />
+      <FileInput setFormData={setFormData} columnId={columnId} />
       <div className="flex gap-12 md:justify-end">
         <button
           onClick={handleModalClose}
