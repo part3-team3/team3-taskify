@@ -1,7 +1,7 @@
 import axios from '@/lib/axios';
 
-const getMembers = async () => {
-  const res = await axios.get('/members?dashboardId=10039');
+const getMembers = async (dashboardId: number) => {
+  const res = await axios.get(`/members?dashboardId=${dashboardId}`);
 
   return res.data.members;
 };
