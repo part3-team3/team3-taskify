@@ -28,11 +28,11 @@ body {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     sans-serif;
-    word-spacing: -2px;
+  word-spacing: -2px;
 }
 
 .teskify {
-  color: #5534DA;
+  color: #5534da;
   font-family: Montserrat;
   font-weight: 700;
   line-height: 65px;
