@@ -153,7 +153,7 @@ const NavBar = () => {
           <Image src={icCrown} width={20} height={16} alt="왕관" />
         )}
       </div>
-      <div className="sm:px-auto flex gap-10 md:gap-16">
+      <div className="md:pl-auto flex gap-10 pl-20 md:gap-16">
         {createdByMe && (
           <button
             onClick={handleRefresh}
@@ -173,7 +173,7 @@ const NavBar = () => {
           className="h-30 w-73 rounded-md border border-solid border-gray-200 bg-white px-2.5 py-4 text-xs text-gray-600 md:h-36 md:w-109 md:text-sm xl:h-40 xl:w-116 xl:text-base"
           onClick={openModal}
         >
-          <div className="flex gap-[8px]">
+          <div className="flex items-center justify-center gap-[8px]">
             <Image
               className="hidden md:flex"
               src={icAdd}
