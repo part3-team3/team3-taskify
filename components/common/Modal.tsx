@@ -1,4 +1,3 @@
-// 공용 모달 이상한 점 수정 부탁드려요~^^
 import { ReactNode } from 'react';
 
 interface ModalProps {

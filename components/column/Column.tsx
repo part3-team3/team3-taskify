@@ -5,7 +5,6 @@ import { Card } from '@/types/card';
 import ColumnType from '@/types/column';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-
 import ColumnCard from './ColumnCard';
 
 const Column = ({
